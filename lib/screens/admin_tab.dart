@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/add_teacher_dialog.dart';
 import '../widgets/button.dart';
+import '../widgets/delete_dialog.dart';
 import '../widgets/edit_dialog.dart';
 import '../widgets/user_row.dart';
 
@@ -130,7 +131,11 @@ class _AdminTabState extends State<AdminTab> {
                                 barrierDismissible: true,
                                 builder: (context) => const EditDialog(),
                               ),
-															onDelete: () {},
+                              onDelete: () => showDialog(
+                                context: context,
+                                barrierDismissible: true,
+                                builder: (context) => const deleteDialog(),
+                              ),
                             ),
                             UserRow(
                               nome: 'User2',
@@ -140,7 +145,11 @@ class _AdminTabState extends State<AdminTab> {
                                 barrierDismissible: true,
                                 builder: (context) => const EditDialog(),
                               ),
-															onDelete: () {},
+                              onDelete: () => showDialog(
+                                context: context,
+                                barrierDismissible: true,
+                                builder: (context) => const deleteDialog(),
+                              ),
                             ),
                           ],
                         ),
