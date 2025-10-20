@@ -24,29 +24,50 @@ class ImageViewerTab extends StatelessWidget {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             spacing: 10,
             children: [
               InkWell(
-								onTap: () {},
+                onTap: () {},
                 child: Row(
                   children: [
                     Icon(Icons.arrow_back, size: 24, color: green),
-                    Text('Voltar', style: TextStyle(fontSize: 20, color: green)),
+                    Text(
+                      'Voltar',
+                      style: TextStyle(fontSize: 20, color: green),
+                    ),
                   ],
                 ),
               ),
               Expanded(
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: ImageViewerBox(
-                        imagePath: 'assets/images/2000x1000.jpg', // test image
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8),
+                    border: BoxBorder.all(color: green, width: 3),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: ImageViewerBox(
+                          imagePath:
+                              'assets/images/2000x1000.jpg', // test image
+                        ),
                       ),
-                    ),
-                  ],
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          color: lightGray,
+                          child: Center(
+                            child: Text('<descrição da imagem>'),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
