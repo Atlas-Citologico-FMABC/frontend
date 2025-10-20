@@ -7,8 +7,9 @@ import 'package:flutter/material.dart';
 
 import 'screens/admin_tab.dart';
 import 'screens/diretorio_tab.dart';
+import 'screens/image_viewer_tab.dart';
 
-enum TabType { home, diretorios, diretorio, galeria, login, admin }
+enum TabType { home, diretorios, diretorio, galeria, imageViewer, login, admin }
 
 final Color darkBlue = Color(0xff002C53);
 const double navHeight = 100;
@@ -34,9 +35,11 @@ class _MainPageState extends State<MainPage> {
 			case TabType.diretorios:
 				return DiretoriosTab(onTapDiretorio: onTapTab);
 			case TabType.diretorio:
-				return DiretorioTab();
+				return DiretorioTab(onTapImage: onTapTab);
 			case TabType.galeria:
 				return GaleriaTab();
+			case TabType.imageViewer:
+				return ImageViewerTab();
 			case TabType.login:
 				return LoginTab(onTap: onTapTab);
 			case TabType.admin:

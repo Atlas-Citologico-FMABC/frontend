@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import '../main.dart';
 import '../widgets/galeria_box.dart';
 
 final Color lightGray = Color(0xffEBEBEB);
 
 class DiretorioTab extends StatelessWidget {
-  const DiretorioTab({super.key});
+	final Function(TabType) onTapImage;
+  const DiretorioTab({super.key, required this.onTapImage});
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +71,7 @@ class DiretorioTab extends StatelessWidget {
                                 spacing: 50,
                                 runSpacing: 50,
                                 children: <Widget>[
-                                  GaleriaBox(title: 'Image 1'),
+                                  GaleriaBox(title: 'Image 1', onTap: () => onTapImage(TabType.imageViewer)),
                                   GaleriaBox(title: 'Image 2'),
                                   GaleriaBox(title: 'Image 3'),
                                   GaleriaBox(title: 'Image 4'),
