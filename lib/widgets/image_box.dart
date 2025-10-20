@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget GaleriaBox({
+Widget ImageBox({
   required String title,
 	final VoidCallback? onTap,
   Color borderColor = Colors.transparent,
