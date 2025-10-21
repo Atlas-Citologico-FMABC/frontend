@@ -1,6 +1,7 @@
 import 'package:atlas_citologico_fmabc/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:atlas_citologico_fmabc/main.dart';
+import '../utils/responsiveness.dart';
 
 final Color gray = Color(0xFFEBEBEB);
 
