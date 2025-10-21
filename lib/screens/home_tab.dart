@@ -48,7 +48,7 @@ class HomeTab extends StatelessWidget {
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.only(top: 70, right: 0, left: 80),
+              padding: const EdgeInsets.only(top: 70, right: 80, left: 80),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
