@@ -2,6 +2,8 @@ import 'package:atlas_citologico_fmabc/widgets/diretorio_box.dart';
 import 'package:flutter/material.dart';
 
 final Color darkBlue = Color(0xff002C53);
+final Color lightGray = Color(0xffEBEBEB);
+final Color green = Color(0xff009951);
 
 class HomeTab extends StatelessWidget {
   final double navHeight;
@@ -30,7 +32,7 @@ class HomeTab extends StatelessWidget {
                 Divider(color: Colors.white),
                 SizedBox(height: 100),
                 Text(
-                  '<descrição do sistema',
+                  '<descrição do sistema>',
                   style: TextStyle(color: Colors.white, fontSize: 30),
                   textAlign: TextAlign.center,
                 ),
@@ -39,32 +41,41 @@ class HomeTab extends StatelessWidget {
           ),
           Container(
             width: double.infinity,
-            height: MediaQuery.of(context).size.height,
+						constraints: BoxConstraints(
+							minHeight: MediaQuery.of(context).size.height - 383, // -383 just for tests
+						),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: lightGray,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.elliptical(700, 70),
                 topRight: Radius.elliptical(700, 70),
               ),
             ),
             child: Padding(
+<<<<<<< HEAD
               padding: const EdgeInsets.only(top: 70, right: 80, left: 80),
+=======
+              padding: const EdgeInsets.symmetric(vertical: 70, horizontal: 80),
+>>>>>>> 2e573565129a7122dd34170d0767f04cc523c653
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    'Diretórios mais usados:',
-                    style: TextStyle(fontSize: 30),
+                  Align(
+										alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Diretórios mais usados:',
+                      style: TextStyle(fontSize: 30),
+                    ),
                   ),
                   SizedBox(height: 20),
                   Wrap(
                     spacing: 50,
                     runSpacing: 30,
                     children: <Widget>[
-                      DiretorioBox(title: 'Diretório 1'),
-                      DiretorioBox(title: 'Diretório 2'),
-                      DiretorioBox(title: 'Diretório 3'),
-                      DiretorioBox(title: 'Diretório 4'),
+                      DiretorioBox(title: 'Diretório 1', borderWidth: 5, borderColor: green),
+                      DiretorioBox(title: 'Diretório 2', borderWidth: 5, borderColor: green),
+                      DiretorioBox(title: 'Diretório 3', borderWidth: 5, borderColor: green),
+                      DiretorioBox(title: 'Diretório 4', borderWidth: 5, borderColor: green),
                     ],
                   ),
                 ],

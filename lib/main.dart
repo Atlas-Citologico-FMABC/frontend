@@ -5,7 +5,10 @@ import 'package:atlas_citologico_fmabc/screens/login_tab.dart';
 import 'package:atlas_citologico_fmabc/widgets/navbar.dart';
 import 'package:flutter/material.dart';
 
-enum TabType { home, diretorios, galeria, login }
+import 'screens/admin_tab.dart';
+import 'screens/diretorio_tab.dart';
+
+enum TabType { home, diretorios, diretorio, galeria, login, admin }
 
 final Color darkBlue = Color(0xff002C53);
 const double navHeight = 100;
@@ -29,11 +32,15 @@ class _MainPageState extends State<MainPage> {
 			case TabType.home:
 				return HomeTab(navHeight: navHeight);
 			case TabType.diretorios:
-				return DiretoriosTab();
+				return DiretoriosTab(onTapDiretorio: onTapTab);
+			case TabType.diretorio:
+				return DiretorioTab();
 			case TabType.galeria:
 				return GaleriaTab();
 			case TabType.login:
-				return LoginTab();
+				return LoginTab(onTap: onTapTab);
+			case TabType.admin:
+				return AdminTab();
 		}
 	}
 

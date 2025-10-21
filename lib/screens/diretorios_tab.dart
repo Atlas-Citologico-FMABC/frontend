@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import '../main.dart';
+import '../widgets/diretorio_box.dart';
+
+final Color lightGray = Color(0xffEBEBEB);
 
 import '../widgets/diretorio_box.dart';
 
 class DiretoriosTab extends StatelessWidget {
-  const DiretoriosTab({super.key});
+  final Function(TabType) onTapDiretorio;
+  const DiretoriosTab({super.key, required this.onTapDiretorio});
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +36,21 @@ class DiretoriosTab extends StatelessWidget {
             ),
           ),
           Container(
+<<<<<<< HEAD
 						constraints: BoxConstraints(
 							minHeight: MediaQuery.of(context).size.height,
 						),
             width: double.infinity,
             decoration: BoxDecoration(
               color: Colors.white,
+=======
+            constraints: BoxConstraints(
+              minHeight: MediaQuery.of(context).size.height,
+            ),
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: lightGray,
+>>>>>>> 2e573565129a7122dd34170d0767f04cc523c653
               borderRadius: BorderRadius.only(
                 topLeft: Radius.elliptical(700, 70),
                 topRight: Radius.elliptical(700, 70),
@@ -52,7 +66,11 @@ class DiretoriosTab extends StatelessWidget {
                     spacing: 50,
                     runSpacing: 30,
                     children: <Widget>[
+<<<<<<< HEAD
                       DiretorioBox(title: 'Diretório 1'),
+=======
+                      DiretorioBox(title: 'Diretório 1', onTap: () => onTapDiretorio(TabType.diretorio)),
+>>>>>>> 2e573565129a7122dd34170d0767f04cc523c653
                       DiretorioBox(title: 'Diretório 2'),
                       DiretorioBox(title: 'Diretório 3'),
                       DiretorioBox(title: 'Diretório 4'),

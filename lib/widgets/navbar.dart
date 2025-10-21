@@ -2,6 +2,8 @@ import 'package:atlas_citologico_fmabc/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:atlas_citologico_fmabc/main.dart';
 
+final Color gray = Color(0xFFEBEBEB);
+
 PreferredSizeWidget NavBar({
   required double height,
   required TabType selectedTab,
@@ -20,25 +22,42 @@ PreferredSizeWidget NavBar({
         ),
         toolbarHeight: height,
         actions: <Widget>[
-          Button(
-            label: 'Home',
-            isSelected: selectedTab == TabType.home,
-            onTap: () => onTapTab(TabType.home),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+            child: Button(
+              text: 'Home',
+              isSelected: selectedTab == TabType.home,
+              selectedBackgroundColor: gray,
+              onTap: () => onTapTab(TabType.home),
+            ),
           ),
-          Button(
-            label: 'Diretórios',
-            isSelected: selectedTab == TabType.diretorios,
-            onTap: () => onTapTab(TabType.diretorios),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+            child: Button(
+              text: 'Diretórios',
+              isSelected: selectedTab == TabType.diretorios || selectedTab == TabType.diretorio,
+              selectedBackgroundColor: gray,
+              onTap: () => onTapTab(TabType.diretorios),
+            ),
           ),
-          Button(
-            label: 'Galeria',
-            isSelected: selectedTab == TabType.galeria,
-            onTap: () => onTapTab(TabType.galeria),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+            child: Button(
+              text: 'Galeria',
+              isSelected: selectedTab == TabType.galeria,
+              selectedBackgroundColor: gray,
+              onTap: () => onTapTab(TabType.galeria),
+            ),
           ),
-          Button(
-            label: 'Login',
-            isSelected: selectedTab == TabType.login,
-            onTap: () => onTapTab(TabType.login),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+            child: Button(
+              text: 'LOGIN',
+              foregroundColor: Colors.white,
+              backgroundColor: Colors.blue,
+              horizontalPadding: 60,
+              onTap: () => onTapTab(TabType.login),
+            ),
           ),
         ],
       ),
