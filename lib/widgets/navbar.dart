@@ -23,58 +23,59 @@ PreferredSizeWidget NavBar({
           child: Image.asset('assets/images/fmabc.png', height: 50),
         ),
         toolbarHeight: height,
-        leading: isMobile(context) 
-    ? Builder(
-        builder: (ctx) => IconButton(
-          icon: Icon(Icons.menu),
-          onPressed: () {
-            Scaffold.of(ctx).openDrawer();
-          },
-        ),
-      )
-    : null,
-  actions: <Widget>[
-  if (!isMobile(context)) ...[// Botões originais aqui
-  ],
-],
+        leading: isMobile(context)
+            ? Builder(
+                builder: (ctx) => IconButton(
+                  icon: Icon(Icons.menu),
+                  onPressed: () {
+                    Scaffold.of(ctx).openDrawer();
+                  },
+                ),
+              )
+            : null,
         actions: <Widget>[
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-            child: Button(
-              text: 'Home',
-              isSelected: selectedTab == TabType.home,
-              selectedBackgroundColor: gray,
-              onTap: () => onTapTab(TabType.home),
+          if (!isMobile(context)) ...[
+            // Botões originais aqu
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+              child: Button(
+                text: 'Home',
+                isSelected: selectedTab == TabType.home,
+                selectedBackgroundColor: gray,
+                onTap: () => onTapTab(TabType.home),
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-            child: Button(
-              text: 'Diretórios',
-              isSelected: selectedTab == TabType.diretorios || selectedTab == TabType.diretorio,
-              selectedBackgroundColor: gray,
-              onTap: () => onTapTab(TabType.diretorios),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+              child: Button(
+                text: 'Diretórios',
+                isSelected:
+                    selectedTab == TabType.diretorios ||
+                    selectedTab == TabType.diretorio,
+                selectedBackgroundColor: gray,
+                onTap: () => onTapTab(TabType.diretorios),
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-            child: Button(
-              text: 'Galeria',
-              isSelected: selectedTab == TabType.galeria,
-              selectedBackgroundColor: gray,
-              onTap: () => onTapTab(TabType.galeria),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+              child: Button(
+                text: 'Galeria',
+                isSelected: selectedTab == TabType.galeria,
+                selectedBackgroundColor: gray,
+                onTap: () => onTapTab(TabType.galeria),
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-            child: Button(
-              text: 'LOGIN',
-              foregroundColor: Colors.white,
-              backgroundColor: Colors.blue,
-              horizontalPadding: 60,
-              onTap: () => onTapTab(TabType.login),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+              child: Button(
+                text: 'LOGIN',
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.blue,
+                horizontalPadding: 60,
+                onTap: () => onTapTab(TabType.login),
+              ),
             ),
-          ),
+          ],
         ],
       ),
     ),
