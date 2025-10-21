@@ -23,6 +23,10 @@ PreferredSizeWidget NavBar({
           child: Image.asset('assets/images/fmabc.png', height: 50),
         ),
         toolbarHeight: height,
+        leading: isMobile(context) 
+            ? Builder(
+                builder: (context) => IconButton(
+                  icon: Icon(Icons.menu),
         actions: <Widget>[
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
