@@ -24,9 +24,15 @@ PreferredSizeWidget NavBar({
         ),
         toolbarHeight: height,
         leading: isMobile(context) 
-            ? Builder(
-                builder: (context) => IconButton(
-                  icon: Icon(Icons.menu),
+    ? Builder(
+        builder: (ctx) => IconButton(
+          icon: Icon(Icons.menu),
+          onPressed: () {
+            Scaffold.of(ctx).openDrawer();
+          },
+        ),
+      )
+    : null,"
         actions: <Widget>[
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
