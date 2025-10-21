@@ -33,6 +33,10 @@ PreferredSizeWidget NavBar({
         ),
       )
     : null,
+  actions: <Widget>[
+  if (!isMobile(context)) ...[// Botões originais aqui
+  ],
+],
         actions: <Widget>[
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
