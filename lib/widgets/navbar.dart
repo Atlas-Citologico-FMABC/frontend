@@ -9,6 +9,7 @@ PreferredSizeWidget NavBar({
   required double height,
   required TabType selectedTab,
   required Function(TabType) onTapTab,
+  required BuildContext context,
 }) {
   return PreferredSize(
     preferredSize: Size.fromHeight(height),
