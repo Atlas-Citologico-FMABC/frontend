@@ -60,9 +60,63 @@ class _MainPageState extends State<MainPage> {
         onTapTab: onTapTab,
         context: context, 
       ),
-      body: getTab(selectedTab),
-      backgroundColor: darkBlue,
-    ),
-  ); 
+drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              DrawerHeader(
+                decoration: BoxDecoration(color: darkBlue),
+                child: Column(
+                  children: [
+                    Text(
+                      'Atlas de Citologia',
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    ),
+                    Text(
+                      'FMABC',
+                      style: TextStyle(color: Colors.white70, fontSize: 14),
+                    ),
+                  ],
+                ),
+              ),
+              ListTile(
+                leading: Icon(Icons.home),
+                title: Text('Home'),
+                onTap: () {
+                  onTapTab(TabType.home);
+                  Navigator.pop(context); // Fecha o drawer
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.folder),
+                title: Text('Diretórios'),
+                onTap: () {
+                  onTapTab(TabType.diretorios);
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.photo),
+                title: Text('Galeria'),
+                onTap: () {
+                  onTapTab(TabType.galeria);
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.login),
+                title: Text('Login'),
+                onTap: () {
+                  onTapTab(TabType.login);
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        ),
+        body: getTab(selectedTab),
+        backgroundColor: darkBlue,
+      ),
+    ); 
+  }
 }
-} 
