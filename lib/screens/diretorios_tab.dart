@@ -15,8 +15,6 @@ class DiretoriosTab extends StatelessWidget {
         children: <Widget>[
           Container(
             width: double.infinity,
-            // height: MediaQuery.of(context).size.height - navHeight,
-            // color: darkBlue,
             padding: EdgeInsets.all(30),
             child: Column(
               children: <Widget>[
@@ -40,11 +38,7 @@ class DiretoriosTab extends StatelessWidget {
             width: double.infinity,
             decoration: BoxDecoration(
               color: lightGray,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.elliptical(700, 70),
-                topRight: Radius.elliptical(700, 70),
-              ),
-            ),
+            ), // ← CORRIGIDO: fechamento correto
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 70, horizontal: 80),
               child: Column(
