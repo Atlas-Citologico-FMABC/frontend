@@ -50,14 +50,19 @@ class _MainPageState extends State<MainPage> {
 
 	@override
 	Widget build(BuildContext context) {
-		return MaterialApp(
-			debugShowCheckedModeBanner: false,
-      title: 'Atlas de Citologia',
-			home: Scaffold(
-				appBar: NavBar(height: navHeight, selectedTab: selectedTab, onTapTab: onTapTab),
-				body: getTab(selectedTab),
-				backgroundColor: darkBlue,
-			),
-		);
-	}
+  return MaterialApp(
+    debugShowCheckedModeBanner: false,
+    title: 'Atlas de Citologia',
+    home: Scaffold(
+      appBar: NavBar(  
+        height: navHeight,
+        selectedTab: selectedTab, 
+        onTapTab: onTapTab,
+        context: context, 
+      ),
+      body: getTab(selectedTab),
+      backgroundColor: darkBlue,
+    ),
+  ); 
+}
 } 
