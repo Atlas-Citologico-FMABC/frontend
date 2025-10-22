@@ -67,6 +67,7 @@ drawer: Drawer(
               DrawerHeader(
                 decoration: BoxDecoration(color: darkBlue),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       'Atlas de Citologia',
