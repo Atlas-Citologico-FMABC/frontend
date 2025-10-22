@@ -44,6 +44,7 @@ class HomeTab extends StatelessWidget {
             ),
             Container(
               width: double.infinity,
+              margin: EdgeInsets.only(top: -50), 
               constraints: BoxConstraints(
                 minHeight: MediaQuery.of(context).size.height,
               ),
