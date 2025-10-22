@@ -12,41 +12,49 @@ class HomeTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Container(
-              width: double.infinity,
-              color: lightGray,
-              padding: EdgeInsets.all(30),
-              child: Column(
-                children: <Widget>[
-                  Text(
-                    'Atlas de Citologia',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 45,
-                    ),
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          Container(
+            width: double.infinity,
+            color: darkBlue,
+            padding: EdgeInsets.all(30),
+            child: Column(
+              children: <Widget>[
+                Text(
+                  'Atlas de Citologia',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 45,
                   ),
-                  Divider(color: Colors.black),
-                  SizedBox(height: 100),
-                  Text(
-                    '<descrição do sistema>',
-                    style: TextStyle(color: Colors.black, fontSize: 30),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
+                ),
+                Divider(color: Colors.white),
+                SizedBox(height: 100),
+                Text(
+                  '<descrição do sistema>',
+                  style: TextStyle(color: Colors.white, fontSize: 30),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+          Container(
+            constraints: BoxConstraints(
+              minHeight: MediaQuery.of(context).size.height,
+            ),
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: darkBlue,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.elliptical(700, 70),
+                topRight: Radius.elliptical(700, 70),
               ),
             ),
-            Container(
-              width: double.infinity,
-              constraints: BoxConstraints(
-                minHeight: MediaQuery.of(context).size.height,
-              ),
+            child: Container(
+              margin: EdgeInsets.only(top: 50),
               decoration: BoxDecoration(
-                color: darkBlue,
+                color: lightGray,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.elliptical(700, 70),
                   topRight: Radius.elliptical(700, 70),
@@ -62,7 +70,7 @@ class HomeTab extends StatelessWidget {
                       child: Text(
                         'Diretórios mais usados:',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.black,
                           fontSize: 30,
                         ),
                       ),
@@ -99,8 +107,8 @@ class HomeTab extends StatelessWidget {
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
