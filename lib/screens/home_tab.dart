@@ -45,9 +45,7 @@ class HomeTab extends StatelessWidget {
             Container(
               width: double.infinity,
               constraints: BoxConstraints(
-                minHeight:
-                    MediaQuery.of(context).size.height -
-                    383, // -383 just for tests
+                minHeight: MediaQuery.of(context).size.height,
               ),
               decoration: BoxDecoration(
                 color: lightGray,
@@ -95,6 +93,7 @@ class HomeTab extends StatelessWidget {
                         ),
                       ],
                     ),
+                    SizedBox(height: 100),
                   ],
                 ),
               ),
