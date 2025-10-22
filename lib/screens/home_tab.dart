@@ -46,8 +46,8 @@ class HomeTab extends StatelessWidget {
                 minHeight: MediaQuery.of(context).size.height,
               ),
               decoration: BoxDecoration(
-                color: lightGray,
-                borderRadius: BorderRadius.only(  // ← BORDA ELÍPTICA ADICIONADA
+                color: darkBlue,
+                borderRadius: BorderRadius.only(
                   topLeft: Radius.elliptical(700, 70),
                   topRight: Radius.elliptical(700, 70),
                 ),
@@ -61,7 +61,10 @@ class HomeTab extends StatelessWidget {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         'Diretórios mais usados:',
-                        style: TextStyle(fontSize: 30),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 30,
+                        ),
                       ),
                     ),
                     SizedBox(height: 20),
