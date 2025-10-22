@@ -58,7 +58,6 @@ class _MainPageState extends State<MainPage> {
         height: navHeight,
         selectedTab: selectedTab, 
         onTapTab: onTapTab,
-        context: context, 
       ),
 drawer: Drawer(
           child: ListView(
