@@ -47,7 +47,7 @@ class HomeTab extends StatelessWidget {
               ),
               decoration: BoxDecoration(
                 color: lightGray,
-                borderRadius: BorderRadius.only(
+                borderRadius: BorderRadius.only(  // ← BORDA ELÍPTICA ADICIONADA
                   topLeft: Radius.elliptical(700, 70),
                   topRight: Radius.elliptical(700, 70),
                 ),
