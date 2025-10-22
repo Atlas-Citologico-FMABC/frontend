@@ -1,5 +1,7 @@
 import 'package:atlas_citologico_fmabc/widgets/diretorio_box.dart';
 import 'package:flutter/material.dart';
+import 'package:atlas_citologico_fmabc/widgets/navbar.dart';
+import 'package:atlas_citologico_fmabc/main.dart';
 
 final Color darkBlue = Color(0xff002C53);
 final Color lightGray = Color(0xffEBEBEB);
@@ -52,11 +54,7 @@ class HomeTab extends StatelessWidget {
               ),
             ),
             child: Padding(
-<<<<<<< HEAD
               padding: const EdgeInsets.only(top: 70, right: 80, left: 80),
-=======
-              padding: const EdgeInsets.symmetric(vertical: 70, horizontal: 80),
->>>>>>> 2e573565129a7122dd34170d0767f04cc523c653
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
