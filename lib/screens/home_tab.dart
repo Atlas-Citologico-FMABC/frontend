@@ -20,7 +20,7 @@ class HomeTab extends StatelessWidget {
             Container(
               width: double.infinity,
               // height: MediaQuery.of(context).size.height - navHeight,
-              // color: darkBlue,
+              color: darkBlue,
               padding: EdgeInsets.all(30),
               child: Column(
                 children: <Widget>[
