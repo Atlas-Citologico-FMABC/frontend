@@ -13,7 +13,34 @@ class HomeTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return Scaffold(
+    appBar: NavBar(
+      height: navHeight,
+      selectedTab: TabType.home,
+      onTapTab: (tab) {},
+      context: context,
+    ),
+    drawer: Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          DrawerHeader(
+            decoration: BoxDecoration(color: darkBlue),
+            child: Column(
+              children: [
+                Text('Atlas de Citologia', style: TextStyle(color: Colors.white, fontSize: 20)),
+                Text('FMABC', style: TextStyle(color: Colors.white70, fontSize: 14)),
+              ],
+            ),
+          ),
+          ListTile(leading: Icon(Icons.home), title: Text('Home'), onTap: () => Navigator.pop(context)),
+          ListTile(leading: Icon(Icons.folder), title: Text('Diretórios'), onTap: () => Navigator.pop(context)),
+          ListTile(leading: Icon(Icons.photo), title: Text('Galeria'), onTap: () => Navigator.pop(context)),
+          ListTile(leading: Icon(Icons.login), title: Text('Login'), onTap: () => Navigator.pop(context)),
+        ],
+      ),
+    ),
+    body: SingleChildScrollView(
       child: Column(
         children: <Widget>[
           Container(
