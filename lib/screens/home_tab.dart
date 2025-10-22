@@ -18,23 +18,23 @@ class HomeTab extends StatelessWidget {
           children: <Widget>[
             Container(
               width: double.infinity,
-              color: darkBlue,
+              color: lightGray,
               padding: EdgeInsets.all(30),
               child: Column(
                 children: <Widget>[
                   Text(
                     'Atlas de Citologia',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold,
                       fontSize: 45,
                     ),
                   ),
-                  Divider(color: Colors.white),
+                  Divider(color: Colors.black),
                   SizedBox(height: 100),
                   Text(
                     '<descrição do sistema>',
-                    style: TextStyle(color: Colors.white, fontSize: 30),
+                    style: TextStyle(color: Colors.black, fontSize: 30),
                     textAlign: TextAlign.center,
                   ),
                 ],
