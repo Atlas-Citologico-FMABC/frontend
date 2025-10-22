@@ -13,14 +13,12 @@ class HomeTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          // Container azul (fundo)
-          Container(
-            width: double.infinity,
-            height: MediaQuery.of(context).size.height * 0.4, // 40% da tela
-            color: darkBlue,
-            child: Padding(
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Container(
+              width: double.infinity,
+              color: darkBlue,
               padding: EdgeInsets.all(30),
               child: Column(
                 children: <Widget>[
@@ -33,7 +31,7 @@ class HomeTab extends StatelessWidget {
                     ),
                   ),
                   Divider(color: Colors.white),
-                  SizedBox(height: 30),
+                  SizedBox(height: 100),
                   Text(
                     '<descrição do sistema>',
                     style: TextStyle(color: Colors.white, fontSize: 30),
@@ -42,15 +40,11 @@ class HomeTab extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-          
-          // Container branco com borda (sobreposto)
-          Positioned(
-            top: MediaQuery.of(context).size.height * 0.3, // Começa no 30% da tela
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: Container(
+            Container(
+              width: double.infinity,
+              constraints: BoxConstraints(
+                minHeight: MediaQuery.of(context).size.height,
+              ),
               decoration: BoxDecoration(
                 color: lightGray,
                 borderRadius: BorderRadius.only(
@@ -59,7 +53,7 @@ class HomeTab extends StatelessWidget {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.only(top: 100, right: 80, left: 80),
+                padding: const EdgeInsets.only(top: 70, right: 80, left: 80),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -102,8 +96,8 @@ class HomeTab extends StatelessWidget {
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
