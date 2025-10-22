@@ -39,7 +39,7 @@ class DiretoriosTab extends StatelessWidget {
             ),
             width: double.infinity,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: lightGray,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.elliptical(700, 70),
                 topRight: Radius.elliptical(700, 70),
@@ -55,7 +55,7 @@ class DiretoriosTab extends StatelessWidget {
                     spacing: 50,
                     runSpacing: 30,
                     children: <Widget>[
-                      DiretorioBox(title: 'Diretório 1'),
+                      DiretorioBox(title: 'Diretório 1', onTap: () => onTapDiretorio(TabType.diretorio)),
                       DiretorioBox(title: 'Diretório 2'),
                       DiretorioBox(title: 'Diretório 3'),
                       DiretorioBox(title: 'Diretório 4'),
