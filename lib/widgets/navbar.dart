@@ -24,23 +24,14 @@ PreferredSizeWidget NavBar({
           ),
           toolbarHeight: height,
           automaticallyImplyLeading: false,
-          leading: isMobile(context)
-              ? IconButton(
-                  icon: Icon(Icons.menu, color: Colors.white),
-                  onPressed: () {
-                    Scaffold.of(context).openDrawer();
-                  },
-                )
-              : null,
+          leading: null,
           actions: <Widget>[
-            // Hamburguer no canto direito
             Builder(
               builder: (context) => IconButton(
                 icon: Icon(Icons.menu, color: Colors.white, size: 30),
                 onPressed: () => Scaffold.of(context).openEndDrawer(),
               ),
             ),
-            
             if (!isMobile(context)) ...[
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
