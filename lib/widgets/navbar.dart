@@ -20,10 +20,12 @@ PreferredSizeWidget NavBar({
           elevation: isMobile(context) ? 0 : 4,
           titleSpacing: 30,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          title: Padding(
-            padding: EdgeInsets.symmetric(vertical: 10),
-            child: Image.asset('assets/images/fmabc.png', height: 50),
-          ),
+          title: isMobile(context) 
+              ? null // CELULAR: SEM IMAGEM
+              : Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                  child: Image.asset('assets/images/fmabc.png', height: 50),
+                ),
           toolbarHeight: height,
           automaticallyImplyLeading: false,
           leading: null,
