@@ -19,102 +19,133 @@ void main() {
 }
 
 class MainPage extends StatefulWidget {
-	const MainPage({super.key});
+  const MainPage({super.key});
 
-	@override
-	State<MainPage> createState() => _MainPageState();
+  @override
+  State<MainPage> createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
-	TabType selectedTab = TabType.home;
+  TabType selectedTab = TabType.home;
 
-	Widget getTab(TabType tab) {
-		switch(tab) {
-			case TabType.home:
-				return HomeTab(navHeight: navHeight);
-			case TabType.diretorios:
-				return DiretoriosTab(onTapDiretorio: onTapTab);
-			case TabType.diretorio:
-				return DiretorioTab(onTapImage: onTapTab);
-			case TabType.galeria:
-				return GaleriaTab();
-			case TabType.imageViewer:
-				return ImageViewerTab();
-			case TabType.login:
-				return LoginTab(onTap: onTapTab);
-			case TabType.admin:
-				return AdminTab();
-		}
-	}
+  Widget getTab(TabType tab) {
+    switch(tab) {
+      case TabType.home:
+        return HomeTab(navHeight: navHeight);
+      case TabType.diretorios:
+        return DiretoriosTab(onTapDiretorio: onTapTab);
+      case TabType.diretorio:
+        return DiretorioTab(onTapImage: onTapTab);
+      case TabType.galeria:
+        return GaleriaTab();
+      case TabType.imageViewer:
+        return ImageViewerTab();
+      case TabType.login:
+        return LoginTab(onTap: onTapTab);
+      case TabType.admin:
+        return AdminTab();
+    }
+  }
 
-	void onTapTab(TabType tab) {
-		setState(() => selectedTab = tab);
-	}
+  void onTapTab(TabType tab) {
+    setState(() => selectedTab = tab);
+  }
 
-	@override
-	Widget build(BuildContext context) {
-  return MaterialApp(
-    debugShowCheckedModeBanner: false,
-    title: 'Atlas de Citologia',
-    home: Scaffold(
-      appBar: NavBar(  
-        height: navHeight,
-        selectedTab: selectedTab, 
-        onTapTab: onTapTab,
-      ),
-drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              DrawerHeader(
-                decoration: BoxDecoration(color: darkBlue),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Atlas de Citologia',
-                      style: TextStyle(color: Colors.white, fontSize: 20),
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Atlas de Citologia',
+      home: Scaffold(
+        appBar: NavBar(  
+          height: navHeight,
+          selectedTab: selectedTab, 
+          onTapTab: onTapTab,
+        ),
+        endDrawer: Drawer(
+          child: Container(
+            color: Colors.white,
+            child: Column(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 25),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 50),
+                        InkWell(
+                          onTap: () {
+                            onTapTab(TabType.home);
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 15),
+                            child: Text(
+                              'Home',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.black87,
+                              ),
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            onTapTab(TabType.diretorios);
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 15),
+                            child: Text(
+                              'Diretórios',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.black87,
+                              ),
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            onTapTab(TabType.galeria);
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 15),
+                            child: Text(
+                              'Galeria',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.black87,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        InkWell(
+                          onTap: () {
+                            onTapTab(TabType.login);
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 15),
+                            child: Text(
+                              'LOGIN',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: darkBlue,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    Text(
-                      'FMABC',
-                      style: TextStyle(color: Colors.white70, fontSize: 14),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-              ListTile(
-                leading: Icon(Icons.home),
-                title: Text('Home'),
-                onTap: () {
-                  onTapTab(TabType.home);
-                  Navigator.pop(context); // Fecha o drawer
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.folder),
-                title: Text('Diretórios'),
-                onTap: () {
-                  onTapTab(TabType.diretorios);
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.photo),
-                title: Text('Galeria'),
-                onTap: () {
-                  onTapTab(TabType.galeria);
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.login),
-                title: Text('Login'),
-                onTap: () {
-                  onTapTab(TabType.login);
-                  Navigator.pop(context);
-                },
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         body: getTab(selectedTab),
