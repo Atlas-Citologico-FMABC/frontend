@@ -15,71 +15,11 @@ class HomeTab extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
-          // PRIMEIRA SEÇÃO - FUNDO CINZA COM BORDA INFERIOR AZUL
-          Container(
-            constraints: BoxConstraints(
-              minHeight: MediaQuery.of(context).size.height * 0.6,
-            ),
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: lightGray,
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.elliptical(700, 70),
-                bottomRight: Radius.elliptical(700, 70),
-              ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only(top: 70, right: 80, left: 80, bottom: 100),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Diretórios mais usados:',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 30,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  Wrap(
-                    spacing: 50,
-                    runSpacing: 30,
-                    children: <Widget>[
-                      DiretorioBox(
-                        title: 'Diretório 1',
-                        borderWidth: 5,
-                        borderColor: green,
-                      ),
-                      DiretorioBox(
-                        title: 'Diretório 2',
-                        borderWidth: 5,
-                        borderColor: green,
-                      ),
-                      DiretorioBox(
-                        title: 'Diretório 3',
-                        borderWidth: 5,
-                        borderColor: green,
-                      ),
-                      DiretorioBox(
-                        title: 'Diretório 4',
-                        borderWidth: 5,
-                        borderColor: green,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-          
-          // SEGUNDA SEÇÃO - FUNDO AZUL COM TEXTO
+          // SEÇÃO AZUL EM CIMA
           Container(
             width: double.infinity,
             color: darkBlue,
-            padding: EdgeInsets.all(40),
+            padding: EdgeInsets.all(30),
             child: Column(
               children: <Widget>[
                 Text(
@@ -91,13 +31,83 @@ class HomeTab extends StatelessWidget {
                   ),
                 ),
                 Divider(color: Colors.white),
-                SizedBox(height: 40),
+                SizedBox(height: 100),
                 Text(
-                  '<breve descrição do sistema>',
-                  style: TextStyle(color: Colors.white, fontSize: 24),
+                  '<descrição do sistema>',
+                  style: TextStyle(color: Colors.white, fontSize: 30),
                   textAlign: TextAlign.center,
                 ),
               ],
+            ),
+          ),
+          // SEÇÃO CINZA EMBAIXO
+          Container(
+            constraints: BoxConstraints(
+              minHeight: MediaQuery.of(context).size.height,
+            ),
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: darkBlue,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.elliptical(700, 70),
+                topRight: Radius.elliptical(700, 70),
+              ),
+            ),
+            child: Container(
+              margin: EdgeInsets.only(top: 50),
+              decoration: BoxDecoration(
+                color: lightGray,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.elliptical(700, 70),
+                  topRight: Radius.elliptical(700, 70),
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 70, right: 80, left: 80),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Diretórios mais usados:',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 30,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Wrap(
+                      spacing: 50,
+                      runSpacing: 30,
+                      children: <Widget>[
+                        DiretorioBox(
+                          title: 'Diretório 1',
+                          borderWidth: 5,
+                          borderColor: green,
+                        ),
+                        DiretorioBox(
+                          title: 'Diretório 2',
+                          borderWidth: 5,
+                          borderColor: green,
+                        ),
+                        DiretorioBox(
+                          title: 'Diretório 3',
+                          borderWidth: 5,
+                          borderColor: green,
+                        ),
+                        DiretorioBox(
+                          title: 'Diretório 4',
+                          borderWidth: 5,
+                          borderColor: green,
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 100),
+                  ],
+                ),
+              ),
             ),
           ),
         ],
