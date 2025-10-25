@@ -1,6 +1,7 @@
 import 'package:atlas_citologico_fmabc/widgets/diretorio_box.dart';
 import 'package:flutter/material.dart';
 import 'package:atlas_citologico_fmabc/main.dart';
+import '../utils/responsiveness.dart';
 
 final Color darkBlue = Color(0xff002C53);
 final Color lightGray = Color(0xffEBEBEB);
@@ -27,14 +28,17 @@ class HomeTab extends StatelessWidget {
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 45,
+                    fontSize: isMobile(context) ? 32 : 45,
                   ),
                 ),
                 Divider(color: Colors.white),
-                SizedBox(height: 100),
+                SizedBox(height: isMobile(context) ? 40 : 100),
                 Text(
-                  '<descrição do sistema>',
-                  style: TextStyle(color: Colors.white, fontSize: 30),
+                  isMobile(context) ? '<breve descrição do sistema>' : '<descrição do sistema>',
+                  style: TextStyle(
+                    color: Colors.white, 
+                    fontSize: isMobile(context) ? 20 : 30
+                  ),
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -48,39 +52,54 @@ class HomeTab extends StatelessWidget {
             width: double.infinity,
             decoration: BoxDecoration(
               color: darkBlue,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.elliptical(700, 70),
-                topRight: Radius.elliptical(700, 70),
-              ),
+              borderRadius: isMobile(context) 
+                  ? BorderRadius.only( // CELULAR: CURVA PARA BAIXO
+                      bottomLeft: Radius.elliptical(700, 70),
+                      bottomRight: Radius.elliptical(700, 70),
+                    )
+                  : BorderRadius.only( // COMPUTADOR: CURVA PARA CIMA
+                      topLeft: Radius.elliptical(700, 70),
+                      topRight: Radius.elliptical(700, 70),
+                    ),
             ),
             child: Container(
-              margin: EdgeInsets.only(top: 50),
+              margin: EdgeInsets.only(top: isMobile(context) ? 0 : 50),
               decoration: BoxDecoration(
                 color: lightGray,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.elliptical(700, 70),
-                  topRight: Radius.elliptical(700, 70),
-                ),
+                borderRadius: isMobile(context)
+                    ? BorderRadius.only( // CELULAR: CURVA PARA BAIXO
+                        bottomLeft: Radius.elliptical(700, 70),
+                        bottomRight: Radius.elliptical(700, 70),
+                      )
+                    : BorderRadius.only( // COMPUTADOR: CURVA PARA CIMA
+                        topLeft: Radius.elliptical(700, 70),
+                        topRight: Radius.elliptical(700, 70),
+                      ),
               ),
               child: Padding(
-                padding: const EdgeInsets.only(top: 70, right: 80, left: 80),
+                padding: EdgeInsets.only(
+                  top: isMobile(context) ? 40 : 70, 
+                  right: isMobile(context) ? 20 : 80, 
+                  left: isMobile(context) ? 20 : 80,
+                  bottom: isMobile(context) ? 40 : 0
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Diretórios mais usados:',
+                        isMobile(context) ? 'Diretório Mais Utilizados:' : 'Diretórios mais usados:',
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 30,
+                          fontSize: isMobile(context) ? 24 : 30,
                         ),
                       ),
                     ),
                     SizedBox(height: 20),
                     Wrap(
-                      spacing: 50,
-                      runSpacing: 30,
+                      spacing: isMobile(context) ? 20 : 50,
+                      runSpacing: isMobile(context) ? 15 : 30,
                       children: <Widget>[
                         DiretorioBox(
                           title: 'Diretório 1',
@@ -104,7 +123,7 @@ class HomeTab extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 100),
+                    SizedBox(height: isMobile(context) ? 40 : 100),
                   ],
                 ),
               ),
