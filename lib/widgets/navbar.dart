@@ -23,6 +23,7 @@ PreferredSizeWidget NavBar({
             child: Image.asset('assets/images/fmabc.png', height: 50),
           ),
           toolbarHeight: height,
+					automaticallyImplyLeading: false,
           leading: isMobile(context)
               ? IconButton(
                   icon: Icon(Icons.menu),
