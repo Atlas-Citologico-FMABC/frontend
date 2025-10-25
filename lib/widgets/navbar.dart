@@ -14,7 +14,7 @@ PreferredSizeWidget NavBar({
     preferredSize: Size.fromHeight(height),
     child: Padding(
       padding: const EdgeInsets.only(top: 10, right: 10, left: 10),
-      child: Builder( // ← ADICIONE Builder aqui também
+      child: Builder(
         builder: (context) => AppBar(
           titleSpacing: 30,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -23,16 +23,24 @@ PreferredSizeWidget NavBar({
             child: Image.asset('assets/images/fmabc.png', height: 50),
           ),
           toolbarHeight: height,
-					automaticallyImplyLeading: false,
+          automaticallyImplyLeading: false,
           leading: isMobile(context)
               ? IconButton(
-                  icon: Icon(Icons.menu),
+                  icon: Icon(Icons.menu, color: Colors.white),
                   onPressed: () {
                     Scaffold.of(context).openDrawer();
                   },
                 )
               : null,
           actions: <Widget>[
+            // Hamburguer no canto direito
+            Builder(
+              builder: (context) => IconButton(
+                icon: Icon(Icons.menu, color: Colors.white, size: 30),
+                onPressed: () => Scaffold.of(context).openEndDrawer(),
+              ),
+            ),
+            
             if (!isMobile(context)) ...[
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
