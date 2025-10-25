@@ -67,77 +67,55 @@ class _MainPageState extends State<MainPage> {
             color: Colors.white,
             child: Column(
               children: [
+                Container(
+                  height: 150,
+                  color: darkBlue,
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Atlas de Citologia',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          '<breve descrição do sistema>',
+                          style: TextStyle(
+                            color: Colors.white70,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
                 Expanded(
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 25),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: 50),
-                        InkWell(
-                          onTap: () {
-                            onTapTab(TabType.home);
-                            Navigator.pop(context);
-                          },
-                          child: Container(
-                            padding: EdgeInsets.symmetric(vertical: 15),
-                            child: Text(
-                              'Home',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.black87,
-                              ),
-                            ),
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            onTapTab(TabType.diretorios);
-                            Navigator.pop(context);
-                          },
-                          child: Container(
-                            padding: EdgeInsets.symmetric(vertical: 15),
-                            child: Text(
-                              'Diretórios',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.black87,
-                              ),
-                            ),
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            onTapTab(TabType.galeria);
-                            Navigator.pop(context);
-                          },
-                          child: Container(
-                            padding: EdgeInsets.symmetric(vertical: 15),
-                            child: Text(
-                              'Galeria',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.black87,
-                              ),
-                            ),
-                          ),
-                        ),
                         SizedBox(height: 20),
-                        InkWell(
-                          onTap: () {
-                            onTapTab(TabType.login);
-                            Navigator.pop(context);
-                          },
-                          child: Container(
-                            padding: EdgeInsets.symmetric(vertical: 15),
-                            child: Text(
-                              'LOGIN',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: darkBlue,
-                                fontWeight: FontWeight.bold,
-                              ),
+                        _buildMenuItem('Home', TabType.home),
+                        _buildMenuItem('Diretórios', TabType.diretorios),
+                        _buildMenuItem('Galeria', TabType.galeria),
+                        SizedBox(height: 20),
+                        _buildMenuItem('LOGIN', TabType.login, isLogin: true),
+                        Spacer(),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 30),
+                          child: Text(
+                            '<breve descrição do sistema>',
+                            style: TextStyle(
+                              color: Colors.grey[600],
+                              fontSize: 12,
                             ),
+                            textAlign: TextAlign.center,
                           ),
                         ),
                       ],
@@ -152,5 +130,31 @@ class _MainPageState extends State<MainPage> {
         backgroundColor: darkBlue,
       ),
     ); 
+  }
+
+  Widget _buildMenuItem(String text, TabType tab, {bool isLogin = false}) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () {
+          onTapTab(tab);
+          Navigator.pop(context);
+        },
+        splashColor: darkBlue.withOpacity(0.1),
+        highlightColor: darkBlue.withOpacity(0.2),
+        child: Container(
+          width: double.infinity,
+          padding: EdgeInsets.symmetric(vertical: 15),
+          child: Text(
+            text,
+            style: TextStyle(
+              fontSize: 18,
+              color: isLogin ? darkBlue : Colors.black87,
+              fontWeight: isLogin ? FontWeight.bold : FontWeight.normal,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
