@@ -1,6 +1,7 @@
 import 'package:atlas_citologico_fmabc/widgets/diretorio_box.dart';
 import 'package:flutter/material.dart';
 import 'package:atlas_citologico_fmabc/main.dart';
+import '../utils/responsiveness.dart';
 
 final Color darkBlue = Color(0xff002C53);
 final Color lightGray = Color(0xffEBEBEB);
@@ -21,21 +22,38 @@ class HomeTab extends StatelessWidget {
             padding: EdgeInsets.all(30),
             child: Column(
               children: <Widget>[
+                if (isMobile(context)) 
+                  Image.asset(
+                    'assets/images/fmabc.png', 
+                    height: 80,
+                    fit: BoxFit.contain,
+                  ),
+                if (isMobile(context)) SizedBox(height: 20),
+                Text(
+                  'FIMABC',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: isMobile(context) ? 24 : 28,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 8),
                 Text(
                   'Atlas de Citologia',
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 45,
+                    fontSize: isMobile(context) ? 32 : 45,
                   ),
                 ),
-                Divider(color: Colors.white),
-                SizedBox(height: 100),
-                Text(
-                  '<descrição do sistema>',
-                  style: TextStyle(color: Colors.white, fontSize: 30),
-                  textAlign: TextAlign.center,
-                ),
+                if (!isMobile(context)) Divider(color: Colors.white),
+                if (!isMobile(context)) SizedBox(height: 40),
+                if (!isMobile(context))
+                  Text(
+                    '<descrição do sistema>',
+                    style: TextStyle(color: Colors.white, fontSize: 24),
+                    textAlign: TextAlign.center,
+                  ),
               ],
             ),
           ),
