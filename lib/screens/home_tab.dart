@@ -16,35 +16,38 @@ class HomeTab extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
-          // SEÇÃO AZUL EM CIMA
           Container(
             width: double.infinity,
             color: darkBlue,
             padding: EdgeInsets.all(30),
             child: Column(
               children: <Widget>[
+                Image.asset(
+                  'assets/images/fmabc.png', 
+                  height: 80,
+                  fit: BoxFit.contain,
+                ),
+                SizedBox(height: 20),
                 Text(
                   'Atlas de Citologia',
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: isMobile(context) ? 32 : 45,
+                    fontSize: isMobile(context) ? 28 : 45,
                   ),
                 ),
-                Divider(color: Colors.white),
-                SizedBox(height: isMobile(context) ? 40 : 100),
+                SizedBox(height: 20),
                 Text(
-                  isMobile(context) ? '<breve descrição do sistema>' : '<descrição do sistema>',
+                  '<breve descrição do sistema>',
                   style: TextStyle(
                     color: Colors.white, 
-                    fontSize: isMobile(context) ? 20 : 30
+                    fontSize: isMobile(context) ? 16 : 20
                   ),
                   textAlign: TextAlign.center,
                 ),
               ],
             ),
           ),
-          // SEÇÃO CINZA EMBAIXO
           Container(
             constraints: BoxConstraints(
               minHeight: MediaQuery.of(context).size.height,
@@ -52,36 +55,26 @@ class HomeTab extends StatelessWidget {
             width: double.infinity,
             decoration: BoxDecoration(
               color: darkBlue,
-              borderRadius: isMobile(context) 
-                  ? BorderRadius.only( // CELULAR: CURVA PARA BAIXO
-                      bottomLeft: Radius.elliptical(700, 70),
-                      bottomRight: Radius.elliptical(700, 70),
-                    )
-                  : BorderRadius.only( // COMPUTADOR: CURVA PARA CIMA
-                      topLeft: Radius.elliptical(700, 70),
-                      topRight: Radius.elliptical(700, 70),
-                    ),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.elliptical(700, 70),
+                bottomRight: Radius.elliptical(700, 70),
+              ),
             ),
             child: Container(
-              margin: EdgeInsets.only(top: isMobile(context) ? 0 : 50),
+              margin: EdgeInsets.only(top: 50),
               decoration: BoxDecoration(
                 color: lightGray,
-                borderRadius: isMobile(context)
-                    ? BorderRadius.only( // CELULAR: CURVA PARA BAIXO
-                        bottomLeft: Radius.elliptical(700, 70),
-                        bottomRight: Radius.elliptical(700, 70),
-                      )
-                    : BorderRadius.only( // COMPUTADOR: CURVA PARA CIMA
-                        topLeft: Radius.elliptical(700, 70),
-                        topRight: Radius.elliptical(700, 70),
-                      ),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.elliptical(700, 70),
+                  bottomRight: Radius.elliptical(700, 70),
+                ),
               ),
               child: Padding(
                 padding: EdgeInsets.only(
-                  top: isMobile(context) ? 40 : 70, 
+                  top: 70, 
                   right: isMobile(context) ? 20 : 80, 
                   left: isMobile(context) ? 20 : 80,
-                  bottom: isMobile(context) ? 40 : 0
+                  bottom: 40
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -89,7 +82,7 @@ class HomeTab extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        isMobile(context) ? 'Diretório Mais Utilizados:' : 'Diretórios mais usados:',
+                        'Diretórios Mais Utilizados:',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: isMobile(context) ? 24 : 30,
@@ -123,7 +116,7 @@ class HomeTab extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: isMobile(context) ? 40 : 100),
+                    SizedBox(height: 40),
                   ],
                 ),
               ),
