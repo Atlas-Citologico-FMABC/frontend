@@ -22,12 +22,13 @@ class HomeTab extends StatelessWidget {
             padding: EdgeInsets.all(30),
             child: Column(
               children: <Widget>[
-                Image.asset(
-                  'assets/images/fmabc.png', 
-                  height: 80,
-                  fit: BoxFit.contain,
-                ),
-                SizedBox(height: 20),
+                if (isMobile(context)) 
+                  Image.asset(
+                    'assets/images/fmabc.png', 
+                    height: 80,
+                    fit: BoxFit.contain,
+                  ),
+                if (isMobile(context)) SizedBox(height: 20),
                 Text(
                   'Atlas de Citologia',
                   style: TextStyle(
