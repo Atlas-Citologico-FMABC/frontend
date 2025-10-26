@@ -65,50 +65,30 @@ class _MainPageState extends State<MainPage> {
         endDrawer: Drawer(
           child: Container(
             color: Colors.white,
-            child: Column(
-              children: [
-                Container(
-                  height: 150,
-                  color: darkBlue,
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Atlas de Citologia',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(height: 8),
-                        Text(
-                          '<breve descrição do sistema>',
-                          style: TextStyle(
-                            color: Colors.white70,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
+            child: Center(
+              child: Container(
+                width: 200,
+                height: 200,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 8,
+                      offset: Offset(0, 2),
                     ),
-                  ),
+                  ],
                 ),
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 25),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 20),
-                        _buildMenuItem('Home', TabType.home),
-                        _buildMenuItem('Diretórios', TabType.diretorios),
-                        _buildMenuItem('Galeria', TabType.galeria),
-                      ],
-                    ),
-                  ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _buildMenuItem('Home', TabType.home),
+                    _buildMenuItem('Diretórios', TabType.diretorios),
+                    _buildMenuItem('Galeria', TabType.galeria),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ),
@@ -118,7 +98,7 @@ class _MainPageState extends State<MainPage> {
     ); 
   }
 
-  Widget _buildMenuItem(String text, TabType tab, {bool isLogin = false}) {
+  Widget _buildMenuItem(String text, TabType tab) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -130,14 +110,15 @@ class _MainPageState extends State<MainPage> {
         highlightColor: darkBlue.withOpacity(0.2),
         child: Container(
           width: double.infinity,
-          padding: EdgeInsets.symmetric(vertical: 15),
+          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
           child: Text(
             text,
             style: TextStyle(
               fontSize: 18,
-              color: isLogin ? darkBlue : Colors.black87,
-              fontWeight: isLogin ? FontWeight.bold : FontWeight.normal,
+              color: Colors.black87,
+              fontWeight: FontWeight.normal,
             ),
+            textAlign: TextAlign.center,
           ),
         ),
       ),
