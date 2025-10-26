@@ -104,20 +104,6 @@ class _MainPageState extends State<MainPage> {
                         _buildMenuItem('Home', TabType.home),
                         _buildMenuItem('Diretórios', TabType.diretorios),
                         _buildMenuItem('Galeria', TabType.galeria),
-                        SizedBox(height: 20),
-                        _buildMenuItem('LOGIN', TabType.login, isLogin: true),
-                        Spacer(),
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 30),
-                          child: Text(
-                            '<breve descrição do sistema>',
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: 12,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
                       ],
                     ),
                   ),
