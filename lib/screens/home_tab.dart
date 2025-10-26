@@ -59,8 +59,8 @@ class HomeTab extends StatelessWidget {
               color: darkBlue,
               borderRadius: isMobile(context) 
                   ? BorderRadius.only(
-                      bottomLeft: Radius.elliptical(700, 70),
-                      bottomRight: Radius.elliptical(700, 70),
+                      topLeft: Radius.elliptical(700, 70),
+                      topRight: Radius.elliptical(700, 70),
                     )
                   : BorderRadius.only(
                       topLeft: Radius.elliptical(700, 70),
@@ -68,13 +68,13 @@ class HomeTab extends StatelessWidget {
                     ),
             ),
             child: Container(
-              margin: EdgeInsets.only(top: isMobile(context) ? 0 : 50),
+              margin: EdgeInsets.only(top: isMobile(context) ? 50 : 50),
               decoration: BoxDecoration(
                 color: lightGray,
                 borderRadius: isMobile(context)
                     ? BorderRadius.only(
-                        bottomLeft: Radius.elliptical(700, 70),
-                        bottomRight: Radius.elliptical(700, 70),
+                        topLeft: Radius.elliptical(700, 70),
+                        topRight: Radius.elliptical(700, 70),
                       )
                     : BorderRadius.only(
                         topLeft: Radius.elliptical(700, 70),
@@ -83,7 +83,7 @@ class HomeTab extends StatelessWidget {
               ),
               child: Padding(
                 padding: EdgeInsets.only(
-                  top: isMobile(context) ? 40 : 70, 
+                  top: isMobile(context) ? 70 : 70, 
                   right: isMobile(context) ? 20 : 80, 
                   left: isMobile(context) ? 20 : 80,
                   bottom: isMobile(context) ? 40 : 100
