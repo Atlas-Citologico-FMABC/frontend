@@ -56,10 +56,10 @@ class HomeTab extends StatelessWidget {
               color: lightGray,
               borderRadius: isMobile(context)
                   ? BorderRadius.vertical(
-                      top: Radius.elliptical(700, -100), // CURVA PARA BAIXO
+                      top: Radius.elliptical(700, -100), 
                     )
                   : BorderRadius.vertical(
-                      top: Radius.elliptical(700, 100), // CURVA PARA CIMA
+                      top: Radius.elliptical(700, 100), 
                     ),
             ),
             child: Padding(
@@ -110,7 +110,6 @@ class HomeTab extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 40),
                 ],
               ),
             ),
