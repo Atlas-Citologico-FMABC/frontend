@@ -37,12 +37,13 @@ class HomeTab extends StatelessWidget {
                     fontSize: isMobile(context) ? 28 : 45,
                   ),
                 ),
-                SizedBox(height: 20),
+                Divider(color: Colors.white),
+                SizedBox(height: isMobile(context) ? 20 : 40),
                 Text(
-                  '<breve descrição do sistema>',
+                  isMobile(context) ? '<breve descrição do sistema>' : '<descrição do sistema>',
                   style: TextStyle(
                     color: Colors.white, 
-                    fontSize: isMobile(context) ? 16 : 20
+                    fontSize: isMobile(context) ? 16 : 24
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -56,26 +57,36 @@ class HomeTab extends StatelessWidget {
             width: double.infinity,
             decoration: BoxDecoration(
               color: darkBlue,
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.elliptical(700, 70),
-                bottomRight: Radius.elliptical(700, 70),
-              ),
+              borderRadius: isMobile(context) 
+                  ? BorderRadius.only(
+                      bottomLeft: Radius.elliptical(700, 70),
+                      bottomRight: Radius.elliptical(700, 70),
+                    )
+                  : BorderRadius.only(
+                      topLeft: Radius.elliptical(700, 70),
+                      topRight: Radius.elliptical(700, 70),
+                    ),
             ),
             child: Container(
-              margin: EdgeInsets.only(top: 50),
+              margin: EdgeInsets.only(top: isMobile(context) ? 0 : 50),
               decoration: BoxDecoration(
                 color: lightGray,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.elliptical(700, 70),
-                  bottomRight: Radius.elliptical(700, 70),
-                ),
+                borderRadius: isMobile(context)
+                    ? BorderRadius.only(
+                        bottomLeft: Radius.elliptical(700, 70),
+                        bottomRight: Radius.elliptical(700, 70),
+                      )
+                    : BorderRadius.only(
+                        topLeft: Radius.elliptical(700, 70),
+                        topRight: Radius.elliptical(700, 70),
+                      ),
               ),
               child: Padding(
                 padding: EdgeInsets.only(
-                  top: 70, 
+                  top: isMobile(context) ? 40 : 70, 
                   right: isMobile(context) ? 20 : 80, 
                   left: isMobile(context) ? 20 : 80,
-                  bottom: 40
+                  bottom: isMobile(context) ? 40 : 100
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
