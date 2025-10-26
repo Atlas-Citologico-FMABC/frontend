@@ -64,19 +64,21 @@ class _MainPageState extends State<MainPage> {
         ),
         endDrawer: Drawer(
           child: Container(
-            color: Colors.white,
-            child: Center(
+            color: Colors.transparent, // FUNDO TRANSPARENTE
+            child: Align(
+              alignment: Alignment.topRight,
               child: Container(
-                width: 200,
-                height: 200,
+                margin: EdgeInsets.only(top: 80, right: 20),
+                width: 160,
+                height: 160,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 8,
-                      offset: Offset(0, 2),
+                      color: Colors.black26,
+                      blurRadius: 10,
+                      offset: Offset(0, 4),
                     ),
                   ],
                 ),
@@ -114,7 +116,7 @@ class _MainPageState extends State<MainPage> {
           child: Text(
             text,
             style: TextStyle(
-              fontSize: 18,
+              fontSize: 16,
               color: Colors.black87,
               fontWeight: FontWeight.normal,
             ),
