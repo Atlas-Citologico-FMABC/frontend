@@ -51,86 +51,67 @@ class HomeTab extends StatelessWidget {
             ),
           ),
           Container(
-            constraints: BoxConstraints(
-              minHeight: MediaQuery.of(context).size.height,
-            ),
             width: double.infinity,
             decoration: BoxDecoration(
-              color: darkBlue,
-              borderRadius: isMobile(context) 
-                  ? BorderRadius.only(
-                      bottomLeft: Radius.elliptical(700, 70),
-                      bottomRight: Radius.elliptical(700, 70),
+              color: lightGray,
+              borderRadius: isMobile(context)
+                  ? BorderRadius.vertical(
+                      top: Radius.elliptical(700, -100), // CURVA PARA BAIXO
                     )
-                  : BorderRadius.only(
-                      topLeft: Radius.elliptical(700, 70),
-                      topRight: Radius.elliptical(700, 70),
+                  : BorderRadius.vertical(
+                      top: Radius.elliptical(700, 100), // CURVA PARA CIMA
                     ),
             ),
-            child: Container(
-              margin: EdgeInsets.only(top: isMobile(context) ? 0 : 50),
-              decoration: BoxDecoration(
-                color: lightGray,
-                borderRadius: isMobile(context)
-                    ? BorderRadius.only(
-                        bottomLeft: Radius.elliptical(700, 70),
-                        bottomRight: Radius.elliptical(700, 70),
-                      )
-                    : BorderRadius.only(
-                        topLeft: Radius.elliptical(700, 70),
-                        topRight: Radius.elliptical(700, 70),
-                      ),
+            child: Padding(
+              padding: EdgeInsets.only(
+                top: 70, 
+                right: isMobile(context) ? 20 : 80, 
+                left: isMobile(context) ? 20 : 80,
+                bottom: 40
               ),
-              child: Padding(
-                padding: EdgeInsets.only(
-                  top: isMobile(context) ? 40 : 70, 
-                  right: isMobile(context) ? 20 : 80, 
-                  left: isMobile(context) ? 20 : 80,
-                  bottom: isMobile(context) ? 40 : 100
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Diretórios Mais Utilizados:',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: isMobile(context) ? 24 : 30,
-                        ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Diretórios Mais Utilizados:',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: isMobile(context) ? 24 : 30,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 20),
-                    Wrap(
-                      spacing: isMobile(context) ? 20 : 50,
-                      runSpacing: isMobile(context) ? 15 : 30,
-                      children: <Widget>[
-                        DiretorioBox(
-                          title: 'Diretório 1',
-                          borderWidth: 5,
-                          borderColor: green,
-                        ),
-                        DiretorioBox(
-                          title: 'Diretório 2',
-                          borderWidth: 5,
-                          borderColor: green,
-                        ),
-                        DiretorioBox(
-                          title: 'Diretório 3',
-                          borderWidth: 5,
-                          borderColor: green,
-                        ),
-                        DiretorioBox(
-                          title: 'Diretório 4',
-                          borderWidth: 5,
-                          borderColor: green,
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 40),
-                  ],
-                ),
+                  ),
+                  SizedBox(height: 20),
+                  Wrap(
+                    spacing: isMobile(context) ? 20 : 50,
+                    runSpacing: isMobile(context) ? 15 : 30,
+                    children: <Widget>[
+                      DiretorioBox(
+                        title: 'Diretório 1',
+                        borderWidth: 5,
+                        borderColor: green,
+                      ),
+                      DiretorioBox(
+                        title: 'Diretório 2',
+                        borderWidth: 5,
+                        borderColor: green,
+                      ),
+                      DiretorioBox(
+                        title: 'Diretório 3',
+                        borderWidth: 5,
+                        borderColor: green,
+                      ),
+                      DiretorioBox(
+                        title: 'Diretório 4',
+                        borderWidth: 5,
+                        borderColor: green,
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 40),
+                ],
               ),
             ),
           ),
