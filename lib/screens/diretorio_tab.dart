@@ -12,11 +12,11 @@ class DiretorioTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: NavBar( // ADICIONAR NAVBAR
+      appBar: NavBar( 
         height: navHeight,
         selectedTab: TabType.diretorio,
-        onTapTab: (tab) {}, // Você pode ajustar esta função conforme necessário
-        showImageOnRight: true, // IMAGEM NO LADO DIREITO PARA MOBILE
+        onTapTab: (tab) {}, 
+        showImageOnRight: true, 
       ),
       body: Column(
         children: <Widget>[
