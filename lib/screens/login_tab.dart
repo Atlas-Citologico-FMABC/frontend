@@ -12,6 +12,8 @@ class LoginTab extends StatelessWidget {
   LoginTab({super.key, required this.onTap});
 
   final _formKey = GlobalKey<FormState>();
+	final TextEditingController emailController = TextEditingController(); 
+	final TextEditingController senhaController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +46,7 @@ class LoginTab extends StatelessWidget {
                     children: <Widget>[
                       Text('Email:', style: TextStyle(fontSize: 20)),
                       InputField(
+												controller: emailController,
                         errorText: 'Por favor, insira um endereço de email',
                         labelText: 'Email',
                         width: 500,
@@ -69,6 +72,7 @@ class LoginTab extends StatelessWidget {
                     children: <Widget>[
                       Text('Senha:', style: TextStyle(fontSize: 20)),
                       InputField(
+												controller: senhaController,
                         errorText: 'Por favor, insira uma senha',
                         labelText: 'Senha',
                         width: 500,
@@ -93,6 +97,8 @@ class LoginTab extends StatelessWidget {
                     text: 'Fazer Login',
                     onTap: () {
                       if (_formKey.currentState!.validate()) {
+												print(emailController.text);
+												print(senhaController.text);
                         onTap(TabType.admin);
                       }
                     },
