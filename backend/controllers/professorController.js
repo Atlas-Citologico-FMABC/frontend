@@ -8,10 +8,14 @@ exports.loginProfessor = (req, res) => {
     [email, senha],
     (err, results) => {
       if (err) return res.status(500).json({ error: err });
-      if (results.length > 0)
+      if (results.length > 0) {
         res.json({ message: 'Login bem-sucedido!', professor: results[0] });
-      else
+				console.log('professor login: ok');
+			}
+      else {
         res.status(401).json({ message: 'Credenciais inválidas' });
+				console.log('professor login: deu errado');
+			}
     }
   );
 };

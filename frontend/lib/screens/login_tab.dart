@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:atlas_citologico_fmabc/main.dart';
 import '../services/admin.dart';
+import '../services/professor.dart';
 import '../widgets/button.dart';
 import '../widgets/input_field.dart';
 
@@ -22,8 +23,16 @@ class LoginTab extends StatelessWidget {
 			'senha': senha,
 		});
 
+		final int professorStatusCode = await ProfessorService().loginProfessor({
+			'email': email,
+			'senha': senha,
+		});
+
 		if(adminStatusCode == 200) {
 			return onTap(TabType.admin);
+		}
+		if(professorStatusCode == 200) {
+			return print("Vai para telas do professor");
 		}
 		return print("Não foi possível realizar o login.");
 	} 

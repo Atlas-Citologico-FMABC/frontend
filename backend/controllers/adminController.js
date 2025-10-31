@@ -12,11 +12,11 @@ exports.loginAdmin = (req, res) => {
       if (err) return res.status(500).json({ error: err });
       if (results.length > 0){
         res.json({ message: 'Login bem-sucedido', admin: results[0] });
-        console.log('login ok');
+        console.log('admin login: ok');
       }
       else {
         res.status(401).json({ message: 'Credenciais inválidas' });
-        console.log('login deu errado');
+        console.log('admin login: deu errado');
       }
 
     }
