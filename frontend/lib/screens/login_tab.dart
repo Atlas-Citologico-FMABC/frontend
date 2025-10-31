@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:atlas_citologico_fmabc/main.dart';
+import '../services/admin.dart';
 import '../widgets/button.dart';
 import '../widgets/input_field.dart';
 
@@ -14,6 +15,18 @@ class LoginTab extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 	final TextEditingController emailController = TextEditingController(); 
 	final TextEditingController senhaController = TextEditingController();
+
+	Future login(String email, String senha) async {
+		final int adminStatusCode = await AdminService().loginAdmin({
+			'email_admin': email,
+			'senha': senha,
+		});
+
+		if(adminStatusCode == 200) {
+			return onTap(TabType.admin);
+		}
+		return print("Não foi possível realizar o login.");
+	} 
 
   @override
   Widget build(BuildContext context) {
@@ -95,11 +108,9 @@ class LoginTab extends StatelessWidget {
                   padding: const EdgeInsets.all(60),
                   child: Button(
                     text: 'Fazer Login',
-                    onTap: () {
+                    onTap: () async {
                       if (_formKey.currentState!.validate()) {
-												print(emailController.text);
-												print(senhaController.text);
-                        onTap(TabType.admin);
+												await login(emailController.text, senhaController.text);
                       }
                     },
                     foregroundColor: Colors.white,
