@@ -46,6 +46,11 @@ PreferredSizeWidget NavBar({
                     height: 200,
                   ),
                   icon: const Icon(Icons.menu, color: Colors.white),
+                  offset: Offset(
+                    MediaQuery.of(context).size.width *
+                        0.1, // centraliza horizontalmente
+                    0, //ajusta verticalmente
+                  ),
                   onSelected: (TabType tab) {
                     onTapTab(tab);
                   },
@@ -53,7 +58,13 @@ PreferredSizeWidget NavBar({
                     const PopupMenuItem(
                       value: TabType.home,
                       child: Center(
-                        child: Text('Home', style: TextStyle(fontSize: 20)),
+                        child: Text(
+                          'Home',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
                     const PopupMenuItem(
@@ -61,20 +72,35 @@ PreferredSizeWidget NavBar({
                       child: Center(
                         child: Text(
                           'Diretórios',
-                          style: TextStyle(fontSize: 20),
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
                     const PopupMenuItem(
                       value: TabType.galeria,
                       child: Center(
-                        child: Text('Galeria', style: TextStyle(fontSize: 20)),
+                        child: Text(
+                          'Galeria',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
                     const PopupMenuItem(
                       value: TabType.login,
                       child: Center(
-                        child: Text('Login', style: TextStyle(fontSize: 20)),
+                        child: Text(
+                          'Login',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
                   ],
