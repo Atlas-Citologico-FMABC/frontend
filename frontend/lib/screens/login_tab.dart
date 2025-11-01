@@ -14,28 +14,49 @@ class LoginTab extends StatelessWidget {
   LoginTab({super.key, required this.onTap});
 
   final _formKey = GlobalKey<FormState>();
-	final TextEditingController emailController = TextEditingController(); 
-	final TextEditingController senhaController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController senhaController = TextEditingController();
 
-	Future login(String email, String senha) async {
-		final int adminStatusCode = await AdminService().loginAdmin({
-			'email_admin': email,
-			'senha': senha,
-		});
+  Future login(BuildContext context, String email, String senha) async {
+    final int adminStatusCode = await AdminService().loginAdmin({
+      'email_admin': email,
+      'senha': senha,
+    });
 
-		final int professorStatusCode = await ProfessorService().loginProfessor({
-			'email': email,
-			'senha': senha,
-		});
+    final int professorStatusCode = await ProfessorService().loginProfessor({
+      'email': email,
+      'senha': senha,
+    });
 
-		if(adminStatusCode == 200) {
-			return onTap(TabType.admin);
-		}
-		if(professorStatusCode == 200) {
-			return print("Vai para telas do professor");
-		}
-		return print("Não foi possível realizar o login.");
-	} 
+    if (adminStatusCode == 200) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+					backgroundColor: green,
+          content: Text('Login realizado com sucesso.'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      return onTap(TabType.admin);
+    }
+    if (professorStatusCode == 200) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+					backgroundColor: green,
+          content: Text('Login realizado com sucesso.'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      return print("Vai para telas do professor");
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+				backgroundColor: Colors.red,
+        content: Text('Falha no login, email ou senha incorretos.'),
+        duration: Duration(seconds: 3),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +89,7 @@ class LoginTab extends StatelessWidget {
                     children: <Widget>[
                       Text('Email:', style: TextStyle(fontSize: 20)),
                       InputField(
-												controller: emailController,
+                        controller: emailController,
                         errorText: 'Por favor, insira um endereço de email',
                         labelText: 'Email',
                         width: 500,
@@ -94,7 +115,7 @@ class LoginTab extends StatelessWidget {
                     children: <Widget>[
                       Text('Senha:', style: TextStyle(fontSize: 20)),
                       InputField(
-												controller: senhaController,
+                        controller: senhaController,
                         errorText: 'Por favor, insira uma senha',
                         labelText: 'Senha',
                         width: 500,
@@ -119,7 +140,11 @@ class LoginTab extends StatelessWidget {
                     text: 'Fazer Login',
                     onTap: () async {
                       if (_formKey.currentState!.validate()) {
-												await login(emailController.text, senhaController.text);
+                        await login(
+                          context,
+                          emailController.text,
+                          senhaController.text,
+                        );
                       }
                     },
                     foregroundColor: Colors.white,
