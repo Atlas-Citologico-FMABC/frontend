@@ -1,7 +1,7 @@
 import 'package:atlas_citologico_fmabc/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:atlas_citologico_fmabc/main.dart';
-import 'package:atlas_citologico_fmabc/utils/responsiveness.dart'; //importando o ismobile 
+import 'package:atlas_citologico_fmabc/utils/responsiveness.dart'; //importando o ismobile
 
 final Color gray = Color(0xFFEBEBEB);
 
@@ -16,44 +16,74 @@ PreferredSizeWidget NavBar({
       padding: const EdgeInsets.only(top: 10, right: 10, left: 10),
       child: Builder(
         builder: (context) {
-          //usamoso builder pois estamos usando o drawer
+          // usamos o builder pois precisamos de um context válido para interagir com o Scaffold
           if (isMobile(context)) {
-            //verifica se a tela eh mobile <768
+            // versão mobile: fundo azul, "bloquinho" central e PopupMenuButton (hamburger)
             return AppBar(
-              titleSpacing: 0, //espacamento horizontal
-              shape: RoundedRectangleBorder(
+              backgroundColor: const Color(0xff002C53), // define a cor do fundo
+              centerTitle: true, //centraliza o titulo
+              elevation: 0, //remove a sombra
+              titleSpacing: 0, //remove o espaco lateral do titulo
+              shape: RoundedRectangleBorder( //bordas arredondadas
                 borderRadius: BorderRadius.circular(8),
-              ), //aplica cantos arredondados
-              title: Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: 10,
-                ), //aplica 10 pixels de espaçamento (em cima e embaixo)
-                child: Image.asset('assets/images/fmabc.png', height: 40),
               ),
-              toolbarHeight:
-                  height, //altura da tollbar - (barra superior da interfafe, q contem titulo, botao de nav e acoes)
-              actions: <Widget>[
-                //lista de widgets q mostra na direita
-                IconButton(
-                  //botao usado para item de acao
-                  icon: const Icon(
-                    Icons.menu,
-                  ), //hamburguer - const usado para otimização
-                  onPressed: () {
-                    Scaffold.of(
-                      context,
-                    ).openEndDrawer(); // faz o menu lateral aparecer
-                  }, //so uma caixinha, nn precisa mudar atraz, fazer lista e colocar texto fazer com o pupopmenubotton
-                  //ontap() -
+              title: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 6,
+                    horizontal: 20,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    selectedTab == TabType.home
+                        ? 'Home'
+                        : selectedTab == TabType.diretorios ||
+                              selectedTab == TabType.diretorio
+                        ? 'Diretórios'
+                        : selectedTab == TabType.galeria
+                        ? 'Galeria'
+                        : 'LOGIN',
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+              toolbarHeight: height, //altura da appbar
+              actions: <Widget>[ //itens do lado direito
+                PopupMenuButton<TabType>( //cria os itens do menu
+                  icon: const Icon(Icons.menu, color: Colors.white),
+                  onSelected: (TabType tab) {
+                    onTapTab(tab);
+                  },
+                  itemBuilder: (BuildContext ctx) => <PopupMenuEntry<TabType>>[
+                    const PopupMenuItem(
+                      value: TabType.home,
+                      child: Text('Home'),
+                    ),
+                    const PopupMenuItem(
+                      value: TabType.diretorios,
+                      child: Text('Diretórios'),
+                    ),
+                    const PopupMenuItem(
+                      value: TabType.galeria,
+                      child: Text('Galeria'),
+                    ),
+                    const PopupMenuItem(
+                      value: TabType.login,
+                      child: Text('LOGIN'),
+                    ),
+                  ],
                 ),
               ],
             );
-
-          //void main() => runApp(const PopupMenuApp());
-          //enum menu {} e leva para outra pagina
-          
-
           }
+
           return AppBar(
             titleSpacing: 30,
             shape: RoundedRectangleBorder(
