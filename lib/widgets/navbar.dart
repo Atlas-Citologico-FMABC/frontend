@@ -31,26 +31,12 @@ PreferredSizeWidget NavBar({
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Container(
                   padding: const EdgeInsets.symmetric(
-                    vertical: 6,
-                    horizontal: 20,
+                    vertical: 12,
+                    horizontal: 30,
                   ),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    selectedTab == TabType.home
-                        ? 'Home'
-                        : selectedTab == TabType.diretorios ||
-                              selectedTab == TabType.diretorio
-                        ? 'Diretórios'
-                        : selectedTab == TabType.galeria
-                        ? 'Galeria'
-                        : 'LOGIN',
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w600,
-                    ),
                   ),
                 ),
               ),
@@ -76,7 +62,7 @@ PreferredSizeWidget NavBar({
                     ),
                     const PopupMenuItem(
                       value: TabType.login,
-                      child: Text('LOGIN'),
+                      child: Text('Login'),
                     ),
                   ],
                 ),
