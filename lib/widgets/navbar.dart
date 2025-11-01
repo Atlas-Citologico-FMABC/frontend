@@ -52,19 +52,30 @@ PreferredSizeWidget NavBar({
                   itemBuilder: (BuildContext ctx) => <PopupMenuEntry<TabType>>[
                     const PopupMenuItem(
                       value: TabType.home,
-                      child: Text('Home', style: TextStyle(fontSize: 20)),
+                      child: Center(
+                        child: Text('Home', style: TextStyle(fontSize: 20)),
+                      ),
                     ),
                     const PopupMenuItem(
                       value: TabType.diretorios,
-                      child: Text('Diretórios', style: TextStyle(fontSize: 20)),
+                      child: Center(
+                        child: Text(
+                          'Diretórios',
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ),
                     ),
                     const PopupMenuItem(
                       value: TabType.galeria,
-                      child: Text('Galeria', style: TextStyle(fontSize: 20)),
+                      child: Center(
+                        child: Text('Galeria', style: TextStyle(fontSize: 20)),
+                      ),
                     ),
                     const PopupMenuItem(
                       value: TabType.login,
-                      child: Text('Login', style: TextStyle(fontSize: 20)),
+                      child: Center(
+                        child: Text('Login', style: TextStyle(fontSize: 20)),
+                      ),
                     ),
                   ],
                 ),
