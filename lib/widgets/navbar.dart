@@ -24,7 +24,8 @@ PreferredSizeWidget NavBar({
               centerTitle: true, //centraliza o titulo
               elevation: 0, //remove a sombra
               titleSpacing: 0, //remove o espaco lateral do titulo
-              shape: RoundedRectangleBorder( //bordas arredondadas
+              shape: RoundedRectangleBorder(
+                //bordas arredondadas
                 borderRadius: BorderRadius.circular(8),
               ),
               title: Padding(
@@ -37,9 +38,13 @@ PreferredSizeWidget NavBar({
                 ),
               ),
               toolbarHeight: height, //altura da appbar
-              actions: <Widget>[ //itens do lado direito
-                PopupMenuButton<TabType>( 
-                  constraints: BoxConstraints.tightFor(height: 200),//cria os itens do menu
+              actions: <Widget>[
+                //itens do lado direito
+                PopupMenuButton<TabType>(
+                  constraints: BoxConstraints.tightFor(
+                    width: 300, // largura do menu popup
+                    height: 500, // altura do menu popup
+                  ),
                   icon: const Icon(Icons.menu, color: Colors.white),
                   onSelected: (TabType tab) {
                     onTapTab(tab);
