@@ -14,8 +14,12 @@ class EditDialog extends StatefulWidget {
 
 class _EditDialogState extends State<EditDialog> {
   final _formKey = GlobalKey<FormState>();
-	final TextEditingController nomeController = TextEditingController(text: 'user1'); 
-	final TextEditingController senhaController = TextEditingController(text: 'senha1'); 
+  final TextEditingController nomeController = TextEditingController(
+    text: 'user1',
+  );
+  final TextEditingController senhaController = TextEditingController(
+    text: 'senha1',
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +32,7 @@ class _EditDialogState extends State<EditDialog> {
         child: SizedBox(
           height: 200,
           child: Form(
-						key: _formKey,
+            key: _formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -41,7 +45,7 @@ class _EditDialogState extends State<EditDialog> {
                     ),
                     Expanded(
                       child: InputField(
-												controller: nomeController,
+                        controller: nomeController,
                         errorText: 'Digite um novo nome',
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
@@ -59,9 +63,9 @@ class _EditDialogState extends State<EditDialog> {
                     ),
                     Expanded(
                       child: InputField(
-												controller: senhaController,
+                        controller: senhaController,
                         errorText: 'Digite uma nova senha',
-												// obscureText: true,
+                        // obscureText: true,
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
                             color: Colors.black.withAlpha(50),
@@ -79,10 +83,10 @@ class _EditDialogState extends State<EditDialog> {
                   text: 'Salvar',
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
-											print(nomeController.text);
-											print(senhaController.text);
-											print('professor editado com sucesso');
-											Navigator.pop(context);
+                      print(nomeController.text);
+                      print(senhaController.text);
+                      print('professor editado com sucesso');
+                      Navigator.pop(context);
                     }
                   },
                   backgroundColor: green,

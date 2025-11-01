@@ -61,9 +61,7 @@ class ImageViewerTab extends StatelessWidget {
                         flex: 1,
                         child: Container(
                           color: lightGray,
-                          child: Center(
-                            child: Text('<descrição da imagem>'),
-                          ),
+                          child: Center(child: Text('<descrição da imagem>')),
                         ),
                       ),
                     ],

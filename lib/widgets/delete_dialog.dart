@@ -36,8 +36,8 @@ class DeleteDialog extends StatelessWidget {
                   Button(
                     text: 'Deletar',
                     onTap: () {
-											Navigator.pop(context);
-										},
+                      Navigator.pop(context);
+                    },
                     backgroundColor: Colors.red,
                     foregroundColor: Colors.white,
                   ),
@@ -45,8 +45,8 @@ class DeleteDialog extends StatelessWidget {
                   Button(
                     text: 'Cancelar',
                     onTap: () {
-											Navigator.pop(context);
-										},
+                      Navigator.pop(context);
+                    },
                     backgroundColor: lightGray,
                   ),
                 ],

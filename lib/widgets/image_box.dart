@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 Widget ImageBox({
   required String title,
-	final VoidCallback? onTap,
+  final VoidCallback? onTap,
   Color borderColor = Colors.transparent,
   double borderWidth = 0,
 }) {
   return InkWell(
-		onTap: onTap,
+    onTap: onTap,
     child: Container(
       width: 250,
       height: 250,

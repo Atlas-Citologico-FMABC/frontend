@@ -10,10 +10,9 @@ Widget Button({
   double horizontalPadding = 30,
   double verticalPadding = 25,
   double borderRadius = 8,
-	double fontSize = 20,
-	FontWeight fontWeight = FontWeight.normal,
+  double fontSize = 20,
+  FontWeight fontWeight = FontWeight.normal,
 }) {
-
   return TextButton(
     onPressed: onTap,
     style: TextButton.styleFrom(

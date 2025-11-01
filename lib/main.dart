@@ -19,48 +19,52 @@ void main() {
 }
 
 class MainPage extends StatefulWidget {
-	const MainPage({super.key});
+  const MainPage({super.key});
 
-	@override
-	State<MainPage> createState() => _MainPageState();
+  @override
+  State<MainPage> createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
-	TabType selectedTab = TabType.home;
+  TabType selectedTab = TabType.home;
 
-	Widget getTab(TabType tab) {
-		switch(tab) {
-			case TabType.home:
-				return HomeTab(navHeight: navHeight);
-			case TabType.diretorios:
-				return DiretoriosTab(onTapDiretorio: onTapTab);
-			case TabType.diretorio:
-				return DiretorioTab(onTapImage: onTapTab);
-			case TabType.galeria:
-				return GaleriaTab();
-			case TabType.imageViewer:
-				return ImageViewerTab();
-			case TabType.login:
-				return LoginTab(onTap: onTapTab);
-			case TabType.admin:
-				return AdminTab();
-		}
-	}
+  Widget getTab(TabType tab) {
+    switch (tab) {
+      case TabType.home:
+        return HomeTab(navHeight: navHeight);
+      case TabType.diretorios:
+        return DiretoriosTab(onTapDiretorio: onTapTab);
+      case TabType.diretorio:
+        return DiretorioTab(onTapImage: onTapTab);
+      case TabType.galeria:
+        return GaleriaTab();
+      case TabType.imageViewer:
+        return ImageViewerTab();
+      case TabType.login:
+        return LoginTab(onTap: onTapTab);
+      case TabType.admin:
+        return AdminTab();
+    }
+  }
 
-	void onTapTab(TabType tab) {
-		setState(() => selectedTab = tab);
-	}
+  void onTapTab(TabType tab) {
+    setState(() => selectedTab = tab);
+  }
 
-	@override
-	Widget build(BuildContext context) {
-		return MaterialApp(
-			debugShowCheckedModeBanner: false,
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Atlas de Citologia',
-			home: Scaffold(
-				appBar: NavBar(height: navHeight, selectedTab: selectedTab, onTapTab: onTapTab),
-				body: getTab(selectedTab),
-				backgroundColor: darkBlue,
-			),
-		);
-	}
-} 
+      home: Scaffold(
+        appBar: NavBar(
+          height: navHeight,
+          selectedTab: selectedTab,
+          onTapTab: onTapTab,
+        ),
+        body: getTab(selectedTab),
+        backgroundColor: darkBlue,
+      ),
+    );
+  }
+}

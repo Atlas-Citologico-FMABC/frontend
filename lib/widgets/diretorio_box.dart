@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 Widget DiretorioBox({
   required String title,
-	final VoidCallback? onTap,
+  final VoidCallback? onTap,
   double borderWidth = 0,
   Color borderColor = Colors.transparent,
 }) {
   return InkWell(
-		onTap: onTap,
+    onTap: onTap,
     child: Container(
       width: 300,
       height: 170,

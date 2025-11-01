@@ -41,9 +41,11 @@ class HomeTab extends StatelessWidget {
           ),
           Container(
             width: double.infinity,
-						constraints: BoxConstraints(
-							minHeight: MediaQuery.of(context).size.height - 383, // -383 just for tests
-						),
+            constraints: BoxConstraints(
+              minHeight:
+                  MediaQuery.of(context).size.height -
+                  383, // -383 just for tests
+            ),
             decoration: BoxDecoration(
               color: lightGray,
               borderRadius: BorderRadius.only(
@@ -57,7 +59,7 @@ class HomeTab extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Align(
-										alignment: Alignment.centerLeft,
+                    alignment: Alignment.centerLeft,
                     child: Text(
                       'Diretórios mais usados:',
                       style: TextStyle(fontSize: 30),
@@ -68,10 +70,26 @@ class HomeTab extends StatelessWidget {
                     spacing: 50,
                     runSpacing: 30,
                     children: <Widget>[
-                      DiretorioBox(title: 'Diretório 1', borderWidth: 5, borderColor: green),
-                      DiretorioBox(title: 'Diretório 2', borderWidth: 5, borderColor: green),
-                      DiretorioBox(title: 'Diretório 3', borderWidth: 5, borderColor: green),
-                      DiretorioBox(title: 'Diretório 4', borderWidth: 5, borderColor: green),
+                      DiretorioBox(
+                        title: 'Diretório 1',
+                        borderWidth: 5,
+                        borderColor: green,
+                      ),
+                      DiretorioBox(
+                        title: 'Diretório 2',
+                        borderWidth: 5,
+                        borderColor: green,
+                      ),
+                      DiretorioBox(
+                        title: 'Diretório 3',
+                        borderWidth: 5,
+                        borderColor: green,
+                      ),
+                      DiretorioBox(
+                        title: 'Diretório 4',
+                        borderWidth: 5,
+                        borderColor: green,
+                      ),
                     ],
                   ),
                 ],

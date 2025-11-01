@@ -26,7 +26,7 @@ class _AddTeacherDialogState extends State<AddTeacherDialog> {
         child: SizedBox(
           height: 200,
           child: Form(
-						key: _formKey,
+            key: _formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -91,8 +91,8 @@ class _AddTeacherDialogState extends State<AddTeacherDialog> {
                   text: 'Adicionar professor',
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
-											print('ok');
-											Navigator.pop(context);
+                      print('ok');
+                      Navigator.pop(context);
                     }
                   },
                   backgroundColor: green,

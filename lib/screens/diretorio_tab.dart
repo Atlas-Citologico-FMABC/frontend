@@ -5,7 +5,7 @@ import '../widgets/image_box.dart';
 final Color lightGray = Color(0xffEBEBEB);
 
 class DiretorioTab extends StatelessWidget {
-	final Function(TabType) onTapImage;
+  final Function(TabType) onTapImage;
   const DiretorioTab({super.key, required this.onTapImage});
 
   @override
@@ -67,11 +67,15 @@ class DiretorioTab extends StatelessWidget {
                             child: Padding(
                               padding: const EdgeInsets.all(10),
                               child: Wrap(
-																alignment: WrapAlignment.center,
+                                alignment: WrapAlignment.center,
                                 spacing: 50,
                                 runSpacing: 50,
                                 children: <Widget>[
-                                  ImageBox(title: 'Image 1', onTap: () => onTapImage(TabType.imageViewer)),
+                                  ImageBox(
+                                    title: 'Image 1',
+                                    onTap: () =>
+                                        onTapImage(TabType.imageViewer),
+                                  ),
                                   ImageBox(title: 'Image 2'),
                                   ImageBox(title: 'Image 3'),
                                   ImageBox(title: 'Image 4'),

@@ -7,7 +7,8 @@ final Color lightGray = Color(0xffEBEBEB);
 class DiretoriosTab extends StatelessWidget {
   final Function(TabType) onTapDiretorio;
   const DiretoriosTab({super.key, required this.onTapDiretorio});
-	final String description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
+  final String description =
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
 
   String descriptionPreview(String description) {
     if (description.length > 30) {
@@ -70,7 +71,7 @@ class DiretoriosTab extends StatelessWidget {
                             title: 'Diretório 1',
                             onTap: () => onTapDiretorio(TabType.diretorio),
                           ),
-													SizedBox(height: 10),
+                          SizedBox(height: 10),
                           Text(descriptionPreview(description)),
                         ],
                       ),

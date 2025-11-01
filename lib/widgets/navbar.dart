@@ -42,11 +42,17 @@ PreferredSizeWidget NavBar({
                   onPressed: () {
                     Scaffold.of(
                       context,
-                    ).openDrawer(); // faz o menu lateral aparecer
-                  },
+                    ).openEndDrawer(); // faz o menu lateral aparecer
+                  }, //so uma caixinha, nn precisa mudar atraz, fazer lista e colocar texto fazer com o pupopmenubotton
+                  //ontap() -
                 ),
               ],
             );
+
+          //void main() => runApp(const PopupMenuApp());
+          //enum menu {} e leva para outra pagina
+          
+
           }
           return AppBar(
             titleSpacing: 30,

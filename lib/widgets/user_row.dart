@@ -3,7 +3,12 @@ import 'button.dart';
 
 final Color lightGray = Color(0xffEBEBEB);
 
-DataRow UserRow({required nome, required email, VoidCallback? onEdit, VoidCallback? onDelete}) {
+DataRow UserRow({
+  required nome,
+  required email,
+  VoidCallback? onEdit,
+  VoidCallback? onDelete,
+}) {
   return DataRow(
     cells: [
       DataCell(Text(nome)),

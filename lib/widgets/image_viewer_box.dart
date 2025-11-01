@@ -9,19 +9,14 @@ class ImageViewerBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-			height: double.infinity,
-      decoration: BoxDecoration(
-        color: Colors.white,
-      ),
+      height: double.infinity,
+      decoration: BoxDecoration(color: Colors.white),
       clipBehavior: Clip.hardEdge,
       child: InteractiveViewer(
         minScale: 1,
         maxScale: 50,
         boundaryMargin: const EdgeInsets.all(double.infinity),
-        child: Image.asset(
-          imagePath,
-          fit: BoxFit.contain,
-        ),
+        child: Image.asset(imagePath, fit: BoxFit.contain),
       ),
     );
   }
