@@ -46,11 +46,6 @@ PreferredSizeWidget NavBar({
                     height: 200,
                   ),
                   icon: const Icon(Icons.menu, color: Colors.white),
-                  offset: Offset(
-                    MediaQuery.of(context).size.width *
-                        0.1, // centraliza horizontalmente
-                    0, //ajusta verticalmente
-                  ),
                   onSelected: (TabType tab) {
                     onTapTab(tab);
                   },
