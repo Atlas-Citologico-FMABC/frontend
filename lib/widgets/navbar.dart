@@ -34,10 +34,6 @@ PreferredSizeWidget NavBar({
                     vertical: 12,
                     horizontal: 30,
                   ),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
                 ),
               ),
               toolbarHeight: height, //altura da appbar
