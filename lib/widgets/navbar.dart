@@ -38,7 +38,8 @@ PreferredSizeWidget NavBar({
               ),
               toolbarHeight: height, //altura da appbar
               actions: <Widget>[ //itens do lado direito
-                PopupMenuButton<TabType>( //cria os itens do menu
+                PopupMenuButton<TabType>( 
+                  constraints: BoxConstraints.tightFor(height: 200),//cria os itens do menu
                   icon: const Icon(Icons.menu, color: Colors.white),
                   onSelected: (TabType tab) {
                     onTapTab(tab);
