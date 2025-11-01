@@ -42,8 +42,8 @@ PreferredSizeWidget NavBar({
                 //itens do lado direito
                 PopupMenuButton<TabType>(
                   constraints: BoxConstraints.tightFor(
-                    width: 300, // largura do menu popup
-                    height: 500, // altura do menu popup
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: 200,
                   ),
                   icon: const Icon(Icons.menu, color: Colors.white),
                   onSelected: (TabType tab) {
@@ -52,19 +52,19 @@ PreferredSizeWidget NavBar({
                   itemBuilder: (BuildContext ctx) => <PopupMenuEntry<TabType>>[
                     const PopupMenuItem(
                       value: TabType.home,
-                      child: Text('Home'),
+                      child: Text('Home', style: TextStyle(fontSize: 20)),
                     ),
                     const PopupMenuItem(
                       value: TabType.diretorios,
-                      child: Text('Diretórios'),
+                      child: Text('Diretórios', style: TextStyle(fontSize: 20)),
                     ),
                     const PopupMenuItem(
                       value: TabType.galeria,
-                      child: Text('Galeria'),
+                      child: Text('Galeria', style: TextStyle(fontSize: 20)),
                     ),
                     const PopupMenuItem(
                       value: TabType.login,
-                      child: Text('Login'),
+                      child: Text('Login', style: TextStyle(fontSize: 20)),
                     ),
                   ],
                 ),
