@@ -46,6 +46,11 @@ PreferredSizeWidget NavBar({
                     height: 200,
                   ),
                   icon: const Icon(Icons.menu, color: Colors.white),
+                  offset: Offset(
+                    -MediaQuery.of(context).size.width *
+                        0.4, // move o menu pro centro
+                    kToolbarHeight, // deixa o menu logo abaixo da AppBar
+                  ),
                   onSelected: (TabType tab) {
                     onTapTab(tab);
                   },
