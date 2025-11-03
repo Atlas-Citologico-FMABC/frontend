@@ -47,8 +47,8 @@ PreferredSizeWidget NavBar({
                   ),
                   icon: const Icon(Icons.menu, color: Colors.white),
                   offset: Offset(
-                    -MediaQuery.of(context).size.width *
-                        0.1 ,0// move o menu pro centro
+                    -MediaQuery.of(context).size.width * 0.1,
+                    0, // move o menu pro centro
                   ),
                   onSelected: (TabType tab) {
                     onTapTab(tab);
@@ -57,12 +57,7 @@ PreferredSizeWidget NavBar({
                     const PopupMenuItem(
                       value: TabType.home,
                       child: Center(
-                        child: Text(
-                          'Home',
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
-                        ),
+                        child: Text('Home', style: TextStyle(fontSize: 20)),
                       ),
                     ),
                     const PopupMenuItem(
@@ -70,30 +65,35 @@ PreferredSizeWidget NavBar({
                       child: Center(
                         child: Text(
                           'Diretórios',
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
+                          style: TextStyle(fontSize: 20),
                         ),
                       ),
                     ),
                     const PopupMenuItem(
                       value: TabType.galeria,
                       child: Center(
-                        child: Text(
-                          'Galeria',
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
-                        ),
+                        child: Text('Galeria', style: TextStyle(fontSize: 20)),
                       ),
                     ),
-                    const PopupMenuItem(
+                    PopupMenuItem(
                       value: TabType.login,
                       child: Center(
-                        child: Text(
-                          'Login',
-                          style: TextStyle(
-                            fontSize: 20,
+                        child: Container(
+                          width: 120, // largura do quadrado
+                          height: 40, // altura do quadrado
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: Colors.green, // cor do quadrado
+                            borderRadius: BorderRadius.circular(
+                              8,
+                            ), // cantos arredondados
+                          ),
+                          child: const Text(
+                            'LOGIN',
+                            style: TextStyle(
+                              color: Colors.white, // texto branco
+                              fontSize: 20,
+                            ),
                           ),
                         ),
                       ),
