@@ -24,10 +24,6 @@ PreferredSizeWidget NavBar({
               centerTitle: true, //centraliza o titulo
               elevation: 0, //remove a sombra
               titleSpacing: 0, //remove o espaco lateral do titulo
-              shape: RoundedRectangleBorder(
-                //bordas arredondadas
-                borderRadius: BorderRadius.circular(8),
-              ),
               title: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Container(
