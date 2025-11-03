@@ -48,8 +48,7 @@ PreferredSizeWidget NavBar({
                   icon: const Icon(Icons.menu, color: Colors.white),
                   offset: Offset(
                     -MediaQuery.of(context).size.width *
-                        0.1, // move o menu pro centro
-                    kToolbarHeight, // deixa o menu logo abaixo da AppBar
+                        0.1 ,0// move o menu pro centro
                   ),
                   onSelected: (TabType tab) {
                     onTapTab(tab);
@@ -62,7 +61,6 @@ PreferredSizeWidget NavBar({
                           'Home',
                           style: TextStyle(
                             fontSize: 20,
-                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
@@ -74,7 +72,6 @@ PreferredSizeWidget NavBar({
                           'Diretórios',
                           style: TextStyle(
                             fontSize: 20,
-                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
@@ -86,7 +83,6 @@ PreferredSizeWidget NavBar({
                           'Galeria',
                           style: TextStyle(
                             fontSize: 20,
-                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
@@ -98,7 +94,6 @@ PreferredSizeWidget NavBar({
                           'Login',
                           style: TextStyle(
                             fontSize: 20,
-                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
