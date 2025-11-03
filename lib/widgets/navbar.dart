@@ -43,7 +43,6 @@ PreferredSizeWidget NavBar({
                 PopupMenuButton<TabType>(
                   constraints: BoxConstraints.tightFor(
                     width: MediaQuery.of(context).size.width * 0.8,
-                    height: 200,
                   ),
                   icon: const Icon(Icons.menu, color: Colors.white),
                   offset: Offset(
