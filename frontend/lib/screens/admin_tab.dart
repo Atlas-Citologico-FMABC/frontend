@@ -1,4 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import '../models/teacher.dart';
+import '../services/admin.dart';
 import '../widgets/add_teacher_dialog.dart';
 import '../widgets/button.dart';
 import '../widgets/delete_dialog.dart';
@@ -16,6 +19,71 @@ class AdminTab extends StatefulWidget {
 }
 
 class _AdminTabState extends State<AdminTab> {
+  final _adminService = AdminService();
+  late Future<List<Teacher>> _futureTeachers;
+  @override
+  void initState() {
+    super.initState();
+    _futureTeachers = _loadTeachers();
+  }
+
+  Future<List<Teacher>> _loadTeachers() async {
+    final res = await _adminService.listarProfessor();
+    if (res.statusCode != 200) {
+      throw Exception('Falha ao carregar professores (${res.statusCode})');
+    }
+
+    final decoded = jsonDecode(res.body);
+    final list = decoded is List ? decoded : (decoded['data'] as List? ?? []);
+
+    return list
+        .map((e) => Teacher.fromJson(e as Map<String, dynamic>))
+        .toList();
+  }
+
+  Future<void> _refresh() async {
+    setState(() {
+      _futureTeachers = _loadTeachers();
+    });
+  }
+
+  Future<void> _onAddTeacher() async {
+    await showDialog(
+      context: context,
+      builder: (_) => const AddTeacherDialog(),
+    );
+    await _refresh();
+  }
+
+  Future<void> _onEditTeacher(Teacher t) async {
+    await showDialog(context: context, builder: (_) => const EditDialog());
+    await _refresh();
+  }
+
+  Future<void> _onDeleteTeacher(Teacher t) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (_) => const DeleteDialog(),
+    );
+    if (confirmed == true) {
+      final res = await _adminService.deletarProfessor(t.email);
+      if (!mounted) return;
+      if (res.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Professor deletado com sucesso.')),
+        );
+        await _refresh();
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.red,
+            content: Text('Erro ao deletar (${res.statusCode}).'),
+          ),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -84,95 +152,87 @@ class _AdminTabState extends State<AdminTab> {
               SizedBox(width: 150),
               VerticalDivider(thickness: 5, color: Colors.white),
               SizedBox(width: 150),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Tabela de Professores Autorizados',
-                    style: TextStyle(fontSize: 30),
-                  ),
-                  SizedBox(height: 10),
-                  Container(
-                    // width: 670,
-                    height: 400,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: DataTable(
-                          dataRowMinHeight: 70,
-                          dataRowMaxHeight: 70,
-                          dataTextStyle: TextStyle(fontSize: 20),
-                          columnSpacing: 100,
-                          columns: [
-                            DataColumn(
-                              label: Text('Nome'),
-                              headingRowAlignment: MainAxisAlignment.center,
-                            ),
-                            DataColumn(
-                              label: Text('Email'),
-                              headingRowAlignment: MainAxisAlignment.center,
-                            ),
-                            DataColumn(
-                              label: Text(''),
-                              headingRowAlignment: MainAxisAlignment.center,
-                            ),
-                          ],
-                          rows: [
-                            UserRow(
-                              nome: 'User1',
-                              email: 'user1@email.com',
-                              onEdit: () => showDialog(
-                                context: context,
-                                barrierDismissible: true,
-                                builder: (context) => const EditDialog(),
-                              ),
-                              onDelete: () => showDialog(
-                                context: context,
-                                barrierDismissible: true,
-                                builder: (context) => const DeleteDialog(),
-                              ),
-                            ),
-                            UserRow(
-                              nome: 'User2',
-                              email: 'user2@email.com',
-                              onEdit: () => showDialog(
-                                context: context,
-                                barrierDismissible: true,
-                                builder: (context) => const EditDialog(),
-                              ),
-                              onDelete: () => showDialog(
-                                context: context,
-                                barrierDismissible: true,
-                                builder: (context) => const DeleteDialog(),
-                              ),
-                            ),
-                          ],
-                        ),
+              FutureBuilder<List<Teacher>>(
+                future: _futureTeachers,
+                builder: (context, snapshot) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Tabela de Professores Autorizados',
+                        style: TextStyle(fontSize: 30),
                       ),
-                    ),
-                  ),
-                  SizedBox(height: 40),
-                  Button(
-                    text: 'Adicionar Professor',
-                    onTap: () => showDialog(
-                      context: context,
-                      barrierDismissible: true,
-                      builder: (context) => const AddTeacherDialog(),
-                    ),
-                    backgroundColor: green,
-                    foregroundColor: Colors.white,
-                    horizontalPadding: 60,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ],
+                      SizedBox(height: 10),
+                      Container(
+                        // width: 670,
+                        height: 400,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: _buildTable(snapshot),
+                      ),
+                      SizedBox(height: 40),
+                      Button(
+                        text: 'Adicionar Professor',
+                        onTap: _onAddTeacher,
+                        backgroundColor: green,
+                        foregroundColor: Colors.white,
+                        horizontalPadding: 60,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ],
+                  );
+                },
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTable(AsyncSnapshot<List<Teacher>> snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return const Center(child: CircularProgressIndicator());
+    }
+    if (snapshot.hasError) {
+      return Center(child: Text('Erro: ${snapshot.error}'));
+    }
+
+    final teachers = snapshot.data ?? [];
+
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: DataTable(
+          dataRowMinHeight: 70,
+          dataRowMaxHeight: 70,
+          dataTextStyle: const TextStyle(fontSize: 20),
+          columnSpacing: 100,
+          columns: const [
+            DataColumn(
+              label: Text('Nome'),
+              headingRowAlignment: MainAxisAlignment.center,
+            ),
+            DataColumn(
+              label: Text('Email'),
+              headingRowAlignment: MainAxisAlignment.center,
+            ),
+            DataColumn(
+              label: Text(''),
+              headingRowAlignment: MainAxisAlignment.center,
+            ),
+          ], 
+          rows: teachers.map((t) {
+            return UserRow(
+              nome: t.nome,
+              email: t.email,
+              onEdit: () => _onEditTeacher(t),
+              onDelete: () => _onDeleteTeacher(t),
+            );
+          }).toList(),
         ),
       ),
     );
