@@ -66,7 +66,11 @@ class HomeTab extends StatelessWidget {
                           alignment: Alignment.centerLeft,
                           child: Text(
                             'Diretórios mais usados:',
-                            style: TextStyle(fontSize: 20, color: darkBlue),
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: darkBlue,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                         const SizedBox(height: 20),
