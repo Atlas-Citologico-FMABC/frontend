@@ -38,7 +38,7 @@ exports.criarProfessor = (req, res) => {
 
 // Listar todos os professores
 exports.listarProfessores = (req, res) => {
-  db.query('SELECT * FROM Professor', (err, results) => {
+  db.query('SELECT email, nome FROM Professor', (err, results) => {
     if (err) return res.status(500).json({ error: err });
     res.json(results);
   });
