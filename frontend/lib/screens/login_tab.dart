@@ -9,13 +9,33 @@ final Color darkBlue = Color(0xff002C53);
 final Color lightGray = Color(0xffEBEBEB);
 final Color green = Color(0xff009951);
 
-class LoginTab extends StatelessWidget {
+class LoginTab extends StatefulWidget {
   final Function(TabType) onTap;
   LoginTab({super.key, required this.onTap});
 
+  @override
+  State<LoginTab> createState() => _LoginTabState();
+}
+
+class _LoginTabState extends State<LoginTab> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController senhaController = TextEditingController();
+
+  late TextEditingController emailController;
+  late TextEditingController senhaController;
+
+	@override
+	void initState() {
+		super.initState();
+		emailController = TextEditingController();
+		senhaController = TextEditingController();
+	}
+
+	@override
+	void dispose() {
+		emailController.dispose();
+		senhaController.dispose();
+		super.dispose();
+	}
 
   Future login(BuildContext context, String email, String senha) async {
     final int adminStatusCode = await AdminService().loginAdmin({
@@ -36,7 +56,7 @@ class LoginTab extends StatelessWidget {
           duration: Duration(seconds: 3),
         ),
       );
-      return onTap(TabType.admin);
+      return widget.onTap(TabType.admin);
     }
     if (professorStatusCode == 200) {
       ScaffoldMessenger.of(context).showSnackBar(
