@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../services/admin.dart';
 import 'button.dart';
 import 'input_field.dart';
 
@@ -14,9 +15,9 @@ class AddTeacherDialog extends StatefulWidget {
 
 class _AddTeacherDialogState extends State<AddTeacherDialog> {
   final _formKey = GlobalKey<FormState>();
-	final TextEditingController nomeController = TextEditingController(); 
-	final TextEditingController emailController = TextEditingController(); 
-	final TextEditingController senhaController = TextEditingController();
+  final TextEditingController nomeController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController senhaController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,7 @@ class _AddTeacherDialogState extends State<AddTeacherDialog> {
         child: SizedBox(
           height: 200,
           child: Form(
-						key: _formKey,
+            key: _formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -42,7 +43,7 @@ class _AddTeacherDialogState extends State<AddTeacherDialog> {
                     ),
                     Expanded(
                       child: InputField(
-												controller: nomeController,
+                        controller: nomeController,
                         errorText: 'Digite um nome',
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
@@ -60,7 +61,7 @@ class _AddTeacherDialogState extends State<AddTeacherDialog> {
                     ),
                     Expanded(
                       child: InputField(
-												controller: emailController,
+                        controller: emailController,
                         errorText: 'Digite um email',
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
@@ -78,7 +79,7 @@ class _AddTeacherDialogState extends State<AddTeacherDialog> {
                     ),
                     Expanded(
                       child: InputField(
-												controller: senhaController,
+                        controller: senhaController,
                         errorText: 'Digite uma senha',
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
@@ -95,12 +96,15 @@ class _AddTeacherDialogState extends State<AddTeacherDialog> {
                 SizedBox(height: 50),
                 Button(
                   text: 'Adicionar professor',
-                  onTap: () {
+                  onTap: () async {
                     if (_formKey.currentState!.validate()) {
-											print(nomeController.text);
-											print(emailController.text);
-											print(senhaController.text);
-											Navigator.pop(context);
+                      Map<String, dynamic> professorData = {
+                        'email': emailController.text,
+                        'senha': senhaController.text,
+                        'nome': nomeController.text
+                      };
+                      await AdminService().criarProfessor(professorData);
+                      Navigator.pop(context);
                     }
                   },
                   backgroundColor: green,
