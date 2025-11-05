@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import '../services/admin.dart';
 import 'button.dart';
 
 final Color lightGray = Color(0xffEBEBEB);
 
 class DeleteDialog extends StatelessWidget {
-  const DeleteDialog({super.key});
+	final String emailToDelete;
+  const DeleteDialog({super.key, required this.emailToDelete});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,8 @@ class DeleteDialog extends StatelessWidget {
                 children: <Widget>[
                   Button(
                     text: 'Deletar',
-                    onTap: () {
+                    onTap: () async {
+											AdminService().deletarProfessor(emailToDelete);
 											Navigator.pop(context);
 										},
                     backgroundColor: Colors.red,

@@ -61,27 +61,11 @@ class _AdminTabState extends State<AdminTab> {
   }
 
   Future<void> _onDeleteTeacher(Teacher t) async {
-    final confirmed = await showDialog<bool>(
+    await showDialog<bool>(
       context: context,
-      builder: (_) => const DeleteDialog(),
+      builder: (_) => DeleteDialog(emailToDelete: t.email),
     );
-    if (confirmed == true) {
-      final res = await _adminService.deletarProfessor(t.email);
-      if (!mounted) return;
-      if (res.statusCode == 200) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Professor deletado com sucesso.')),
-        );
-        await _refresh();
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            backgroundColor: Colors.red,
-            content: Text('Erro ao deletar (${res.statusCode}).'),
-          ),
-        );
-      }
-    }
+    await _refresh();
   }
 
   @override
@@ -224,7 +208,7 @@ class _AdminTabState extends State<AdminTab> {
               label: Text(''),
               headingRowAlignment: MainAxisAlignment.center,
             ),
-          ], 
+          ],
           rows: teachers.map((t) {
             return UserRow(
               nome: t.nome,
