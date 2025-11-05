@@ -56,7 +56,7 @@ class _AdminTabState extends State<AdminTab> {
   }
 
   Future<void> _onEditTeacher(Teacher t) async {
-    await showDialog(context: context, builder: (_) => const EditDialog());
+    await showDialog(context: context, builder: (_) => EditDialog(emailToEdit: t.email, initialName: t.nome));
     await _refresh();
   }
 

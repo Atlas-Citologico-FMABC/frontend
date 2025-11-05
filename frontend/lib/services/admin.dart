@@ -20,7 +20,7 @@ class AdminService {
   }
 
   //Testar
-  Future<http.Response> atualizarProfessor(String email, String nome, String senha) async {
+  Future<http.Response> atualizarProfessor(String email, String senha, String nome) async {
     final body = {'nome': nome, 'senha': senha};
     return await _nodeService.put('/admin/professores/$email', body);
   }

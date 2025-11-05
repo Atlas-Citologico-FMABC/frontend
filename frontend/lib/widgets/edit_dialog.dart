@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../services/admin.dart';
 import 'button.dart';
 import 'input_field.dart';
 
@@ -6,7 +7,13 @@ final Color darkBlue = Color(0xff002C53);
 final Color green = Color(0xff009951);
 
 class EditDialog extends StatefulWidget {
-  const EditDialog({super.key});
+	final String emailToEdit;
+  final String initialName;
+  const EditDialog({
+    super.key,
+    required this.emailToEdit,
+    required this.initialName,
+  });
 
   @override
   State<EditDialog> createState() => _EditDialogState();
@@ -14,11 +21,26 @@ class EditDialog extends StatefulWidget {
 
 class _EditDialogState extends State<EditDialog> {
   final _formKey = GlobalKey<FormState>();
-	final TextEditingController nomeController = TextEditingController(text: 'user1'); 
-	final TextEditingController senhaController = TextEditingController(text: 'senha1'); 
+	late TextEditingController senhaController;
+	late TextEditingController nomeController;
+
+	@override
+	void initState() {
+		super.initState();
+		senhaController = TextEditingController();
+		nomeController = TextEditingController(text: widget.initialName);
+	}
+
+	@override
+	void dispose() {
+		senhaController.dispose();
+		nomeController.dispose();
+		super.dispose();
+	}
 
   @override
   Widget build(BuildContext context) {
+
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       elevation: 8,
@@ -28,7 +50,7 @@ class _EditDialogState extends State<EditDialog> {
         child: SizedBox(
           height: 200,
           child: Form(
-						key: _formKey,
+            key: _formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -41,7 +63,7 @@ class _EditDialogState extends State<EditDialog> {
                     ),
                     Expanded(
                       child: InputField(
-												controller: nomeController,
+                        controller: nomeController,
                         errorText: 'Digite um novo nome',
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
@@ -61,7 +83,7 @@ class _EditDialogState extends State<EditDialog> {
                       child: InputField(
 												controller: senhaController,
                         errorText: 'Digite uma nova senha',
-												// obscureText: true,
+                        // obscureText: true,
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
                             color: Colors.black.withAlpha(50),
@@ -79,10 +101,12 @@ class _EditDialogState extends State<EditDialog> {
                   text: 'Salvar',
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
-											print(nomeController.text);
-											print(senhaController.text);
-											print('professor editado com sucesso');
-											Navigator.pop(context);
+                      AdminService().atualizarProfessor(
+                        widget.emailToEdit,
+                        senhaController.text,
+                        nomeController.text,
+                      );
+                      Navigator.pop(context);
                     }
                   },
                   backgroundColor: green,
