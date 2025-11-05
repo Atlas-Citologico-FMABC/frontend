@@ -21,6 +21,7 @@ class EditDialog extends StatefulWidget {
 
 class _EditDialogState extends State<EditDialog> {
   final _formKey = GlobalKey<FormState>();
+
 	late TextEditingController senhaController;
 	late TextEditingController nomeController;
 

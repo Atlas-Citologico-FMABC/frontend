@@ -15,9 +15,26 @@ class AddTeacherDialog extends StatefulWidget {
 
 class _AddTeacherDialogState extends State<AddTeacherDialog> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController nomeController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController senhaController = TextEditingController();
+
+  late TextEditingController emailController;
+  late TextEditingController senhaController;
+  late TextEditingController nomeController;
+
+	@override
+	void initState() {
+		super.initState();
+		emailController = TextEditingController();
+		senhaController = TextEditingController();
+		nomeController = TextEditingController();
+	}
+
+	@override
+	void dispose() {
+		emailController.dispose();
+		senhaController.dispose();
+		nomeController.dispose();
+		super.dispose();
+	}
 
   @override
   Widget build(BuildContext context) {
