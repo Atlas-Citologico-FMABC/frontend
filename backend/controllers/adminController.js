@@ -3,11 +3,11 @@ require('dotenv').config();
 
 // Login do admin
 exports.loginAdmin = (req, res) => {
-  const { email_admin, senha } = req.body;
+  const { email, senha } = req.body;
 
   db.query(
-    'SELECT * FROM Admin WHERE email_admin=? AND senha=?',
-    [email_admin, senha],
+    'SELECT * FROM Admin WHERE email=? AND senha=?',
+    [email, senha],
     (err, results) => {
       if (err) return res.status(500).json({ error: err });
       if (results.length > 0){
@@ -25,10 +25,10 @@ exports.loginAdmin = (req, res) => {
 
 // Criar professor
 exports.criarProfessor = (req, res) => {
-  const { email, senha, nome, email_admin } = req.body;
+  const { email, senha, nome } = req.body;
   db.query(
-    `INSERT INTO Professor (email, senha, nome, email_admin) VALUES (?, ?, ?, ${process.env.ADMIN_DB})`,
-    [email, senha, nome, email_admin],
+    `INSERT INTO Professor (email, senha, nome) VALUES (?, ?, ?)`,
+    [email, senha, nome],
     (err) => {
       if (err) return res.status(500).json({ error: err });
       res.json({ message: 'Professor criado com sucesso!' });

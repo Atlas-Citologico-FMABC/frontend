@@ -19,7 +19,7 @@ class LoginTab extends StatelessWidget {
 
   Future login(BuildContext context, String email, String senha) async {
     final int adminStatusCode = await AdminService().loginAdmin({
-      'email_admin': email,
+      'email': email,
       'senha': senha,
     });
 
