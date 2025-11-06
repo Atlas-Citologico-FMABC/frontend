@@ -94,6 +94,8 @@ class LoginTab extends StatelessWidget {
                     onTap: () {
                       if (_formKey.currentState!.validate()) {
                         onTap(TabType.admin);
+                        // onTap(TabType.profDiretorios);
+                        // onTap(TabType.profGaleria);
                       }
                     },
                     foregroundColor: Colors.white,
