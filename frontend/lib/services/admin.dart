@@ -4,13 +4,12 @@ import 'package:http/http.dart' as http;
 class AdminService {
   final NodeService _nodeService = NodeService();
 
-  Future<int> loginAdmin(Map<String, dynamic> userData) async {
-    var res = await _nodeService.post('/admin/login', userData);
-		return res;
+  Future<http.Response> loginAdmin(Map<String, dynamic> userData) async {
+		return await _nodeService.post('/admin/login', userData);
   }
 
   //Testar
-  Future<int> criarProfessor(Map<String, dynamic> userData) async {
+  Future<http.Response> criarProfessor(Map<String, dynamic> userData) async {
     return await _nodeService.post('/admin/professores', userData);
   }
 

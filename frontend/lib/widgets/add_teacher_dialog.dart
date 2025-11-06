@@ -121,7 +121,7 @@ class _AddTeacherDialogState extends State<AddTeacherDialog> {
                         'nome': nomeController.text
                       };
                       final res = await AdminService().criarProfessor(professorData);
-                      if (res == 200) {
+                      if (res.statusCode == 200) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             backgroundColor: green,

@@ -38,17 +38,17 @@ class _LoginTabState extends State<LoginTab> {
 	}
 
   Future login(BuildContext context, String email, String senha) async {
-    final int adminStatusCode = await AdminService().loginAdmin({
+    final adminRes = await AdminService().loginAdmin({
       'email': email,
       'senha': senha,
     });
 
-    final int professorStatusCode = await ProfessorService().loginProfessor({
+    final professorRes = await ProfessorService().loginProfessor({
       'email': email,
       'senha': senha,
     });
 
-    if (adminStatusCode == 200) {
+    if (adminRes.statusCode == 200) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
 					backgroundColor: green,
@@ -58,7 +58,7 @@ class _LoginTabState extends State<LoginTab> {
       );
       return widget.onTap(TabType.admin);
     }
-    if (professorStatusCode == 200) {
+    if (professorRes.statusCode == 200) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
 					backgroundColor: green,

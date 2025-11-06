@@ -4,13 +4,13 @@ import 'package:http/http.dart' as http;
 class NodeService {
   final String baseUrl = 'http://localhost:3000';
 
-  Future<int> post(String endpoint, Map<String, dynamic> body) async {
-    var retorno = await http.post(
+  Future<http.Response> post(String endpoint, Map<String, dynamic> body) async {
+    var res = await http.post(
       Uri.parse('$baseUrl$endpoint'),
       headers: {'Content-Type': 'application/json; charset=UTF-8'},
       body: jsonEncode(body),
     );
-		return retorno.statusCode;
+		return res;
   }
 
   // Testar
