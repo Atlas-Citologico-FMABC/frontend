@@ -120,8 +120,26 @@ class _AddTeacherDialogState extends State<AddTeacherDialog> {
                         'senha': senhaController.text,
                         'nome': nomeController.text
                       };
-                      await AdminService().criarProfessor(professorData);
-                      Navigator.pop(context);
+                      final res = await AdminService().criarProfessor(professorData);
+                      if (res == 200) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            backgroundColor: green,
+                            content: Text('Professor adicionado com sucesso.'),
+                            duration: Duration(seconds: 3),
+                          ),
+                        );
+                      }
+											else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            backgroundColor: Colors.red,
+                            content: Text('Não foi possível adicionar o professor.'),
+                            duration: Duration(seconds: 3),
+                          ),
+                        );
+											}
+											Navigator.pop(context);
                     }
                   },
                   backgroundColor: green,
