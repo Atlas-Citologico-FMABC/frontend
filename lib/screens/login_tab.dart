@@ -93,7 +93,8 @@ class LoginTab extends StatelessWidget {
                     text: 'Fazer Login',
                     onTap: () {
                       if (_formKey.currentState!.validate()) {
-                        onTap(TabType.admin);
+                        // onTap(TabType.admin);
+                        onTap(TabType.profHome);
                         // onTap(TabType.profDiretorios);
                         // onTap(TabType.profGaleria);
                       }

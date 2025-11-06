@@ -71,7 +71,7 @@ class ProfDiretorioTab extends StatelessWidget {
                                 spacing: 50,
                                 runSpacing: 50,
                                 children: <Widget>[
-                                  ImageBox(title: 'Image 1', onTap: () => onTapImage(TabType.imageViewer)),
+                                  ImageBox(title: 'Image 1', onTap: () => onTapImage(TabType.profImageViewer)),
                                   ImageBox(title: 'Image 2'),
                                   ImageBox(title: 'Image 3'),
                                   ImageBox(title: 'Image 4'),

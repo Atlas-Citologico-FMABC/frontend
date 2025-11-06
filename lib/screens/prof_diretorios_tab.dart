@@ -72,7 +72,7 @@ class ProfDiretoriosTab extends StatelessWidget {
                               DiretorioBox(
                                 title: 'Diretório 1',
                                 onTap: () =>
-                                    onTapDiretorio(TabType.diretorio),
+                                    onTapDiretorio(TabType.profDiretorio),
                               ),
                               const SizedBox(height: 10),
                               Text(descriptionPreview(description)),

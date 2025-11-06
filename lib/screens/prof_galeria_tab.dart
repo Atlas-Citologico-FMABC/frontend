@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import '../widgets/image_box.dart';
 import '../widgets/floating_round_button.dart';
-import '../main.dart';
 
 final Color lightGray = Color(0xffEBEBEB);
 
 class ProfGaleriaTab extends StatelessWidget {
-  final Function(TabType) onTapImage;
-  const ProfGaleriaTab({super.key, required this.onTapImage});
+  const ProfGaleriaTab({super.key});
 
   @override
   Widget build(BuildContext context) {
