@@ -15,6 +15,7 @@ import 'screens/prof_diretorio_tab.dart';
 import 'screens/image_viewer_tab.dart';
 import 'screens/prof_image_viewer_tab.dart';
 
+enum NavBarType { normal, teacher }
 enum TabType { home, diretorios, diretorio, galeria, imageViewer, login, admin, profHome, profDiretorios, profGaleria, profDiretorio, profImageViewer}
 
 final Color darkBlue = Color(0xff002C53);
@@ -32,7 +33,17 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+	NavBarType selectedNavBar = NavBarType.normal;
 	TabType selectedTab = TabType.home;
+
+	PreferredSizeWidget getNavBar(NavBarType navBar) {
+		switch(navBar) {
+			case NavBarType.normal:
+				return NavBar(height: navHeight, selectedTab: selectedTab, onTapTab: onTapTab);
+			case NavBarType.teacher:
+				return profNavBar(height: navHeight, selectedTab: selectedTab, onTapTab: onTapTab);
+		}
+	}
 
 	Widget getTab(TabType tab) {
     switch(tab) {
@@ -67,29 +78,13 @@ class _MainPageState extends State<MainPage> {
 		setState(() => selectedTab = tab);
 	}
 
-  PreferredSizeWidget getNavBar(TabType tab) {
-    if (tab == TabType.profHome || tab == TabType.profDiretorios || tab == TabType.profDiretorio || tab == TabType.profGaleria || tab == TabType.profImageViewer) {
-      return profNavBar(
-        height: navHeight,
-        selectedTab: selectedTab,
-        onTapTab: onTapTab,
-      );
-    }
-
-    return NavBar(
-      height: navHeight,
-      selectedTab: selectedTab,
-      onTapTab: onTapTab,
-    );
-  }
-
 	@override
 	Widget build(BuildContext context) {
 		return MaterialApp(
 			debugShowCheckedModeBanner: false,
       title: 'Atlas de Citologia',
 			home: Scaffold(
-				appBar: getNavBar(selectedTab),
+				appBar: getNavBar(selectedNavBar),
 				body: getTab(selectedTab),
 				backgroundColor: darkBlue,
 			),

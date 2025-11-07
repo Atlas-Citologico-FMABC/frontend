@@ -100,9 +100,6 @@ class LoginTab extends StatelessWidget {
 												print(emailController.text);
 												print(senhaController.text);
                         onTap(TabType.admin);
-                        // onTap(TabType.profHome);
-                        // onTap(TabType.profDiretorios);
-                        // onTap(TabType.profGaleria);
                       }
                     },
                     foregroundColor: Colors.white,
