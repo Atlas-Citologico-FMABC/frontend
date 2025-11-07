@@ -35,7 +35,7 @@ PreferredSizeWidget profNavBar({
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
             child: Button(
               text: 'Diretórios',
-              isSelected: selectedTab == TabType.profDiretorios || selectedTab == TabType.profDiretorios,
+              isSelected: selectedTab == TabType.profDiretorios,
               selectedBackgroundColor: gray,
               onTap: () => onTapTab(TabType.profDiretorios),
             ),
