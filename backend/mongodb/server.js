@@ -1,0 +1,137 @@
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+require("dotenv").config();
+
+const Directory = require("./models/directory");
+const imageInfo = require("./models/imageInfo");
+
+const app = express();
+app.use(express.json());
+app.use(cors());
+
+const PORT = process.env.PORT || 3001; // usar porta diferente da 3000 (servidor MySQL)
+
+// Conexão com o MongoDB e inicializa servidor somente após conectar
+async function start() {
+	try {
+		await mongoose.connect(process.env.MONGO_URI, {
+			useNewUrlParser: true,
+			useUnifiedTopology: true,
+		});
+		console.log("Conectado ao MongoDB");
+
+		app.listen(PORT, () =>
+			console.log(`Servidor rodando em http://localhost:${PORT}`),
+		);
+	} catch (err) {
+		console.error("MongoDB erro de conexão:", err);
+		process.exit(1); // encerra para evitar comportamento inconsistente
+	}
+}
+start();
+
+// Teste de status da API
+app.get("/test", async (req, res) => {
+	try {
+		const dbStatus = mongoose.connection.readyState; // 1 = conectado
+		res.json({
+			message: "API funcionando!",
+			mongoStatus: dbStatus === 1 ? "Conectado ao MongoDB" : "Desconectado",
+		});
+	} catch (err) {
+		res.status(500).json({ error: err.message });
+	}
+});
+
+// Parte de Diretorio:
+// Criar novo item
+app.post("/directory", async (req, res) => {
+	try {
+		console.log(" Tentando criar item no diretório...");
+		const item = new Directory(req.body);
+		const respMongo = await item.save();
+		console.log(" Item criado com sucesso:", respMongo);
+		res.status(201).json(respMongo);
+	} catch (erro) {
+		console.log(" Erro ao criar item:", erro.message);
+		res.status(400).json({ erro: erro.message });
+	}
+});
+
+// Listar todos os itens
+app.get("/directory", async (req, res) => {
+	try {
+		const itens = await Directory.find();
+		res.status(200).json(itens);
+	} catch (erro) {
+		console.log("Erro ao listar itens:", erro.message);
+		res.status(500).json({ erro: erro.message });
+	}
+});
+
+// Buscar item pelo ID
+app.get("/directory/:id", async (req, res) => {
+	try {
+		const item = await Directory.findById(req.params.id);
+		if (!item) return res.status(404).json({ erro: "Item não encontrado" });
+		res.status(200).json(item);
+	} catch (erro) {
+		console.log("Erro ao buscar item:", erro.message);
+		res.status(500).json({ erro: erro.message });
+	}
+});
+
+//  Remover item pelo ID
+app.delete("/directory/:id", async (req, res) => {
+	try {
+		const item = await Directory.findByIdAndDelete(req.params.id);
+		if (!item)
+			return res
+				.status(404)
+				.json({ erro: "Item não encontrado para exclusão" });
+
+		console.log("Item removido com sucesso:", item._id);
+		res.status(200).json({
+			message: "Item removido com sucesso",
+			item,
+		});
+	} catch (erro) {
+		console.log("Erro ao remover item:", erro.message);
+		res.status(500).json({ erro: erro.message });
+	}
+});
+
+// Atualizar item pelo ID
+app.put("/directory/:id", async (req, res) => {
+	try {
+		const id = req.params.id;
+		const updatedItem = await Directory.findByIdAndUpdate(
+			id,
+			{
+				titulo: req.body.titulo,
+				descricao: req.body.descricao,
+				listIMG: req.body.listIMG,
+			},
+			{ new: true, runValidators: true }, // retorna o item atualizado e executa validações
+		);
+
+		if (!updatedItem) {
+			return res.status(404).json({ erro: "Item não encontrado para edição" });
+		}
+
+		console.log("Item atualizado com sucesso:", updatedItem._id);
+		res.status(200).json(updatedItem);
+	} catch (erro) {
+		console.log("Erro ao editar item:", erro.message);
+		res.status(500).json({ erro: erro.message });
+	}
+});
+
+//Parte das Imagens
+
+// middleware de erro genérico
+app.use((err, req, res, next) => {
+	console.error("Unhandled error:", err);
+	res.status(err.status || 500).json({ erro: err.message || "Erro interno" });
+});
