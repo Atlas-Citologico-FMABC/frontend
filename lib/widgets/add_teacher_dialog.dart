@@ -14,6 +14,9 @@ class AddTeacherDialog extends StatefulWidget {
 
 class _AddTeacherDialogState extends State<AddTeacherDialog> {
   final _formKey = GlobalKey<FormState>();
+	final TextEditingController nomeController = TextEditingController(); 
+	final TextEditingController emailController = TextEditingController(); 
+	final TextEditingController senhaController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +42,7 @@ class _AddTeacherDialogState extends State<AddTeacherDialog> {
                     ),
                     Expanded(
                       child: InputField(
+												controller: nomeController,
                         errorText: 'Digite um nome',
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
@@ -56,6 +60,7 @@ class _AddTeacherDialogState extends State<AddTeacherDialog> {
                     ),
                     Expanded(
                       child: InputField(
+												controller: emailController,
                         errorText: 'Digite um email',
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
@@ -73,6 +78,7 @@ class _AddTeacherDialogState extends State<AddTeacherDialog> {
                     ),
                     Expanded(
                       child: InputField(
+												controller: senhaController,
                         errorText: 'Digite uma senha',
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
@@ -91,7 +97,9 @@ class _AddTeacherDialogState extends State<AddTeacherDialog> {
                   text: 'Adicionar professor',
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
-											print('ok');
+											print(nomeController.text);
+											print(emailController.text);
+											print(senhaController.text);
 											Navigator.pop(context);
                     }
                   },
