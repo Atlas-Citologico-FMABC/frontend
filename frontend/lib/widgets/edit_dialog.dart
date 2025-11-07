@@ -100,13 +100,32 @@ class _EditDialogState extends State<EditDialog> {
                 SizedBox(height: 50),
                 Button(
                   text: 'Salvar',
-                  onTap: () {
+                  onTap: () async {
                     if (_formKey.currentState!.validate()) {
-                      AdminService().atualizarProfessor(
+                      final res = await AdminService().atualizarProfessor(
                         widget.emailToEdit,
                         senhaController.text,
                         nomeController.text,
                       );
+                      if (res.statusCode == 200) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            backgroundColor: green,
+                            content: Text('Professor editado com sucesso.'),
+                            duration: Duration(seconds: 3),
+                          ),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            backgroundColor: Colors.red,
+                            content: Text(
+                              'Falha ao tentar editar o professor.',
+                            ),
+                            duration: Duration(seconds: 3),
+                          ),
+                        );
+                      }
                       Navigator.pop(context);
                     }
                   },
