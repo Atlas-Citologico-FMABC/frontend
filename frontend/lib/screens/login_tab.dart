@@ -51,7 +51,7 @@ class _LoginTabState extends State<LoginTab> {
       'senha': senha,
     });
 
-    if (adminRes.statusCode == 200) {
+    if (adminRes.statusCode == HttpStatus.ok) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
 					backgroundColor: green,
@@ -59,9 +59,10 @@ class _LoginTabState extends State<LoginTab> {
           duration: Duration(seconds: 3),
         ),
       );
-      return widget.onTap(TabType.admin);
+      widget.onTap(TabType.admin);
+			return HttpStatus.ok;
     }
-    if (professorRes.statusCode == 200) {
+    if (professorRes.statusCode == HttpStatus.ok) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
 					backgroundColor: green,
@@ -81,6 +82,7 @@ class _LoginTabState extends State<LoginTab> {
         duration: Duration(seconds: 3),
       ),
     );
+		return HttpStatus.unauthorized;
   }
 
   @override
