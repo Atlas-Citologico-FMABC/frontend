@@ -58,7 +58,7 @@ class _MainPageState extends State<MainPage> {
       case TabType.imageViewer:
         return ImageViewerTab();
       case TabType.login:
-        return LoginTab(onTap: onTapTab);
+        return LoginTab(switchNavBar: switchNavBar, onTap: onTapTab);
       case TabType.admin:
         return AdminTab();
       case TabType.profHome:
@@ -72,6 +72,10 @@ class _MainPageState extends State<MainPage> {
       case TabType.profImageViewer:
         return ProfImageViewerTab();
     }
+	}
+
+	void switchNavBar(NavBarType navBarType) {
+		setState(() => selectedNavBar = navBarType);
 	}
 
 	void onTapTab(TabType tab) {

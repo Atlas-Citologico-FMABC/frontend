@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:atlas_citologico_fmabc/main.dart';
 import '../services/admin.dart';
@@ -10,8 +12,9 @@ final Color lightGray = Color(0xffEBEBEB);
 final Color green = Color(0xff009951);
 
 class LoginTab extends StatefulWidget {
+	final Function(NavBarType) switchNavBar;
   final Function(TabType) onTap;
-  LoginTab({super.key, required this.onTap});
+  LoginTab({super.key, required this.switchNavBar, required this.onTap});
 
   @override
   State<LoginTab> createState() => _LoginTabState();
@@ -66,7 +69,9 @@ class _LoginTabState extends State<LoginTab> {
           duration: Duration(seconds: 3),
         ),
       );
-      return print("Vai para telas do professor");
+      widget.switchNavBar(NavBarType.teacher);
+			widget.onTap(TabType.profHome);
+			return HttpStatus.ok;
     }
 
     ScaffoldMessenger.of(context).showSnackBar(
