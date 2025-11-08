@@ -2,6 +2,7 @@ import 'package:atlas_citologico_fmabc/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:atlas_citologico_fmabc/main.dart';
 
+final Color green = Color(0xff009951);
 final Color gray = Color(0xFFEBEBEB);
 
 PreferredSizeWidget profNavBar({
@@ -52,11 +53,11 @@ PreferredSizeWidget profNavBar({
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
             child: Button(
-              text: 'LOGIN',
+              text: 'Logado',
               foregroundColor: Colors.white,
-              backgroundColor: Colors.blue,
+              backgroundColor: green,
               horizontalPadding: 60,
-              onTap: () => onTapTab(TabType.login),
+              onTap: () {},
             ),
           ),
         ],
