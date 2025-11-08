@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const imageInfoSchema = new mongoose.Schema({
+const infoImagemSchema = new mongoose.Schema({
   nomeNaPasta: { type: String, required: true, trim: true, unique: true },
   nomeImagem:  { type: String, required: true, trim: true },
   descricao:   { type: String, required: true, trim: true },
@@ -15,4 +15,4 @@ const imageInfoSchema = new mongoose.Schema({
   }
 }, { timestamps: true })
 
-module.exports = mongoose.model('ImageInfo', imageInfoSchema);
+module.exports = mongoose.model('InfoImagem', infoImagemSchema);

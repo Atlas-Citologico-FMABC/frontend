@@ -3,8 +3,8 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
 
-const Directory = require("./models/directory");
-const imageInfo = require("./models/imageInfo");
+const Diretorio = require("./models/diretorioSchema");
+const InfoImagem = require("./models/infoImagemSchema");
 
 const app = express();
 app.use(express.json());
@@ -46,10 +46,10 @@ app.get("/test", async (req, res) => {
 
 // Parte de Diretorio:
 // Criar novo item
-app.post("/directory", async (req, res) => {
+app.post("/diretorio", async (req, res) => {
 	try {
 		console.log(" Tentando criar item no diretório...");
-		const item = new Directory(req.body);
+		const item = new Diretorio(req.body);
 		const respMongo = await item.save();
 		console.log(" Item criado com sucesso:", respMongo);
 		res.status(201).json(respMongo);
@@ -60,9 +60,9 @@ app.post("/directory", async (req, res) => {
 });
 
 // Listar todos os itens
-app.get("/directory", async (req, res) => {
+app.get("/diretorio", async (req, res) => {
 	try {
-		const itens = await Directory.find();
+		const itens = await Diretorio.find();
 		res.status(200).json(itens);
 	} catch (erro) {
 		console.log("Erro ao listar itens:", erro.message);
@@ -71,9 +71,9 @@ app.get("/directory", async (req, res) => {
 });
 
 // Buscar item pelo ID
-app.get("/directory/:id", async (req, res) => {
+app.get("/diretorio/:id", async (req, res) => {
 	try {
-		const item = await Directory.findById(req.params.id);
+		const item = await Diretorio.findById(req.params.id);
 		if (!item) return res.status(404).json({ erro: "Item não encontrado" });
 		res.status(200).json(item);
 	} catch (erro) {
@@ -83,9 +83,9 @@ app.get("/directory/:id", async (req, res) => {
 });
 
 //  Remover item pelo ID
-app.delete("/directory/:id", async (req, res) => {
+app.delete("/diretorio/:id", async (req, res) => {
 	try {
-		const item = await Directory.findByIdAndDelete(req.params.id);
+		const item = await Diretorio.findByIdAndDelete(req.params.id);
 		if (!item)
 			return res
 				.status(404)
@@ -103,10 +103,10 @@ app.delete("/directory/:id", async (req, res) => {
 });
 
 // Atualizar item pelo ID
-app.put("/directory/:id", async (req, res) => {
+app.put("/diretorio/:id", async (req, res) => {
 	try {
 		const id = req.params.id;
-		const updatedItem = await Directory.findByIdAndUpdate(
+		const updatedItem = await Diretorio.findByIdAndUpdate(
 			id,
 			{
 				titulo: req.body.titulo,
