@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 Widget ImageBox({
   required String title,
 	final VoidCallback? onTap,
+	DecorationImage previewImage = const DecorationImage(image: AssetImage('assets/images/image.png')),
   Color borderColor = Colors.transparent,
   double borderWidth = 0,
 }) {
@@ -12,7 +13,7 @@ Widget ImageBox({
       width: 250,
       height: 250,
       decoration: BoxDecoration(
-        image: DecorationImage(image: AssetImage('assets/images/image.png')),
+        image: previewImage,
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withValues(alpha: 0.7),
