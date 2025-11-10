@@ -54,7 +54,7 @@ class _MainPageState extends State<MainPage> {
       case TabType.diretorio:
         return DiretorioTab(onTapImage: onTapTab);
       case TabType.galeria:
-        return GaleriaTab();
+        return GaleriaTab(onTapImage: onTapTab);
       case TabType.imageViewer:
         return ImageViewerTab();
       case TabType.login:
