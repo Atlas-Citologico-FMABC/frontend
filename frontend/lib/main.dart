@@ -33,7 +33,11 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-	String? currImageFolderName;
+	String? currImageFolderName; // imagem referente a imagem clicada na galeria
+
+	List<String>? currImageFolderNames; // apenas as imagens referentes a certo diretorio
+	String? diretorioTitle, diretorioDescription;
+
 	NavBarType selectedNavBar = NavBarType.normal;
 	TabType selectedTab = TabType.home;
 
@@ -43,6 +47,15 @@ class _MainPageState extends State<MainPage> {
 			selectedTab = TabType.imageViewer,
 		);
 		print(currImageFolderName);
+	}
+
+	void openDirectory(List<String> imageFolderNames, {String? title, String? description}) {
+		setState(() {
+			currImageFolderNames = imageFolderNames;
+			diretorioTitle = title;
+			diretorioDescription = description;
+			selectedTab = TabType.diretorio;
+		});
 	}
 
 	PreferredSizeWidget getNavBar(NavBarType navBar) {
@@ -59,9 +72,9 @@ class _MainPageState extends State<MainPage> {
       case TabType.home:
         return HomeTab(navHeight: navHeight);
       case TabType.diretorios:
-        return DiretoriosTab(onTapDiretorio: onTapTab);
+        return DiretoriosTab(openDirectory: openDirectory);
       case TabType.diretorio:
-        return DiretorioTab(onTapImage: onTapTab);
+        return DiretorioTab(onTapImage: openImageViewer, folderNames: currImageFolderNames, title: diretorioTitle, description: diretorioDescription);
       case TabType.galeria:
         return GaleriaTab(openImageViewer: openImageViewer);
       case TabType.imageViewer:
