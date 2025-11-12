@@ -5,7 +5,8 @@ import '../widgets/image_viewer_box.dart';
 final Color lightGray = Color(0xffEBEBEB);
 
 class ImageViewerTab extends StatelessWidget {
-  const ImageViewerTab({super.key});
+	final String imageFolderName;
+  const ImageViewerTab({super.key, required this.imageFolderName});
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +54,7 @@ class ImageViewerTab extends StatelessWidget {
                       Expanded(
                         flex: 2,
                         child: ImageViewerBox(
-                          imagePath:
-                              'assets/images/2000x1000.jpg', // test image
+                          imagePath: imageFolderName,
                         ),
                       ),
                       Expanded(
