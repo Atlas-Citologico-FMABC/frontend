@@ -33,8 +33,17 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+	String? currImageFolderName;
 	NavBarType selectedNavBar = NavBarType.normal;
 	TabType selectedTab = TabType.home;
+
+	void openImageViewer(String imageFolderName) {
+		currImageFolderName = imageFolderName;
+		setState(() =>
+			selectedTab = TabType.imageViewer,
+		);
+		print(currImageFolderName);
+	}
 
 	PreferredSizeWidget getNavBar(NavBarType navBar) {
 		switch(navBar) {
@@ -54,9 +63,9 @@ class _MainPageState extends State<MainPage> {
       case TabType.diretorio:
         return DiretorioTab(onTapImage: onTapTab);
       case TabType.galeria:
-        return GaleriaTab(onTapImage: onTapTab);
+        return GaleriaTab(openImageViewer: openImageViewer);
       case TabType.imageViewer:
-        return ImageViewerTab();
+        return ImageViewerTab(imageFolderName: currImageFolderName!);
       case TabType.login:
         return LoginTab(switchNavBar: switchNavBar, onTap: onTapTab);
       case TabType.admin:
