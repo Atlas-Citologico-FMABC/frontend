@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const imageRoutes = require("./routes/imageRoutes");
+const directoryRoutes = require("./routes/directoryRoutes");
 
 require("dotenv").config();
 
@@ -10,6 +11,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use('/', imageRoutes);
+app.use('/', directoryRoutes);
 
 const PORT = process.env.PORT || 3001; // usar porta diferente da 3000 (servidor MySQL)
 
