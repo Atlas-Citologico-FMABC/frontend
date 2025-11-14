@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 Widget InputField({
+	required bool validator,
 	TextEditingController? controller,
-  required String errorText,
+  String errorText = '',
   double width = 400,
   double height = 2,
   double fontSize = 20,
@@ -25,12 +26,13 @@ Widget InputField({
         floatingLabelStyle: TextStyle(color: Colors.green),
         floatingLabelBehavior: FloatingLabelBehavior.never,
       ),
-      validator: (value) {
+      validator: validator ? (value) {
         if (value == null || value.isEmpty) {
           return errorText;
         }
         return null;
-      },
+      }
+			: null,
     ),
   );
 }

@@ -116,6 +116,7 @@ class _LoginTabState extends State<LoginTab> {
                     children: <Widget>[
                       Text('Email:', style: TextStyle(fontSize: 20)),
                       InputField(
+												validator: true,
                         controller: emailController,
                         errorText: 'Por favor, insira um endereço de email',
                         labelText: 'Email',
@@ -142,6 +143,7 @@ class _LoginTabState extends State<LoginTab> {
                     children: <Widget>[
                       Text('Senha:', style: TextStyle(fontSize: 20)),
                       InputField(
+												validator: true,
                         controller: senhaController,
                         errorText: 'Por favor, insira uma senha',
                         labelText: 'Senha',

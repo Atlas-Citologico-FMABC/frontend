@@ -64,6 +64,7 @@ class _EditDialogState extends State<EditDialog> {
                     ),
                     Expanded(
                       child: InputField(
+												validator: true,
                         controller: nomeController,
                         errorText: 'Digite um novo nome',
                         enabledBorder: UnderlineInputBorder(
@@ -82,8 +83,9 @@ class _EditDialogState extends State<EditDialog> {
                     ),
                     Expanded(
                       child: InputField(
+												validator: false,
 												controller: senhaController,
-                        errorText: 'Digite uma nova senha',
+                        // errorText: 'Digite uma nova senha', // caso mudar o validator para true
                         // obscureText: true,
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
