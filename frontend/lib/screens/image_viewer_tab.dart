@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/image_canvas.dart';
 import '../widgets/image_viewer_box.dart';
 
 final Color lightGray = Color(0xffEBEBEB);
@@ -53,9 +54,7 @@ class ImageViewerTab extends StatelessWidget {
                     children: [
                       Expanded(
                         flex: 2,
-                        child: ImageViewerBox(
-                          imagePath: imageFolderName,
-                        ),
+												child: ImageCanvas(),
                       ),
                       Expanded(
                         flex: 1,
