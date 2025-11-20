@@ -57,10 +57,10 @@ class _GaleriaTabState extends State<GaleriaTab> {
           _SmallestArgs(folderAbs: folderAbs),
         ).then((result) {
           final previewPath = result?.path;
-          return _GalleryItem(title: title, previewPath: previewPath);
+          return _GalleryItem(imageFolderName: folder, title: title, previewPath: previewPath);
         }).catchError((_) {
           // falha ao varrer a pasta -> volta item com preview nulo (usa placeholder)
-          return _GalleryItem(title: title, previewPath: null);
+          return _GalleryItem(imageFolderName: folder, title: title, previewPath: null);
         }),
       );
     }
@@ -152,7 +152,7 @@ class _GaleriaTabState extends State<GaleriaTab> {
                                       image: FileImage(File(e.previewPath!)),
                                       // fit: BoxFit.cover,
                                     ),
-															onTap: () => widget.openImageViewer(e.previewPath!), // passando o preview apenas para testar abrir a imagem.. ainda deve-se integrar com a lógica das imagens, o que provavelmente receberá um imageFolderName.
+															onTap: () => widget.openImageViewer(e.imageFolderName),
                             ),
                         ],
                       );
@@ -169,9 +169,10 @@ class _GaleriaTabState extends State<GaleriaTab> {
 }
 
 class _GalleryItem {
+	final String imageFolderName;
   final String title;
   final String? previewPath;
-  _GalleryItem({required this.title, required this.previewPath});
+  _GalleryItem({required this.imageFolderName, required this.title, required this.previewPath});
 }
 
 class _SmallestArgs {

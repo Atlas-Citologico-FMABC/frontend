@@ -127,7 +127,7 @@ Gerenciamento de tiles
 /// Ela possui todos os atributos e métodos básicos necessários para se criar a manipulação de tiles da forma que for mais adequada do sistema de tiling para o programa.
 class TileManager {
   String dirPath;
-  String imageFileName = '002.mrxs'; // ESTE VALOR NECESSITA SER ALTERADO PARA RECEBER O VALOR DINÂMICO DO BANCO DE DADOS
+  String? imageFolderName;
   int currentLevel = 0;
   int maxLevel = 0;
   int tileSize;
@@ -144,7 +144,7 @@ class TileManager {
   /// A função tem como intuito definir o diretório do arquivo de imagem correto de onde as imagens que formam os tiles virão.
   Future<void> setTilesDirectory() async {
     var documentsPath = (await getApplicationDocumentsDirectory()).path;
-    dirPath = '$documentsPath/tiles/$imageFileName';
+    dirPath = '$documentsPath/tiles/$imageFolderName';
   }
 
   /// A função tem como intuito definir o maior valor de nível possível da imagem sendo lida.
@@ -282,7 +282,8 @@ class TilePainter extends CustomPainter {
 }
 
 class ImageCanvas extends StatefulWidget {
-  const ImageCanvas({super.key});
+	final String imageFolderName;
+  const ImageCanvas({super.key, required this.imageFolderName});
   @override
   State<ImageCanvas> createState() => _ImageCanvasState();
 }
@@ -300,6 +301,7 @@ class _ImageCanvasState extends State<ImageCanvas> {
   @override
   void initState() {
     super.initState();
+		tileManager.imageFolderName = widget.imageFolderName;
     transformationController = TransformationController();
   }
 

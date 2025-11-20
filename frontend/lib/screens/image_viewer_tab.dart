@@ -54,7 +54,7 @@ class ImageViewerTab extends StatelessWidget {
                     children: [
                       Expanded(
                         flex: 2,
-												child: ImageCanvas(),
+												child: ImageCanvas(imageFolderName: imageFolderName),
                       ),
                       Expanded(
                         flex: 1,
