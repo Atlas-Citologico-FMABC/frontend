@@ -58,7 +58,6 @@ exports.deleteImage = async (req, res) => {
         if (!deletedImage) {
             return res.status(404).json({ message: 'Imagem não encontrada para exclusão' });
         }
-        // Nota: Em um sistema real, você também precisaria remover a referência desta imagem de todos os diretórios.
         res.status(200).json({ message: 'Imagem excluída com sucesso', deletedImage });
     } catch (error) {
         res.status(500).json({ message: 'Erro ao excluir imagem', error: error.message });

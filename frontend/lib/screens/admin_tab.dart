@@ -56,7 +56,10 @@ class _AdminTabState extends State<AdminTab> {
   }
 
   Future<void> _onEditTeacher(Teacher t) async {
-    await showDialog(context: context, builder: (_) => EditDialog(emailToEdit: t.email, initialName: t.nome));
+    await showDialog(
+      context: context,
+      builder: (_) => EditDialog(emailToEdit: t.email, initialName: t.nome),
+    );
     await _refresh();
   }
 
@@ -139,33 +142,35 @@ class _AdminTabState extends State<AdminTab> {
               FutureBuilder<List<Teacher>>(
                 future: _futureTeachers,
                 builder: (context, snapshot) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Tabela de Professores Autorizados',
-                        style: TextStyle(fontSize: 30),
-                      ),
-                      SizedBox(height: 10),
-                      Container(
-                        // width: 670,
-                        height: 400,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8),
+                  return Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Tabela de Professores Autorizados',
+                          style: TextStyle(fontSize: 30),
                         ),
-                        child: _buildTable(snapshot),
-                      ),
-                      SizedBox(height: 40),
-                      Button(
-                        text: 'Adicionar Professor',
-                        onTap: _onAddTeacher,
-                        backgroundColor: green,
-                        foregroundColor: Colors.white,
-                        horizontalPadding: 60,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ],
+                        SizedBox(height: 10),
+                        Container(
+                          height: 400,
+                          constraints: BoxConstraints(minWidth: 600),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: _buildTable(snapshot),
+                        ),
+                        SizedBox(height: 40),
+                        Button(
+                          text: 'Adicionar Professor',
+                          onTap: _onAddTeacher,
+                          backgroundColor: green,
+                          foregroundColor: Colors.white,
+                          horizontalPadding: 60,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ],
+                    ),
                   );
                 },
               ),

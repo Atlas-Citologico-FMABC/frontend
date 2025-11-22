@@ -60,6 +60,7 @@ class _AddTeacherDialogState extends State<AddTeacherDialog> {
                     ),
                     Expanded(
                       child: InputField(
+												validator: true,
                         controller: nomeController,
                         errorText: 'Digite um nome',
                         enabledBorder: UnderlineInputBorder(
@@ -78,6 +79,7 @@ class _AddTeacherDialogState extends State<AddTeacherDialog> {
                     ),
                     Expanded(
                       child: InputField(
+												validator: true,
                         controller: emailController,
                         errorText: 'Digite um email',
                         enabledBorder: UnderlineInputBorder(
@@ -96,6 +98,7 @@ class _AddTeacherDialogState extends State<AddTeacherDialog> {
                     ),
                     Expanded(
                       child: InputField(
+												validator: true,
                         controller: senhaController,
                         errorText: 'Digite uma senha',
                         enabledBorder: UnderlineInputBorder(

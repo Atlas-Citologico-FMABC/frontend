@@ -48,14 +48,26 @@ exports.listarProfessores = (req, res) => {
 exports.atualizarProfessor = (req, res) => {
   const { email } = req.params;
   const { nome, senha } = req.body;
-  db.query(
-    'UPDATE Professor SET nome=?, senha=? WHERE email=?',
-    [nome, senha, email],
-    (err) => {
-      if (err) return res.status(500).json({ error: err });
-      res.json({ message: 'Professor atualizado com sucesso!' });
-    }
-  );
+	if (senha.trim() == '') {
+		db.query(
+			'UPDATE Professor SET nome=? WHERE email=?',
+			[nome, email],
+			(err) => {
+				if (err) return res.status(500).json({ error: err });
+				res.json({ message: 'Professor atualizado com sucesso!' });
+			}
+		);
+	}
+	else {
+		db.query(
+			'UPDATE Professor SET nome=?, senha=? WHERE email=?',
+			[nome, senha, email],
+			(err) => {
+				if (err) return res.status(500).json({ error: err });
+				res.json({ message: 'Professor atualizado com sucesso!' });
+			}
+		);
+	}
 };
 
 // Deletar professor
