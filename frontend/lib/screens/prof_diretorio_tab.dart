@@ -1,115 +1,235 @@
+import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../main.dart';
+import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
+
 import '../widgets/image_box.dart';
 
 final Color lightGray = Color(0xffEBEBEB);
+final Color darkBlue = const Color(0xff05172D);
 
 class ProfDiretorioTab extends StatelessWidget {
-	final Function(TabType) onTapImage;
-  const ProfDiretorioTab({super.key, required this.onTapImage});
+  final List<String>? folderNames;
+  final String? title;
+  final String? description;
+
+  final Function(String)? onTapImage;
+
+  const ProfDiretorioTab({
+    super.key,
+    required this.onTapImage,
+    this.folderNames,
+    this.title,
+    this.description,
+  });
+
+  Future<String> get _tilesPath async {
+    final directory = await getApplicationDocumentsDirectory();
+    return p.join(directory.path, 'tiles');
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Container(
-          width: double.infinity,
-          padding: EdgeInsets.all(30),
+    return FutureBuilder<String>(
+      future: _tilesPath,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Text('Erro: ${snapshot.error}');
+        } else if (!snapshot.hasData) {
+          return const Text('Caminho não encontrado');
+        }
+
+        final tilesPath = snapshot.data!;
+        final tilesRoot = Directory(tilesPath);
+        if (!tilesRoot.existsSync()) {
+          return const Padding(
+            padding: EdgeInsets.only(top: 50),
+            child: Center(
+              child: Text('Nenhum conteúdo encontrado em "tiles/".'),
+            ),
+          );
+        }
+
+        // Todas as subpastas existentes em tiles/
+        final existingSubdirs = tilesRoot
+            .listSync(followLinks: false)
+            .whereType<Directory>()
+            .toList();
+
+        final allow = (folderNames ?? const <String>[])
+            .map((e) => e.toLowerCase())
+            .toSet();
+
+        final toShow = allow.isEmpty
+            ? existingSubdirs
+            : existingSubdirs.where((d) {
+                final name = p.basename(d.path).toLowerCase();
+                return allow.contains(name);
+              }).toList();
+
+        List<Directory> orderedToShow;
+        if (allow.isNotEmpty) {
+          final mapByName = {
+            for (final d in toShow) p.basename(d.path).toLowerCase(): d,
+          };
+          orderedToShow = [
+            for (final name in folderNames!)
+              if (mapByName[name.toLowerCase()] != null)
+                mapByName[name.toLowerCase()]!,
+          ];
+        } else {
+          orderedToShow = toShow
+            ..sort((a, b) => p.basename(a.path).compareTo(p.basename(b.path)));
+        }
+
+        return Padding(
+          padding: const EdgeInsets.only(top: 50),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Atlas de Citologia',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 45,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 50),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      title ?? 'Atlas de Citologia - Diretório',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 45,
+                      ),
+                    ),
+                    const Divider(color: Colors.white),
+                    if ((description ?? '').isNotEmpty) ...[
+                      const SizedBox(height: 8),
+                      Text(
+                        description!,
+                        style: const TextStyle(
+                          color: Colors.white70,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                    const SizedBox(height: 30),
+                  ],
                 ),
               ),
-              Divider(color: Colors.white),
-              SizedBox(height: 30),
-            ],
-          ),
-        ),
-        Expanded(
-          child: Container(
-            constraints: BoxConstraints(
-              minHeight: MediaQuery.of(context).size.height,
-            ),
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: lightGray,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.elliptical(700, 70),
-                topRight: Radius.elliptical(700, 70),
-              ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only(
-                top: 30,
-                right: 100,
-                bottom: 70,
-                left: 20,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    '<Título do Diretório>',
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 50),
-                  Expanded(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: SingleChildScrollView(
-                            child: Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: Wrap(
-																alignment: WrapAlignment.center,
-                                spacing: 50,
-                                runSpacing: 50,
-                                children: <Widget>[
-                                  ImageBox(title: 'Image 1', onTap: () => onTapImage(TabType.profImageViewer)),
-                                  ImageBox(title: 'Image 2'),
-                                  ImageBox(title: 'Image 3'),
-                                  ImageBox(title: 'Image 4'),
-                                  ImageBox(title: 'Image 5'),
-                                  ImageBox(title: 'Image 6'),
-                                  ImageBox(title: 'Image 7'),
-                                  ImageBox(title: 'Image 8'),
-                                  ImageBox(title: 'Image 9'),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 100),
-                        Container(
-                          height: 400,
-                          width: 400,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          padding: EdgeInsets.all(20),
-                          child: SingleChildScrollView(
-                            child: Text(
-                              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ),
-                        ),
-                      ],
+
+              // Conteúdo
+              Expanded(
+                child: Container(
+                  width: double.infinity,
+                  decoration: const BoxDecoration(
+                    color: Color(0xffEBEBEB),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.elliptical(700, 70),
+                      topRight: Radius.elliptical(700, 70),
                     ),
                   ),
-                ],
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      top: 100,
+                      right: 50,
+                      bottom: 70,
+                      left: 50,
+                    ),
+                    child: Builder(
+                      builder: (context) {
+                        if (orderedToShow.isEmpty) {
+                          final info = allow.isEmpty
+                              ? 'Nenhuma pasta de imagem encontrada em tiles/.'
+                              : 'Nenhuma das pastas de imagem especificadas existe em tiles/.';
+                          return Center(child: Text(info));
+                        }
+                        return SingleChildScrollView(
+                          physics: const BouncingScrollPhysics(),
+                          child: Wrap(
+														alignment: WrapAlignment.center,
+                            spacing: 50,
+                            runSpacing: 30,
+                            children: [
+                              for (final dir in orderedToShow)
+                                FutureBuilder<_SmallestResult?>(
+                                  future:
+                                      compute<_SmallestArgs, _SmallestResult?>(
+                                        _pickSmallestImageIsolate,
+                                        _SmallestArgs(folderAbs: dir.path),
+                                      ),
+                                  builder: (context, snap) {
+                                    final folderName = p.basename(dir.path);
+                                    final thumbPath = snap.data?.path;
+                                    final preview = (thumbPath != null)
+                                        ? DecorationImage(
+                                            image: FileImage(File(thumbPath)),
+                                            // fit: BoxFit.cover,
+                                          )
+                                        : const DecorationImage(
+                                            image: AssetImage(
+                                              'assets/images/image.png',
+                                            ),
+                                          );
+
+                                    return ImageBox(
+                                      title: folderName,
+                                      previewImage: preview,
+                                      onTap: () => onTapImage?.call(folderName),
+                                      borderColor: Colors.transparent,
+                                      borderWidth: 0,
+                                    );
+                                  },
+                                ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
-        ),
-      ],
+        );
+      },
     );
   }
+}
+
+class _SmallestArgs {
+  final String folderAbs;
+  const _SmallestArgs({required this.folderAbs});
+}
+
+class _SmallestResult {
+  final String path;
+  const _SmallestResult({required this.path});
+}
+
+_SmallestResult? _pickSmallestImageIsolate(_SmallestArgs args) {
+  final dir = Directory(args.folderAbs);
+  if (!dir.existsSync()) return null;
+
+  File? best;
+  int? bestSize;
+
+  for (final entity in dir.listSync(recursive: true, followLinks: false)) {
+    if (entity is File) {
+      final ext = p.extension(entity.path).toLowerCase();
+      if (ext == '.png' || ext == '.jpg' || ext == '.jpeg' || ext == '.webp') {
+        try {
+          final size = entity.lengthSync();
+          if (best == null || size < (bestSize ?? 1 << 30)) {
+            best = entity;
+            bestSize = size;
+          }
+        } catch (_) {}
+      }
+    }
+  }
+
+  if (best == null) return null;
+  return _SmallestResult(path: best.path);
 }

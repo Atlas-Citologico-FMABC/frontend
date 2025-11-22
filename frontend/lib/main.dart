@@ -107,7 +107,7 @@ class _MainPageState extends State<MainPage> {
       case TabType.profGaleria:
         return ProfGaleriaTab(openTeacherImageViewer: openTeacherImageViewer);
       case TabType.profDiretorio:
-        return ProfDiretorioTab(onTapImage: onTapTab);
+        return ProfDiretorioTab(onTapImage: openTeacherImageViewer, folderNames: currImageFolderNames, title: diretorioTitle, description: diretorioDescription);
       case TabType.profImageViewer:
         return ProfImageViewerTab(imageFolderName: currImageFolderName!);
     }
