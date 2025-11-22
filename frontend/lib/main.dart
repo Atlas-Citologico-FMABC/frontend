@@ -66,6 +66,15 @@ class _MainPageState extends State<MainPage> {
 		});
 	}
 
+	void openTeacherDirectory(List<String> imageFolderNames, {String? title, String? description}) {
+		setState(() {
+			currImageFolderNames = imageFolderNames;
+			diretorioTitle = title;
+			diretorioDescription = description;
+			selectedTab = TabType.profDiretorio;
+		});
+	}
+
 	PreferredSizeWidget getNavBar(NavBarType navBar) {
 		switch(navBar) {
 			case NavBarType.normal:
@@ -94,7 +103,7 @@ class _MainPageState extends State<MainPage> {
       case TabType.profHome:
         return ProfHomeTab(navHeight: navHeight);
       case TabType.profDiretorios:
-        return ProfDiretoriosTab(onTapDiretorio: onTapTab);
+        return ProfDiretoriosTab(openTeacherDirectory: openTeacherDirectory);
       case TabType.profGaleria:
         return ProfGaleriaTab(openTeacherImageViewer: openTeacherImageViewer);
       case TabType.profDiretorio:

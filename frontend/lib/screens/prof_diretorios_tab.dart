@@ -1,35 +1,51 @@
 import 'package:flutter/material.dart';
 import '../widgets/diretorio_box.dart';
+import '../services/directory_service.dart';
 import '../widgets/floating_round_button.dart';
-import '../main.dart';
 
 final Color lightGray = const Color(0xffEBEBEB);
 
-class ProfDiretoriosTab extends StatelessWidget {
-  final Function(TabType) onTapDiretorio;
-  const ProfDiretoriosTab({super.key, required this.onTapDiretorio});
+class ProfDiretoriosTab extends StatefulWidget {
+  final void Function(
+    List<String> imageFolderNames, {
+    String? title,
+    String? description,
+  })
+  openTeacherDirectory;
 
-  final String description =
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+  const ProfDiretoriosTab({super.key, required this.openTeacherDirectory});
 
-  String descriptionPreview(String description) {
-    return description.length > 30
-        ? description.substring(0, 30) + '...'
-        : description + '...';
+  @override
+  State<ProfDiretoriosTab> createState() => _ProfDiretoriosTabState();
+}
+
+class _ProfDiretoriosTabState extends State<ProfDiretoriosTab> {
+  late Future<List<Directory>> _future;
+  final _service = DirectoryService();
+
+  @override
+  void initState() {
+    super.initState();
+    _future = _service.getAll();
   }
+
+  String _descriptionPreview(String d) => d.isEmpty
+      ? 'Sem descrição...'
+      : (d.length > 40 ? '${d.substring(0, 40)}...' : '$d...');
 
   @override
   Widget build(BuildContext context) {
     return Stack(
-      children: [
-        SingleChildScrollView(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(top: 50),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // TODO: restante do seu código permanece igual ao 'diretorio_tab'
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(30),
-                child: const Column(
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 50),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
                       'Atlas de Citologia - Diretórios',
@@ -44,72 +60,80 @@ class ProfDiretoriosTab extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
-                constraints: BoxConstraints(
-                  minHeight: MediaQuery.of(context).size.height,
-                ),
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: lightGray,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.elliptical(700, 70),
-                    topRight: Radius.elliptical(700, 70),
+              Expanded(
+                child: Container(
+                  width: double.infinity,
+                  decoration: const BoxDecoration(
+                    color: Color(0xffEBEBEB),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.elliptical(700, 70),
+                      topRight: Radius.elliptical(700, 70),
+                    ),
                   ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 70, horizontal: 80),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const SizedBox(height: 20),
-                      Wrap(
-                        spacing: 50,
-                        runSpacing: 30,
-                        children: [
-                          Column(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      top: 100,
+                      right: 50,
+                      bottom: 70,
+                      left: 50,
+                    ),
+                    child: FutureBuilder<List<Directory>>(
+                      future: _future,
+                      builder: (context, snap) {
+                        if (snap.connectionState == ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        if (snap.hasError) {
+                          return Center(
+                            child: Text(
+                              'Erro ao carregar diretórios:\n${snap.error}',
+                            ),
+                          );
+                        }
+                        final itens = snap.data ?? const [];
+                        if (itens.isEmpty) {
+                          return const Center(
+                            child: Text('Nenhum diretório encontrado.'),
+                          );
+                        }
+                        return SingleChildScrollView(
+                          physics: const BouncingScrollPhysics(),
+                          child: Wrap(
+                            alignment: WrapAlignment.center,
+                            spacing: 50,
+                            runSpacing: 30,
                             children: [
-                              DiretorioBox(
-                                title: 'Diretório 1',
-                                onTap: () =>
-                                    onTapDiretorio(TabType.profDiretorio),
-                              ),
-                              const SizedBox(height: 10),
-                              Text(descriptionPreview(description)),
+                              for (final d in itens)
+                                Column(
+                                  children: [
+                                    DiretorioBox(
+                                      title: d.title,
+                                      onTap: () => widget.openTeacherDirectory(
+                                        d.imageFolderNames,
+                                        title: d.title,
+                                        description: d.description,
+                                      ),
+                                      borderWidth: 0,
+                                      borderColor: Colors.transparent,
+                                    ),
+                                    SizedBox(height: 10),
+                                    Text(_descriptionPreview(d.description)),
+                                  ],
+                                ),
                             ],
                           ),
-                          DiretorioBox(title: 'Diretório 2'),
-                          DiretorioBox(title: 'Diretório 3'),
-                          DiretorioBox(title: 'Diretório 4'),
-                          DiretorioBox(title: 'Diretório 5'),
-                          DiretorioBox(title: 'Diretório 6'),
-                          DiretorioBox(title: 'Diretório 7'),
-                          DiretorioBox(title: 'Diretório 8'),
-                          DiretorioBox(title: 'Diretório 9'),
-                          DiretorioBox(title: 'Diretório 10'),
-                          DiretorioBox(title: 'Diretório 11'),
-                          DiretorioBox(title: 'Diretório 12'),
-                          DiretorioBox(title: 'Diretório 13'),
-                          DiretorioBox(title: 'Diretório 14'),
-                          DiretorioBox(title: 'Diretório 15'),
-                          DiretorioBox(title: 'Diretório 16'),
-                        ],
-                      ),
-                    ],
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
             ],
           ),
         ),
-
-        /// Botão verde no canto inferior direito
-        FloatingRoundButton(
-          onPressed: () {
-            print("Botão pressionado!");
-            // Coloque aqui a ação desejada, como abrir modal, criar diretório, etc.
-          },
-        ),
+        FloatingRoundButton(onPressed: () {}),
       ],
     );
   }
