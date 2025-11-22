@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const DirectorySchema = new mongoose.Schema({
-  title:           { type: String, required: true, trim: true },
+  title:           { type: String, required: true, trim: true, unique: true },
   description:     { type: String, required: true, trim: true },
 	imageFolderNames: { type: [String] },
 }, { timestamps: true });
