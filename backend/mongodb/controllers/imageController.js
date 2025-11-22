@@ -26,24 +26,22 @@ exports.getAllImages = async (req, res) => {
 
 exports.createImage = async (req, res) => {
     try {
-        const newImage = new Image(req.params);
+        const newImage = new Image(req.body);
         const savedImage = await newImage.save();
         res.status(201).json(savedImage);
     } catch (error) {
-        // Erro de validação ou nome duplicado
         res.status(400).json({ message: 'Erro ao criar imagem', error: error.message });
     }
 };
 exports.updateImage = async (req, res) => {
     try {
-        const updatedImage = await Image.findOne(
-            req.params.title,
-            req.params.description,
-            req.params.imageFolderName,
-            { new: true, runValidators: true } // Retorna o documento atualizado e executa validações
+        const updatedImage = await Image.findOneAndUpdate(
+            { imageFolderName: req.params.imageFolderName },
+            req.body,
+            { new: true, runValidators: true }
         );
         if (!updatedImage) {
-            return res.status(404).json({ message: 'Imagem não encontrada para atualização' });
+            return res.status(404).json({ message: 'Imagem não encontrada' });
         }
         res.status(200).json(updatedImage);
     } catch (error) {
@@ -52,7 +50,11 @@ exports.updateImage = async (req, res) => {
 };
 exports.deleteImage = async (req, res) => {
     try {
-        const deletedImage = await Image.findOne(req.params.imageFolderName);
+        const deletedImage = await Image.findOneAndDelete(
+            { imageFolderName: req.params.imageFolderName },
+            req.body,
+            { new: true, runValidators: true }
+        );
         if (!deletedImage) {
             return res.status(404).json({ message: 'Imagem não encontrada para exclusão' });
         }
