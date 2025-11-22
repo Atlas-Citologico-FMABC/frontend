@@ -49,6 +49,14 @@ class _MainPageState extends State<MainPage> {
 		print(currImageFolderName);
 	}
 
+	void openTeacherImageViewer(String imageFolderName) {
+		currImageFolderName = imageFolderName;
+		setState(() =>
+			selectedTab = TabType.profImageViewer,
+		);
+		print(currImageFolderName);
+	}
+
 	void openDirectory(List<String> imageFolderNames, {String? title, String? description}) {
 		setState(() {
 			currImageFolderNames = imageFolderNames;
@@ -88,11 +96,11 @@ class _MainPageState extends State<MainPage> {
       case TabType.profDiretorios:
         return ProfDiretoriosTab(onTapDiretorio: onTapTab);
       case TabType.profGaleria:
-        return ProfGaleriaTab();
+        return ProfGaleriaTab(openTeacherImageViewer: openTeacherImageViewer);
       case TabType.profDiretorio:
         return ProfDiretorioTab(onTapImage: onTapTab);
       case TabType.profImageViewer:
-        return ProfImageViewerTab();
+        return ProfImageViewerTab(imageFolderName: currImageFolderName!);
     }
 	}
 

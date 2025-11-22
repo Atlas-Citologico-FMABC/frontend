@@ -1,87 +1,210 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../widgets/image_box.dart';
+import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
+import '../main.dart';
+import '../services/image_service.dart';
 import '../widgets/floating_round_button.dart';
+import '../widgets/image_box.dart';
 
-final Color lightGray = Color(0xffEBEBEB);
+final Color lightGray = const Color(0xffEBEBEB);
 
-class ProfGaleriaTab extends StatelessWidget {
-  const ProfGaleriaTab({super.key});
+class ProfGaleriaTab extends StatefulWidget {
+	final void Function(String) openTeacherImageViewer;
+  const ProfGaleriaTab({super.key, required this.openTeacherImageViewer});
+
+  @override
+  State<ProfGaleriaTab> createState() => _ProfGaleriaTabState();
+}
+
+class _ProfGaleriaTabState extends State<ProfGaleriaTab> {
+  late Future<List<_GalleryItem>> _future;
+
+  @override
+  void initState() {
+    super.initState();
+    _future = _loadAll();
+  }
+
+  Future<List<_GalleryItem>> _loadAll() async {
+    final res = await ImageService().getAllImages();
+    if (res.statusCode != 200) {
+      throw Exception('Erro ao buscar imagens: ${res.statusCode}');
+    }
+
+    final List data = jsonDecode(res.body) as List;
+
+    final baseDir = await _tilesBasePath();
+    final items = <_GalleryItem>[];
+
+    // usando Future.wait com compute para paralelizar as varreduras de pasta,
+    // sem bloquear a UI. Cada pasta roda em um isolate separado.
+    final futures = <Future<_GalleryItem?>>[];
+
+    for (final raw in data) {
+      final map = raw as Map<String, dynamic>;
+      final folder = (map['imageFolderName'] ?? '').toString().trim();
+      final title = (map['title'] ?? '').toString().trim();
+      if (folder.isEmpty || title.isEmpty) continue;
+
+      final folderAbs = p.join(baseDir, folder);
+
+      futures.add(
+        compute<_SmallestArgs, _SmallestResult?>(
+          _pickSmallestImageIsolate,
+          _SmallestArgs(folderAbs: folderAbs),
+        ).then((result) {
+          final previewPath = result?.path;
+          return _GalleryItem(imageFolderName: folder, title: title, previewPath: previewPath);
+        }).catchError((_) {
+          // falha ao varrer a pasta -> volta item com preview nulo (usa placeholder)
+          return _GalleryItem(imageFolderName: folder, title: title, previewPath: null);
+        }),
+      );
+    }
+
+    final resolved = await Future.wait(futures);
+    for (final e in resolved) {
+      if (e != null) items.add(e);
+    }
+    return items;
+  }
+
+  Future<String> _tilesBasePath() async {
+    final dir = await getApplicationDocumentsDirectory();
+    return p.join(dir.path, 'tiles');
+  }
 
   @override
   Widget build(BuildContext context) {
     return Stack(
-      children: [
-        SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.all(30),
-                child: Column(
-                  children: [
-                    Text(
-                      'Atlas de Citologia - Galeria',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 45,
-                      ),
-                    ),
-                    Divider(color: Colors.white),
-                    SizedBox(height: 30),
-                  ],
-                ),
-              ),
-              Container(
-                constraints: BoxConstraints(
-                  minHeight: MediaQuery.of(context).size.height,
-                ),
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: lightGray,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.elliptical(700, 70),
-                    topRight: Radius.elliptical(700, 70),
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 70, horizontal: 80),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(height: 20),
-                      Wrap(
-                        spacing: 50,
-                        runSpacing: 50,
-                        children: <Widget> [
-                          ImageBox(title: 'Image 1'),
-                          ImageBox(title: 'Image 2'),
-                          ImageBox(title: 'Image 3'),
-                          ImageBox(title: 'Image 4'),
-                          ImageBox(title: 'Image 5'),
-                          ImageBox(title: 'Image 6'),
-                          ImageBox(title: 'Image 7'),
-                          ImageBox(title: 'Image 8'),
-                          ImageBox(title: 'Image 9'),
-                          ImageBox(title: 'Image 10'),
-                          ImageBox(title: 'Image 11'),
-                          ImageBox(title: 'Image 12'),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        /// ✅ Botão fixo no canto inferior direito, fora do fluxo do Scroll
-        FloatingRoundButton(
-          onPressed: () {
-            print("Botão pressionado!");
-          },
-        ),
-      ],
+      children: <Widget> [
+				SingleChildScrollView(
+					child: Column(
+						children: <Widget>[
+							Container(
+								width: double.infinity,
+								padding: const EdgeInsets.all(30),
+								child: const Column(
+									children: [
+										Text(
+											'Atlas de Citologia - Galeria',
+											style: TextStyle(
+												color: Colors.white,
+												fontWeight: FontWeight.bold,
+												fontSize: 45,
+											),
+										),
+										Divider(color: Colors.white),
+										SizedBox(height: 30),
+									],
+								),
+							),
+							Container(
+								constraints: BoxConstraints(
+									minHeight: MediaQuery.of(context).size.height,
+								),
+								width: double.infinity,
+								decoration: const BoxDecoration(
+									color: Color(0xffEBEBEB),
+									borderRadius: BorderRadius.only(
+										topLeft: Radius.elliptical(700, 70),
+										topRight: Radius.elliptical(700, 70),
+									),
+								),
+								child: Padding(
+									padding: const EdgeInsets.symmetric(vertical: 70, horizontal: 80),
+									child: Column(
+										crossAxisAlignment: CrossAxisAlignment.center,
+										children: [
+											const SizedBox(height: 20),
+											FutureBuilder<List<_GalleryItem>>(
+												future: _future,
+												builder: (context, snapshot) {
+													if (snapshot.connectionState == ConnectionState.waiting) {
+														return const SizedBox(
+															height: 160,
+															child: Center(child: CircularProgressIndicator()),
+														);
+													}
+													if (snapshot.hasError) {
+														return Text(
+															'Erro ao carregar galeria: ${snapshot.error}',
+														);
+													}
+													final items = snapshot.data ?? [];
+													if (items.isEmpty) {
+														return const Text('Nenhuma imagem disponível');
+													}
+				
+													return Wrap(
+														spacing: 50,
+														runSpacing: 50,
+														children: [
+															for (final e in items)
+																ImageBox(
+																	title: e.title,
+																	previewImage: e.previewPath == null
+																			? const DecorationImage(
+																					image: AssetImage('assets/images/image.png'),
+																				)
+																			: DecorationImage(
+																					image: FileImage(File(e.previewPath!)),
+																					// fit: BoxFit.cover,
+																				),
+																			onTap: () => widget.openTeacherImageViewer(e.imageFolderName),
+																),
+														],
+													);
+												},
+											),
+										],
+									),
+								),
+							),
+						],
+					),
+				),
+				FloatingRoundButton(onPressed: () {}),
+			],
     );
   }
+}
+
+class _GalleryItem {
+	final String imageFolderName;
+  final String title;
+  final String? previewPath;
+  _GalleryItem({required this.imageFolderName, required this.title, required this.previewPath});
+}
+
+class _SmallestArgs {
+  final String folderAbs;
+  const _SmallestArgs({required this.folderAbs});
+}
+
+class _SmallestResult {
+  final String path;
+  const _SmallestResult({required this.path});
+}
+
+_SmallestResult? _pickSmallestImageIsolate(_SmallestArgs args) {
+  final dir = Directory(args.folderAbs);
+  if (!dir.existsSync()) return null;
+
+  final files = dir
+      .listSync(recursive: true)
+      .whereType<File>()
+      .where((f) {
+        final ext = p.extension(f.path).toLowerCase();
+        return ext == '.jpeg' || ext == '.jpg' || ext == '.png';
+      })
+      .toList();
+  if (files.isEmpty) return null;
+
+  files.sort((a, b) => a.lengthSync().compareTo(b.lengthSync()));
+  return _SmallestResult(path: files.first.path);
 }

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/image_canvas.dart';
 import '../widgets/image_viewer_box.dart';
 
 final Color lightGray = Color(0xffEBEBEB);
 
 class ProfImageViewerTab extends StatelessWidget {
-  const ProfImageViewerTab({super.key});
+	final String imageFolderName;
+  const ProfImageViewerTab({super.key, required this.imageFolderName});
 
   @override
   Widget build(BuildContext context) {
@@ -52,10 +54,7 @@ class ProfImageViewerTab extends StatelessWidget {
                     children: [
                       Expanded(
                         flex: 2,
-                        child: ImageViewerBox(
-                          imagePath:
-                              'assets/images/2000x1000.jpg', // test image
-                        ),
+												child: ImageCanvas(imageFolderName: imageFolderName),
                       ),
                       Expanded(
                         flex: 1,
