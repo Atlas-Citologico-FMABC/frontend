@@ -166,7 +166,7 @@ class DiretorioTab extends StatelessWidget {
                                     final preview = (thumbPath != null)
                                         ? DecorationImage(
                                             image: FileImage(File(thumbPath)),
-                                            fit: BoxFit.cover,
+                                            // fit: BoxFit.cover,
                                           )
                                         : const DecorationImage(
                                             image: AssetImage(
