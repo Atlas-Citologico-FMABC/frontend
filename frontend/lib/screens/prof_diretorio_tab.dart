@@ -147,41 +147,45 @@ class ProfDiretorioTab extends StatelessWidget {
                         }
                         return SingleChildScrollView(
                           physics: const BouncingScrollPhysics(),
-                          child: Wrap(
-														alignment: WrapAlignment.center,
-                            spacing: 50,
-                            runSpacing: 30,
+                          child: Column(
+														crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              for (final dir in orderedToShow)
-                                FutureBuilder<_SmallestResult?>(
-                                  future:
-                                      compute<_SmallestArgs, _SmallestResult?>(
-                                        _pickSmallestImageIsolate,
-                                        _SmallestArgs(folderAbs: dir.path),
-                                      ),
-                                  builder: (context, snap) {
-                                    final folderName = p.basename(dir.path);
-                                    final thumbPath = snap.data?.path;
-                                    final preview = (thumbPath != null)
-                                        ? DecorationImage(
-                                            image: FileImage(File(thumbPath)),
-                                            // fit: BoxFit.cover,
-                                          )
-                                        : const DecorationImage(
-                                            image: AssetImage(
-                                              'assets/images/image.png',
-                                            ),
-                                          );
-
-                                    return ImageBox(
-                                      title: folderName,
-                                      previewImage: preview,
-                                      onTap: () => onTapImage?.call(folderName),
-                                      borderColor: Colors.transparent,
-                                      borderWidth: 0,
-                                    );
-                                  },
-                                ),
+                              Wrap(
+                                spacing: 50,
+                                runSpacing: 30,
+                                children: [
+                                  for (final dir in orderedToShow)
+                                    FutureBuilder<_SmallestResult?>(
+                                      future:
+                                          compute<_SmallestArgs, _SmallestResult?>(
+                                            _pickSmallestImageIsolate,
+                                            _SmallestArgs(folderAbs: dir.path),
+                                          ),
+                                      builder: (context, snap) {
+                                        final folderName = p.basename(dir.path);
+                                        final thumbPath = snap.data?.path;
+                                        final preview = (thumbPath != null)
+                                            ? DecorationImage(
+                                                image: FileImage(File(thumbPath)),
+                                                // fit: BoxFit.cover,
+                                              )
+                                            : const DecorationImage(
+                                                image: AssetImage(
+                                                  'assets/images/image.png',
+                                                ),
+                                              );
+                              
+                                        return ImageBox(
+                                          title: folderName,
+                                          previewImage: preview,
+                                          onTap: () => onTapImage?.call(folderName),
+                                          borderColor: Colors.transparent,
+                                          borderWidth: 0,
+                                        );
+                                      },
+                                    ),
+                                ],
+                              ),
                             ],
                           ),
                         );

@@ -100,28 +100,32 @@ class _ProfDiretoriosTabState extends State<ProfDiretoriosTab> {
                         }
                         return SingleChildScrollView(
                           physics: const BouncingScrollPhysics(),
-                          child: Wrap(
-                            alignment: WrapAlignment.center,
-                            spacing: 50,
-                            runSpacing: 30,
+                          child: Column(
+														crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              for (final d in itens)
-                                Column(
-                                  children: [
-                                    DiretorioBox(
-                                      title: d.title,
-                                      onTap: () => widget.openTeacherDirectory(
-                                        d.imageFolderNames,
-                                        title: d.title,
-                                        description: d.description,
-                                      ),
-                                      borderWidth: 0,
-                                      borderColor: Colors.transparent,
+                              Wrap(
+                                spacing: 50,
+                                runSpacing: 30,
+                                children: [
+                                  for (final d in itens)
+                                    Column(
+                                      children: [
+                                        DiretorioBox(
+                                          title: d.title,
+                                          onTap: () => widget.openTeacherDirectory(
+                                            d.imageFolderNames,
+                                            title: d.title,
+                                            description: d.description,
+                                          ),
+                                          borderWidth: 0,
+                                          borderColor: Colors.transparent,
+                                        ),
+                                        SizedBox(height: 10),
+                                        Text(_descriptionPreview(d.description)),
+                                      ],
                                     ),
-                                    SizedBox(height: 10),
-                                    Text(_descriptionPreview(d.description)),
-                                  ],
-                                ),
+                                ],
+                              ),
                             ],
                           ),
                         );
