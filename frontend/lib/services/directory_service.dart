@@ -41,5 +41,14 @@ class DirectoryService {
         .map<Directory>((e) => Directory.fromJson(e as Map<String, dynamic>))
         .toList();
   }
+
+  Future<http.Response> deleteDirectory(String directoryTitle) async {
+		final body = {'title': directoryTitle};
+    return await http.delete(
+			Uri.parse('$baseUrl/directories'), 
+      headers: {'Content-Type': 'application/json; charset=UTF-8'},
+			body: jsonEncode(body)
+		);
+  }
 }
 

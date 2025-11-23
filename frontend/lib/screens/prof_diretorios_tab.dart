@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/delete_image_dialog.dart';
 import '../widgets/diretorio_box.dart';
 import '../services/directory_service.dart';
 import '../widgets/floating_round_button.dart';
@@ -32,6 +33,46 @@ class _ProfDiretoriosTabState extends State<ProfDiretoriosTab> {
   String _descriptionPreview(String d) => d.isEmpty
       ? 'Sem descrição...'
       : (d.length > 40 ? '${d.substring(0, 40)}...' : '$d...');
+
+  Future<void> _refresh() async {
+    setState(() {
+      _future = _service.getAll();
+    });
+  }
+
+  Future<void> _onDeleteDirectory(String directoryName) async {
+    await showDialog<bool>(
+      context: context,
+      builder: (_) => DeleteImageDialog( // usando DeleteImageDialog por conta da flexibilidade, depois sera modificado para DeleteDialog
+        onDelete: () async {
+          final res = await DirectoryService().deleteDirectory(directoryName);
+          if (res.statusCode == 200) {
+						_refresh();
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: green,
+                content: Text('Diretório excluído com sucesso'),
+                duration: Duration(seconds: 3),
+              ),
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: Colors.red,
+                content: Text('Falha ao tentar excluir diretório.'),
+                duration: Duration(seconds: 3),
+              ),
+            );
+          }
+          Navigator.pop(context);
+        },
+        onCancel: () => Navigator.pop(context),
+        title: 'Excluir diretório',
+        text: 'Tem certeza que deseja excluir o diretório?',
+        deleteButtonText: 'Excluir',
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +164,7 @@ class _ProfDiretoriosTabState extends State<ProfDiretoriosTab> {
 																							borderColor: Colors.transparent,
 																						),
 																						FloatingRoundButton(
-																							onPressed: () {},
+																							onPressed: () => _onDeleteDirectory(d.title),
 																							right: 50,
 																							bottom: 0,
 																							width: 30,
