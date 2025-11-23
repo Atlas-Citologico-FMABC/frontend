@@ -110,16 +110,36 @@ class _ProfDiretoriosTabState extends State<ProfDiretoriosTab> {
                                   for (final d in itens)
                                     Column(
                                       children: [
-                                        DiretorioBox(
-                                          title: d.title,
-                                          onTap: () => widget.openTeacherDirectory(
-                                            d.imageFolderNames,
-                                            title: d.title,
-                                            description: d.description,
-                                          ),
-                                          borderWidth: 0,
-                                          borderColor: Colors.transparent,
-                                        ),
+                                        Stack(
+                                          children: <Widget> [
+																						DiretorioBox(
+																							title: d.title,
+																							onTap: () => widget.openTeacherDirectory(
+																								d.imageFolderNames,
+																								title: d.title,
+																								description: d.description,
+																							),
+																							borderWidth: 0,
+																							borderColor: Colors.transparent,
+																						),
+																						FloatingRoundButton(
+																							onPressed: () {},
+																							right: 50,
+																							bottom: 0,
+																							width: 30,
+																							backgroundColor: Colors.red,
+																							icon: Icons.delete,
+																						),
+																						FloatingRoundButton(
+																							onPressed: () {},
+																							right: 10,
+																							bottom: 0,
+																							backgroundColor: Colors.blue,
+																							width: 30,
+																							icon: Icons.edit,
+																						),
+																					],
+																				),
                                         SizedBox(height: 10),
                                         Text(_descriptionPreview(d.description)),
                                       ],
