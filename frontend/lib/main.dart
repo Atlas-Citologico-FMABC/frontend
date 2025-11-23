@@ -14,8 +14,9 @@ import 'screens/diretorio_tab.dart';
 import 'screens/prof_diretorio_tab.dart';
 import 'screens/image_viewer_tab.dart';
 import 'screens/prof_image_viewer_tab.dart';
+import 'widgets/admin_navbar.dart';
 
-enum NavBarType { normal, teacher }
+enum NavBarType { normal, teacher, admin }
 enum TabType { home, diretorios, diretorio, galeria, imageViewer, login, admin, profHome, profDiretorios, profGaleria, profDiretorio, profImageViewer}
 
 final Color darkBlue = Color(0xff002C53);
@@ -81,6 +82,8 @@ class _MainPageState extends State<MainPage> {
 				return NavBar(height: navHeight, selectedTab: selectedTab, onTapTab: onTapTab);
 			case NavBarType.teacher:
 				return profNavBar(height: navHeight, selectedTab: selectedTab, onTapTab: onTapTab);
+			case NavBarType.admin:
+				return adminNavBar(height: navHeight);
 		}
 	}
 
