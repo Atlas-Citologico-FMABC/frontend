@@ -5,8 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
-import '../main.dart';
 import '../services/image_service.dart';
+import '../widgets/delete_image_dialog.dart';
 import '../widgets/floating_round_button.dart';
 import '../widgets/image_box.dart';
 
@@ -86,6 +86,39 @@ class _ProfGaleriaTabState extends State<ProfGaleriaTab> {
   Future<String> _tilesBasePath() async {
     final dir = await getApplicationDocumentsDirectory();
     return p.join(dir.path, 'tiles');
+  }
+
+  Future<void> _onDeleteImage(String imageFolderName) async {
+    await showDialog<bool>(
+      context: context,
+      builder: (_) => DeleteImageDialog(
+        onDelete: () async {
+          final res = await ImageService().deleteImage(imageFolderName);
+          if (res.statusCode == 200) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: Colors.green,
+                content: Text('Imagem excluída com sucesso'),
+                duration: Duration(seconds: 3),
+              ),
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: Colors.red,
+                content: Text('Falha ao tentar excluir imagem.'),
+                duration: Duration(seconds: 3),
+              ),
+            );
+          }
+          Navigator.pop(context);
+        },
+        onCancel: () => Navigator.pop(context),
+        title: 'Excluir imagem',
+        text: 'Tem certeza que deseja excluir a imagem?',
+        deleteButtonText: 'Excluir',
+      ),
+    );
   }
 
   @override
@@ -181,7 +214,7 @@ class _ProfGaleriaTabState extends State<ProfGaleriaTab> {
                                           ),
                                     ),
                                     FloatingRoundButton(
-                                      onPressed: () {},
+                                      onPressed: () => _onDeleteImage(e.imageFolderName),
                                       right: 50,
                                       bottom: 0,
                                       width: 30,

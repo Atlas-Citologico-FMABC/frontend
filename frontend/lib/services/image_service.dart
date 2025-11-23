@@ -6,4 +6,9 @@ class ImageService {
   Future<http.Response> getAllImages() async {
     return await http.get(Uri.parse('$baseUrl/images'));
   }
+
+  Future<http.Response> deleteImage(String imageFolderName) async {
+    return await http.delete(Uri.parse('$baseUrl/images/$imageFolderName'));
+  }
+
 }
