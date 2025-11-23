@@ -128,7 +128,9 @@ PreferredSizeWidget profNavBar({
                 ),
                 child: Button(
                   text: 'Diretórios',
-                  isSelected: selectedTab == TabType.profDiretorios,
+                  isSelected:
+                      selectedTab == TabType.profDiretorios ||
+                      selectedTab == TabType.profDiretorio,
                   selectedBackgroundColor: gray,
                   onTap: () => onTapTab(TabType.profDiretorios),
                 ),
