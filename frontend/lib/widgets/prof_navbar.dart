@@ -11,6 +11,7 @@ PreferredSizeWidget profNavBar({
   required double height,
   required TabType selectedTab,
   required Function(TabType) onTapTab,
+	required Function() onLogout,
 }) {
   return PreferredSize(
     preferredSize: Size.fromHeight(height),
@@ -70,6 +71,7 @@ PreferredSizeWidget profNavBar({
                             ),
                           ),
                           PopupMenuItem(
+														onTap: onLogout,
                             child: Center(
                               child: Container(
                                 width: 120,
@@ -149,11 +151,11 @@ PreferredSizeWidget profNavBar({
                   horizontal: 20,
                 ),
                 child: Button(
-                  text: 'Logado',
+                  text: 'SAIR',
                   foregroundColor: Colors.white,
-                  backgroundColor: green,
-                  horizontalPadding: 60,
-                  onTap: () {},
+                  backgroundColor: Colors.red,
+                  horizontalPadding: 50,
+                  onTap: onLogout,
                 ),
               ),
             ],

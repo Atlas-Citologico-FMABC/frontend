@@ -88,7 +88,7 @@ class _MainPageState extends State<MainPage> {
 			case NavBarType.normal:
 				return NavBar(height: navHeight, selectedTab: selectedTab, onTapTab: onTapTab);
 			case NavBarType.teacher:
-				return profNavBar(height: navHeight, selectedTab: selectedTab, onTapTab: onTapTab);
+				return profNavBar(height: navHeight, selectedTab: selectedTab, onTapTab: onTapTab, onLogout: onLogout);
 			case NavBarType.admin:
 				return adminNavBar(height: navHeight, onLogout: onLogout);
 		}
