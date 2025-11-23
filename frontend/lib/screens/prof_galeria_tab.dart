@@ -13,7 +13,7 @@ import '../widgets/image_box.dart';
 final Color lightGray = const Color(0xffEBEBEB);
 
 class ProfGaleriaTab extends StatefulWidget {
-	final void Function(String) openTeacherImageViewer;
+  final void Function(String) openTeacherImageViewer;
   const ProfGaleriaTab({super.key, required this.openTeacherImageViewer});
 
   @override
@@ -54,15 +54,25 @@ class _ProfGaleriaTabState extends State<ProfGaleriaTab> {
 
       futures.add(
         compute<_SmallestArgs, _SmallestResult?>(
-          _pickSmallestImageIsolate,
-          _SmallestArgs(folderAbs: folderAbs),
-        ).then((result) {
-          final previewPath = result?.path;
-          return _GalleryItem(imageFolderName: folder, title: title, previewPath: previewPath);
-        }).catchError((_) {
-          // falha ao varrer a pasta -> volta item com preview nulo (usa placeholder)
-          return _GalleryItem(imageFolderName: folder, title: title, previewPath: null);
-        }),
+              _pickSmallestImageIsolate,
+              _SmallestArgs(folderAbs: folderAbs),
+            )
+            .then((result) {
+              final previewPath = result?.path;
+              return _GalleryItem(
+                imageFolderName: folder,
+                title: title,
+                previewPath: previewPath,
+              );
+            })
+            .catchError((_) {
+              // falha ao varrer a pasta -> volta item com preview nulo (usa placeholder)
+              return _GalleryItem(
+                imageFolderName: folder,
+                title: title,
+                previewPath: null,
+              );
+            }),
       );
     }
 
@@ -81,104 +91,139 @@ class _ProfGaleriaTabState extends State<ProfGaleriaTab> {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      children: <Widget> [
-				SingleChildScrollView(
-					child: Column(
-						children: <Widget>[
-							Container(
-								width: double.infinity,
-								padding: const EdgeInsets.all(30),
-								child: const Column(
-									children: [
-										Text(
-											'Atlas de Citologia - Galeria',
-											style: TextStyle(
-												color: Colors.white,
-												fontWeight: FontWeight.bold,
-												fontSize: 45,
-											),
-										),
-										Divider(color: Colors.white),
-										SizedBox(height: 30),
-									],
-								),
-							),
-							Container(
-								constraints: BoxConstraints(
-									minHeight: MediaQuery.of(context).size.height,
-								),
-								width: double.infinity,
-								decoration: const BoxDecoration(
-									color: Color(0xffEBEBEB),
-									borderRadius: BorderRadius.only(
-										topLeft: Radius.elliptical(700, 70),
-										topRight: Radius.elliptical(700, 70),
-									),
-								),
-								child: Padding(
-									padding: const EdgeInsets.symmetric(vertical: 70, horizontal: 80),
-									child: Column(
-										crossAxisAlignment: CrossAxisAlignment.center,
-										children: [
-											const SizedBox(height: 20),
-											FutureBuilder<List<_GalleryItem>>(
-												future: _future,
-												builder: (context, snapshot) {
-													if (snapshot.connectionState == ConnectionState.waiting) {
-														return const SizedBox(
-															height: 160,
-															child: Center(child: CircularProgressIndicator()),
-														);
-													}
-													if (snapshot.hasError) {
-														return Text(
-															'Erro ao carregar galeria: ${snapshot.error}',
-														);
-													}
-													final items = snapshot.data ?? [];
-													if (items.isEmpty) {
-														return const Text('Nenhuma imagem disponível');
-													}
-				
-													return Wrap(
-														spacing: 50,
-														runSpacing: 50,
-														children: [
-															for (final e in items)
-																ImageBox(
-																	title: e.title,
-																	previewImage: e.previewPath == null
-																			? const DecorationImage(
-																					image: AssetImage('assets/images/image.png'),
-																				)
-																			: DecorationImage(
-																					image: FileImage(File(e.previewPath!)),
-																					// fit: BoxFit.cover,
-																				),
-																			onTap: () => widget.openTeacherImageViewer(e.imageFolderName),
-																),
-														],
-													);
-												},
-											),
-										],
-									),
-								),
-							),
-						],
-					),
-				),
-				FloatingRoundButton(onPressed: () {}),
-			],
+      children: <Widget>[
+        SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(30),
+                child: const Column(
+                  children: [
+                    Text(
+                      'Atlas de Citologia - Galeria',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 45,
+                      ),
+                    ),
+                    Divider(color: Colors.white),
+                    SizedBox(height: 30),
+                  ],
+                ),
+              ),
+              Container(
+                constraints: BoxConstraints(
+                  minHeight: MediaQuery.of(context).size.height,
+                ),
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  color: Color(0xffEBEBEB),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.elliptical(700, 70),
+                    topRight: Radius.elliptical(700, 70),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 70,
+                    horizontal: 80,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(height: 20),
+                      FutureBuilder<List<_GalleryItem>>(
+                        future: _future,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const SizedBox(
+                              height: 160,
+                              child: Center(child: CircularProgressIndicator()),
+                            );
+                          }
+                          if (snapshot.hasError) {
+                            return Text(
+                              'Erro ao carregar galeria: ${snapshot.error}',
+                            );
+                          }
+                          final items = snapshot.data ?? [];
+                          if (items.isEmpty) {
+                            return const Text('Nenhuma imagem disponível');
+                          }
+
+                          return Wrap(
+                            spacing: 50,
+                            runSpacing: 50,
+                            children: [
+                              for (final e in items)
+                                Stack(
+                                  children: <Widget>[
+                                    ImageBox(
+                                      title: e.title,
+                                      previewImage: e.previewPath == null
+                                          ? const DecorationImage(
+                                              image: AssetImage(
+                                                'assets/images/image.png',
+                                              ),
+                                            )
+                                          : DecorationImage(
+                                              image: FileImage(
+                                                File(e.previewPath!),
+                                              ),
+                                              // fit: BoxFit.cover,
+                                            ),
+                                      onTap: () =>
+                                          widget.openTeacherImageViewer(
+                                            e.imageFolderName,
+                                          ),
+                                    ),
+                                    FloatingRoundButton(
+                                      onPressed: () {},
+                                      right: 50,
+                                      bottom: 0,
+                                      width: 30,
+                                      backgroundColor: Colors.red,
+                                      icon: Icons.delete,
+                                    ),
+                                    FloatingRoundButton(
+                                      onPressed: () {},
+                                      right: 10,
+                                      bottom: 0,
+                                      backgroundColor: Colors.blue,
+                                      width: 30,
+                                      icon: Icons.edit,
+                                    ),
+                                  ],
+                                ),
+                            ],
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        FloatingRoundButton(onPressed: () {}),
+      ],
     );
   }
 }
 
 class _GalleryItem {
-	final String imageFolderName;
+  final String imageFolderName;
   final String title;
   final String? previewPath;
-  _GalleryItem({required this.imageFolderName, required this.title, required this.previewPath});
+  _GalleryItem({
+    required this.imageFolderName,
+    required this.title,
+    required this.previewPath,
+  });
 }
 
 class _SmallestArgs {
@@ -195,14 +240,10 @@ _SmallestResult? _pickSmallestImageIsolate(_SmallestArgs args) {
   final dir = Directory(args.folderAbs);
   if (!dir.existsSync()) return null;
 
-  final files = dir
-      .listSync(recursive: true)
-      .whereType<File>()
-      .where((f) {
-        final ext = p.extension(f.path).toLowerCase();
-        return ext == '.jpeg' || ext == '.jpg' || ext == '.png';
-      })
-      .toList();
+  final files = dir.listSync(recursive: true).whereType<File>().where((f) {
+    final ext = p.extension(f.path).toLowerCase();
+    return ext == '.jpeg' || ext == '.jpg' || ext == '.png';
+  }).toList();
   if (files.isEmpty) return null;
 
   files.sort((a, b) => a.lengthSync().compareTo(b.lengthSync()));
