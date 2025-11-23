@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
+import '../widgets/floating_round_button.dart';
 import '../widgets/image_box.dart';
 
 final Color lightGray = Color(0xffEBEBEB);
@@ -175,12 +176,32 @@ class ProfDiretorioTab extends StatelessWidget {
                                                 ),
                                               );
                               
-                                        return ImageBox(
-                                          title: folderName,
-                                          previewImage: preview,
-                                          onTap: () => onTapImage?.call(folderName),
-                                          borderColor: Colors.transparent,
-                                          borderWidth: 0,
+                                        return Stack(
+                                          children: <Widget> [
+																						ImageBox(
+																							title: folderName,
+																							previewImage: preview,
+																							onTap: () => onTapImage?.call(folderName),
+																							borderColor: Colors.transparent,
+																							borderWidth: 0,
+																						),
+																						FloatingRoundButton(
+																							onPressed: () {},
+																							right: 50,
+																							bottom: 0,
+																							width: 30,
+																							backgroundColor: Colors.red,
+																							icon: Icons.delete,
+																						),
+																						FloatingRoundButton(
+																							onPressed: () {},
+																							right: 10,
+																							bottom: 0,
+																							backgroundColor: Colors.blue,
+																							width: 30,
+																							icon: Icons.edit,
+																						),
+																					],
                                         );
                                       },
                                     ),
