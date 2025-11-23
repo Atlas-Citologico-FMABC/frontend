@@ -88,6 +88,12 @@ class _ProfGaleriaTabState extends State<ProfGaleriaTab> {
     return p.join(dir.path, 'tiles');
   }
 
+  Future<void> _refresh() async {
+    setState(() {
+      _future = _loadAll();
+    });
+  }
+
   Future<void> _onDeleteImage(String imageFolderName) async {
     await showDialog<bool>(
       context: context,
@@ -95,6 +101,7 @@ class _ProfGaleriaTabState extends State<ProfGaleriaTab> {
         onDelete: () async {
           final res = await ImageService().deleteImage(imageFolderName);
           if (res.statusCode == 200) {
+						_refresh();
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 backgroundColor: Colors.green,
