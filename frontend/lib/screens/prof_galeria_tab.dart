@@ -138,6 +138,7 @@ class _ProfGaleriaTabState extends State<ProfGaleriaTab> {
       context: context,
       builder: (_) => EditImageDialog(
 				refresh: _refresh,
+				onCancel: () => Navigator.pop(context),
 				imageFolderName: imageFolderName,
 				initialTitle: title,
 				initialDescription: description
