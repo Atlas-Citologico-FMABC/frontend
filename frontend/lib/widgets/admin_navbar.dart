@@ -6,6 +6,7 @@ final Color gray = Color(0xFFEBEBEB);
 
 PreferredSizeWidget adminNavBar({
   required double height,
+	required Function() onLogout,
 }) {
   return PreferredSize(
     preferredSize: Size.fromHeight(height),
@@ -27,7 +28,7 @@ PreferredSizeWidget adminNavBar({
               foregroundColor: Colors.white,
               backgroundColor: Colors.red,
               horizontalPadding: 50,
-              onTap: () {},
+              onTap: onLogout,
             ),
           ),
         ],

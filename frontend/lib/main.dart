@@ -42,6 +42,13 @@ class _MainPageState extends State<MainPage> {
 	NavBarType selectedNavBar = NavBarType.normal;
 	TabType selectedTab = TabType.home;
 
+	void onLogout() {
+		setState(() {
+			selectedNavBar = NavBarType.normal;
+			selectedTab = TabType.login;
+		});
+	}
+
 	void openImageViewer(String imageFolderName) {
 		currImageFolderName = imageFolderName;
 		setState(() =>
@@ -83,7 +90,7 @@ class _MainPageState extends State<MainPage> {
 			case NavBarType.teacher:
 				return profNavBar(height: navHeight, selectedTab: selectedTab, onTapTab: onTapTab);
 			case NavBarType.admin:
-				return adminNavBar(height: navHeight);
+				return adminNavBar(height: navHeight, onLogout: onLogout);
 		}
 	}
 
