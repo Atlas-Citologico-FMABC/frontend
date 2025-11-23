@@ -59,6 +59,7 @@ class _LoginTabState extends State<LoginTab> {
           duration: Duration(seconds: 3),
         ),
       );
+			widget.switchNavBar(NavBarType.admin);
       widget.onTap(TabType.admin);
 			return HttpStatus.ok;
     }
