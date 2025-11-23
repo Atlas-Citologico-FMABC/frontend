@@ -7,9 +7,11 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import '../services/image_service.dart';
 import '../widgets/delete_image_dialog.dart';
+import '../widgets/edit_image_dialog.dart';
 import '../widgets/floating_round_button.dart';
 import '../widgets/image_box.dart';
 
+final Color green = Color(0xff009951);
 final Color lightGray = const Color(0xffEBEBEB);
 
 class ProfGaleriaTab extends StatefulWidget {
@@ -48,7 +50,8 @@ class _ProfGaleriaTabState extends State<ProfGaleriaTab> {
       final map = raw as Map<String, dynamic>;
       final folder = (map['imageFolderName'] ?? '').toString().trim();
       final title = (map['title'] ?? '').toString().trim();
-      if (folder.isEmpty || title.isEmpty) continue;
+      final description = (map['description'] ?? '').toString().trim();
+      if (folder.isEmpty || title.isEmpty || description.isEmpty) continue;
 
       final folderAbs = p.join(baseDir, folder);
 
@@ -62,6 +65,7 @@ class _ProfGaleriaTabState extends State<ProfGaleriaTab> {
               return _GalleryItem(
                 imageFolderName: folder,
                 title: title,
+								description: description,
                 previewPath: previewPath,
               );
             })
@@ -70,6 +74,7 @@ class _ProfGaleriaTabState extends State<ProfGaleriaTab> {
               return _GalleryItem(
                 imageFolderName: folder,
                 title: title,
+								description: description,
                 previewPath: null,
               );
             }),
@@ -104,7 +109,7 @@ class _ProfGaleriaTabState extends State<ProfGaleriaTab> {
 						_refresh();
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                backgroundColor: Colors.green,
+                backgroundColor: green,
                 content: Text('Imagem excluída com sucesso'),
                 duration: Duration(seconds: 3),
               ),
@@ -127,6 +132,19 @@ class _ProfGaleriaTabState extends State<ProfGaleriaTab> {
       ),
     );
   }
+
+  Future<void> _onEditImage(String imageFolderName, String title, String description) async {
+    await showDialog<bool>(
+      context: context,
+      builder: (_) => EditImageDialog(
+				refresh: _refresh,
+				imageFolderName: imageFolderName,
+				initialTitle: title,
+				initialDescription: description
+      ),
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -229,7 +247,7 @@ class _ProfGaleriaTabState extends State<ProfGaleriaTab> {
                                       icon: Icons.delete,
                                     ),
                                     FloatingRoundButton(
-                                      onPressed: () {},
+                                      onPressed: () => _onEditImage(e.imageFolderName, e.title, e.description),
                                       right: 10,
                                       bottom: 0,
                                       backgroundColor: Colors.blue,
@@ -258,10 +276,12 @@ class _ProfGaleriaTabState extends State<ProfGaleriaTab> {
 class _GalleryItem {
   final String imageFolderName;
   final String title;
+  final String description;
   final String? previewPath;
   _GalleryItem({
     required this.imageFolderName,
     required this.title,
+    required this.description,
     required this.previewPath,
   });
 }
