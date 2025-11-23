@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import '../widgets/delete_image_dialog.dart';
 import '../widgets/diretorio_box.dart';
 import '../services/directory_service.dart';
+import '../widgets/edit_directory_dialog.dart';
 import '../widgets/floating_round_button.dart';
 
+final Color green = Color(0xff009951);
 final Color lightGray = const Color(0xffEBEBEB);
 
 class ProfDiretoriosTab extends StatefulWidget {
@@ -38,6 +40,18 @@ class _ProfDiretoriosTabState extends State<ProfDiretoriosTab> {
     setState(() {
       _future = _service.getAll();
     });
+  }
+
+  Future<void> _onEditDirectory(String title, String description) async {
+    await showDialog<bool>(
+      context: context,
+      builder: (_) => EditDirectoryDialog(
+				refresh: _refresh,
+				onCancel: () => Navigator.pop(context),
+				initialTitle: title,
+				initialDescription: description
+      ),
+    );
   }
 
   Future<void> _onDeleteDirectory(String directoryName) async {
@@ -172,7 +186,7 @@ class _ProfDiretoriosTabState extends State<ProfDiretoriosTab> {
 																							icon: Icons.delete,
 																						),
 																						FloatingRoundButton(
-																							onPressed: () {},
+																							onPressed: () => _onEditDirectory(d.title, d.description),
 																							right: 10,
 																							bottom: 0,
 																							backgroundColor: Colors.blue,

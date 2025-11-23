@@ -42,6 +42,15 @@ class DirectoryService {
         .toList();
   }
 
+  Future<http.Response> updateDirectory(String directoryTitle, String newTitle, String newDescription) async {
+		final body = {'title': directoryTitle, 'newTitle': newTitle, 'newDescription': newDescription};
+    return await http.put(
+			Uri.parse('$baseUrl/directories'), 
+      headers: {'Content-Type': 'application/json; charset=UTF-8'},
+			body: jsonEncode(body)
+		);
+  }
+
   Future<http.Response> deleteDirectory(String directoryTitle) async {
 		final body = {'title': directoryTitle};
     return await http.delete(
