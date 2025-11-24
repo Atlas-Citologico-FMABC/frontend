@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 
+import '../main.dart';
 import '../widgets/image_canvas.dart';
 import '../widgets/image_viewer_box.dart';
 
 final Color lightGray = Color(0xffEBEBEB);
 
 class ImageViewerTab extends StatelessWidget {
+	final TabType backTab;
+  final Function(TabType) onBack;
 	final String imageFolderName;
-  const ImageViewerTab({super.key, required this.imageFolderName});
+  const ImageViewerTab({super.key, required this.backTab, required this.onBack, required this.imageFolderName});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +35,7 @@ class ImageViewerTab extends StatelessWidget {
             spacing: 10,
             children: [
               InkWell(
-                onTap: () {},
+                onTap: () => onBack(backTab),
                 child: Row(
                   children: [
                     Icon(Icons.arrow_back, size: 24, color: green),

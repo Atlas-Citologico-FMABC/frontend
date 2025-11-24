@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:atlas_citologico_fmabc/main.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as p;
@@ -15,7 +16,7 @@ class DiretorioTab extends StatelessWidget {
   final String? title;
   final String? description;
 
-  final Function(String)? onTapImage;
+  final Function(String, TabType)? onTapImage;
 
   const DiretorioTab({
     super.key,
@@ -179,7 +180,7 @@ class DiretorioTab extends StatelessWidget {
                                         return ImageBox(
                                           title: folderName,
                                           previewImage: preview,
-                                          onTap: () => onTapImage?.call(folderName),
+                                          onTap: () => onTapImage?.call(folderName, TabType.diretorios),
                                           borderColor: Colors.transparent,
                                           borderWidth: 0,
                                         );

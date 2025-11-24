@@ -12,7 +12,7 @@ import '../widgets/image_box.dart';
 final Color lightGray = const Color(0xffEBEBEB);
 
 class GaleriaTab extends StatefulWidget {
-	final void Function(String) openImageViewer;
+	final void Function(String, TabType) openImageViewer;
   const GaleriaTab({super.key, required this.openImageViewer});
 
   @override
@@ -152,7 +152,7 @@ class _GaleriaTabState extends State<GaleriaTab> {
                                       image: FileImage(File(e.previewPath!)),
                                       // fit: BoxFit.cover,
                                     ),
-															onTap: () => widget.openImageViewer(e.imageFolderName),
+															onTap: () => widget.openImageViewer(e.imageFolderName, TabType.galeria),
                             ),
                         ],
                       );

@@ -36,6 +36,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
 	String? currImageFolderName; // imagem referente a imagem clicada na galeria
+	TabType? currBackTab;
 
 	List<String>? currImageFolderNames; // apenas as imagens referentes a certo diretorio
 	String? diretorioTitle, diretorioDescription;
@@ -50,8 +51,17 @@ class _MainPageState extends State<MainPage> {
 		});
 	}
 
-	void openImageViewer(String imageFolderName) {
+	void onBack(TabType backTab) {
+		currBackTab = backTab;
+		setState(() =>
+			selectedTab = currBackTab!,
+		);
+		print(currImageFolderName);
+	}
+
+	void openImageViewer(String imageFolderName, TabType backTab) {
 		currImageFolderName = imageFolderName;
+		currBackTab = backTab;
 		setState(() =>
 			selectedTab = TabType.imageViewer,
 		);
@@ -106,7 +116,7 @@ class _MainPageState extends State<MainPage> {
       case TabType.galeria:
         return GaleriaTab(openImageViewer: openImageViewer);
       case TabType.imageViewer:
-        return ImageViewerTab(imageFolderName: currImageFolderName!);
+        return ImageViewerTab(backTab: currBackTab!, onBack: onBack, imageFolderName: currImageFolderName!);
       case TabType.login:
         return LoginTab(switchNavBar: switchNavBar, onTap: onTapTab);
       case TabType.admin:
