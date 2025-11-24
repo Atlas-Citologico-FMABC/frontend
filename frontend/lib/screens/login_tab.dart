@@ -91,98 +91,101 @@ class _LoginTabState extends State<LoginTab> {
     return Form(
       key: _formKey,
       child: Center(
-        child: Container(
-          width: MediaQuery.of(context).size.width / 2.5,
-          height: MediaQuery.of(context).size.height / 1.5,
-          decoration: BoxDecoration(
-            color: lightGray,
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(50),
-                  child: Text(
-                    'Login',
-                    style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Container(
+            height: MediaQuery.of(context).size.height / 1.5,
+						constraints: BoxConstraints(minWidth: 630),
+            decoration: BoxDecoration(
+              color: lightGray,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(50),
+                    child: Text(
+                      'Login',
+                      style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    spacing: 5,
-                    children: <Widget>[
-                      Text('Email:', style: TextStyle(fontSize: 20)),
-                      InputField(
-												validator: true,
-                        controller: emailController,
-                        errorText: 'Por favor, insira um endereço de email',
-                        labelText: 'Email',
-                        width: 500,
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.black.withAlpha(50),
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 5,
+                      children: <Widget>[
+                        Text('Email:', style: TextStyle(fontSize: 20)),
+                        InputField(
+          												validator: true,
+                          controller: emailController,
+                          errorText: 'Por favor, insira um endereço de email',
+                          labelText: 'Email',
+                          width: 500,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.black.withAlpha(50),
+                            ),
+                            borderRadius: BorderRadius.circular(8),
                           ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: darkBlue),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    spacing: 5,
-                    children: <Widget>[
-                      Text('Senha:', style: TextStyle(fontSize: 20)),
-                      InputField(
-												validator: true,
-                        controller: senhaController,
-                        errorText: 'Por favor, insira uma senha',
-                        labelText: 'Senha',
-                        width: 500,
-                        obscureText: true,
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.black.withAlpha(50),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: darkBlue),
+                            borderRadius: BorderRadius.circular(8),
                           ),
-                          borderRadius: BorderRadius.circular(8),
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: darkBlue),
-                          borderRadius: BorderRadius.circular(8),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 5,
+                      children: <Widget>[
+                        Text('Senha:', style: TextStyle(fontSize: 20)),
+                        InputField(
+          												validator: true,
+                          controller: senhaController,
+                          errorText: 'Por favor, insira uma senha',
+                          labelText: 'Senha',
+                          width: 500,
+                          obscureText: true,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.black.withAlpha(50),
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: darkBlue),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(60),
-                  child: Button(
-                    text: 'Fazer Login',
-                    onTap: () async {
-                      if (_formKey.currentState!.validate()) {
-                        await login(
-                          context,
-                          emailController.text,
-                          senhaController.text,
-                        );
-                      }
-                    },
-                    foregroundColor: Colors.white,
-                    backgroundColor: green,
-                    fontSize: 30,
+                  Padding(
+                    padding: const EdgeInsets.all(60),
+                    child: Button(
+                      text: 'Fazer Login',
+                      onTap: () async {
+                        if (_formKey.currentState!.validate()) {
+                          await login(
+                            context,
+                            emailController.text,
+                            senhaController.text,
+                          );
+                        }
+                      },
+                      foregroundColor: Colors.white,
+                      backgroundColor: green,
+                      fontSize: 30,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
