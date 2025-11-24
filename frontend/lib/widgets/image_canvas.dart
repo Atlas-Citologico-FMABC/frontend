@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:vector_math/vector_math_64.dart' as vm;
 
+import 'button.dart';
+
+final Color lightGray = const Color(0xffEBEBEB);
+
 /*
 O código abaixo foi para criar os algoritmos que permitem a visualização das imagens do projeto do atlas de imagens de microscópio eletrônico da FMABC.
 As imagens são divididas em pedaços menores para garantir que elas possam ser renderizadas com velocidade, precisão e com garantia que não seja necessário capacidades muito
@@ -59,7 +63,7 @@ class ZoomLevelController {
   int maxZoomLevel = 0;
   double minScale = 0.5;
   double maxScale = 2.0;
-  
+
   /// É um atributo Map que tem como intuito armazenar os valores mínimo e máximo que cada nível de zoom deve possuir. Foi pensado para interação com o Widget InteractiveViewer.
   Map<int, Map<String, double>> levelScaleRanges = {};
 
@@ -67,22 +71,19 @@ class ZoomLevelController {
   void setMaxZoomLevel(int highestLevel) {
     maxZoomLevel = highestLevel;
   }
-  
+
   /// Retorna se o nível atual de zoom é o máximo possível.
   bool isMaxZoom() {
     return zoomLevel == maxZoomLevel;
   }
-  
+
   /// Calcula intervalos apropriados para escalas de zoom. Cada nível deve possuir uma escala confortável ao redor da escala base de 1.0.
   void initializeLevelScaleRanges(Map<int, Map<String, int>> levelDimensions) {
     for (int level = 0; level <= maxZoomLevel; level++) {
-      levelScaleRanges[level] = {
-        'min': 0.5,
-        'max': 2.0,
-      };
+      levelScaleRanges[level] = {'min': 0.5, 'max': 2.0};
     }
   }
-  
+
   /// Mapeia para cada nível o valor mínimo e máximo de seu intervalo de zoom.
   void setScaleRangeForLevel(int level) {
     if (levelScaleRanges.containsKey(level)) {
@@ -91,7 +92,7 @@ class ZoomLevelController {
     }
   }
 
-  /// Retorna em qual nível de zoom a visualização deve se encontrar baseado na escala atual. Move apenas um nível por vez, uma vez que resetamos a escala para 1.0 a cada transição 
+  /// Retorna em qual nível de zoom a visualização deve se encontrar baseado na escala atual. Move apenas um nível por vez, uma vez que resetamos a escala para 1.0 a cada transição
   int getLevelForScale(double currentScale) {
     // Determine what level we should be at based on current scale
     // Only move ONE level at a time since we reset to 1.0 after each transition
@@ -131,16 +132,18 @@ class TileManager {
   int currentLevel = 0;
   int maxLevel = 0;
   int tileSize;
+
   /// O atributo loadedTiles é um map que tem como chave, um objeto TileCoordinate, e como valor, uma imagem. Ele serve como um cachê de imagens que foram carregadas
   /// a visualização.
   final Map<TileCoordinate, ui.Image?> loadedTiles = {};
+
   /// O atributo levelDimensions é um map que tem como chave, uma string representando largura ou altura do nível de zoom da imagem, e como valor, um int representando
   /// o tamanho em pixels de uma das unidades de chave. Ela tem como intuito representar o tamanho de Canvas para cada nível de zoom, para podemos posicionar tiles
-  /// e transicionar entre posições dentro de níveis, corretamente. 
+  /// e transicionar entre posições dentro de níveis, corretamente.
   final Map<int, Map<String, int>> levelDimensions = {};
-  
+
   TileManager({this.dirPath = '', this.tileSize = 512});
-  
+
   /// A função tem como intuito definir o diretório do arquivo de imagem correto de onde as imagens que formam os tiles virão.
   Future<void> setTilesDirectory() async {
     var documentsPath = (await getApplicationDocumentsDirectory()).path;
@@ -175,7 +178,8 @@ class TileManager {
   /// Caso não exista valor e arquivo válido para aquele valor de coordenada, retorna um valor nulo.
   Future<TileData?> getTile(TileCoordinate coord) async {
     // final tilePath = '$dirPath\\level${coord.level}\\${coord.column}_${coord.row}_HQ.png';
-    final tilePath = '$dirPath/level${coord.level}/${coord.column}_${coord.row}_HQ.jpg';
+    final tilePath =
+        '$dirPath/level${coord.level}/${coord.column}_${coord.row}_HQ.jpg';
     final tileFile = File(tilePath);
     if (!await tileFile.exists()) {
       return null;
@@ -212,11 +216,10 @@ class TileManager {
       final TileData? tileFile = await getTile(coord);
       if (tileFile == null) {
         loadedTiles[coord] = null;
-      } 
-      else {
+      } else {
         ui.Image tileImage = await decodeImageFromList(
           await tileFile.file.readAsBytes(),
-        ); 
+        );
         loadedTiles[coord] = tileImage;
       }
     }
@@ -251,26 +254,34 @@ class TilePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final dims = tileManager.levelDimensions[tileManager.currentLevel] ?? {'width': 512, 'height': 512};
+    final dims =
+        tileManager.levelDimensions[tileManager.currentLevel] ??
+        {'width': 512, 'height': 512};
     final double canvasWidth = dims['width']!.toDouble();
     final double canvasHeight = dims['height']!.toDouble();
-    
+
     for (var entry in loadedTiles.entries) {
       if (entry.value == null) continue;
 
       double globalX = entry.key.column * tileManager.tileSize.toDouble();
       double globalY = entry.key.row * tileManager.tileSize.toDouble();
-      
-      double tileWidth = min(tileManager.tileSize.toDouble(), canvasWidth - globalX);
-      double tileHeight = min(tileManager.tileSize.toDouble(), canvasHeight - globalY);
-      
+
+      double tileWidth = min(
+        tileManager.tileSize.toDouble(),
+        canvasWidth - globalX,
+      );
+      double tileHeight = min(
+        tileManager.tileSize.toDouble(),
+        canvasHeight - globalY,
+      );
+
       if (tileWidth <= 0 || tileHeight <= 0) continue;
 
       canvas.drawImageRect(
-        entry.value!, 
+        entry.value!,
         Rect.fromLTWH(0, 0, tileWidth, tileHeight),
         Rect.fromLTWH(globalX, globalY, tileWidth, tileHeight),
-        Paint()
+        Paint(),
       );
     }
   }
@@ -282,26 +293,32 @@ class TilePainter extends CustomPainter {
 }
 
 class ImageCanvas extends StatefulWidget {
-	final String imageFolderName;
+  final String imageFolderName;
   const ImageCanvas({super.key, required this.imageFolderName});
   @override
   State<ImageCanvas> createState() => _ImageCanvasState();
 }
 
 class _ImageCanvasState extends State<ImageCanvas> {
-  bool _isLoading = true; // Flag que existe enquanto todos os tiles iniciais possam ser carregados para tela do usuário. 
-  bool _initialLoadComplete = false; // Flag que existe para que todos os atrivutos da instância tileManger tenham sido definidos corretamente.
-  Offset _viewportOffset = Offset.zero; // Variável privada que carrega o offset de viewport do usuário para o centro da tela, é importante para posicionar a tela do usuário no canvas.
-  bool _levelChangeInProgress = false; // Flag que existe para evitar o update do viewport do usuário enquanto ocorre a transição de níveis de zoom.
+  bool _isLoading =
+      true; // Flag que existe enquanto todos os tiles iniciais possam ser carregados para tela do usuário.
+  bool _initialLoadComplete =
+      false; // Flag que existe para que todos os atrivutos da instância tileManger tenham sido definidos corretamente.
+  Offset _viewportOffset = Offset
+      .zero; // Variável privada que carrega o offset de viewport do usuário para o centro da tela, é importante para posicionar a tela do usuário no canvas.
+  bool _levelChangeInProgress =
+      false; // Flag que existe para evitar o update do viewport do usuário enquanto ocorre a transição de níveis de zoom.
   TileManager tileManager = TileManager(); // instância da classe TileManager
-  ZoomLevelController zoomLevelController = ZoomLevelController(); // instância da classe ZoomLevelController
-  late TransformationController transformationController; // Variável que carregará instância da classe TransformationController, a qual usamos para a manipulação de toda a
-                                                          // movimentação da nossa interface.
+  ZoomLevelController zoomLevelController =
+      ZoomLevelController(); // instância da classe ZoomLevelController
+  late TransformationController
+  transformationController; // Variável que carregará instância da classe TransformationController, a qual usamos para a manipulação de toda a
+  // movimentação da nossa interface.
 
   @override
   void initState() {
     super.initState();
-		tileManager.imageFolderName = widget.imageFolderName;
+    tileManager.imageFolderName = widget.imageFolderName;
     transformationController = TransformationController();
   }
 
@@ -321,16 +338,16 @@ class _ImageCanvasState extends State<ImageCanvas> {
   Future<void> startTiles() async {
     final screenSize = MediaQuery.of(context).size;
     Rect initialViewport = _viewportOffset & screenSize;
-    
+
     await tileManager.setTilesDirectory();
     await tileManager.getHighestLevel();
     zoomLevelController.setMaxZoomLevel(tileManager.maxLevel);
-    
+
     zoomLevelController.initializeLevelScaleRanges(tileManager.levelDimensions);
     zoomLevelController.setScaleRangeForLevel(tileManager.currentLevel);
-    
+
     await tileManager.loadTiles(initialViewport);
-    
+
     setState(() {
       _isLoading = false;
       _initialLoadComplete = true;
@@ -342,7 +359,7 @@ class _ImageCanvasState extends State<ImageCanvas> {
     if (_levelChangeInProgress) {
       return;
     }
-    
+
     Matrix4 matrix = transformationController.value;
     double scale = matrix.getMaxScaleOnAxis();
 
@@ -374,7 +391,7 @@ class _ImageCanvasState extends State<ImageCanvas> {
 
     await tileManager.loadTiles(viewPortRect);
 
-    if(mounted) {
+    if (mounted) {
       setState(() {});
     }
   }
@@ -390,12 +407,12 @@ class _ImageCanvasState extends State<ImageCanvas> {
     final originalTranslationX = originalMatrix.getTranslation().x;
     final originalTranslationY = originalMatrix.getTranslation().y;
     final int oldLevel = tileManager.currentLevel;
-    
+
     double newScale = currentScale + num;
-    
+
     bool levelChanged = false;
     int newZoomLevel = oldLevel;
-    
+
     if (num > 0 && oldLevel > 0) {
       newZoomLevel = oldLevel - 1;
       levelChanged = true;
@@ -405,45 +422,55 @@ class _ImageCanvasState extends State<ImageCanvas> {
     }
 
     if (levelChanged) {
-      final worldCenterXOldLevel = (viewportCenterX - originalTranslationX) / currentScale;
-      final worldCenterYOldLevel = (viewportCenterY - originalTranslationY) / currentScale;
-      
+      final worldCenterXOldLevel =
+          (viewportCenterX - originalTranslationX) / currentScale;
+      final worldCenterYOldLevel =
+          (viewportCenterY - originalTranslationY) / currentScale;
+
       double finalWorldCenterX = worldCenterXOldLevel;
       double finalWorldCenterY = worldCenterYOldLevel;
-      
+
       _levelChangeInProgress = true;
-      
-      final oldDims = tileManager.levelDimensions[oldLevel] ?? {'width': 512, 'height': 512};
-      final newDims = tileManager.levelDimensions[newZoomLevel] ?? {'width': 512, 'height': 512};
-      
-      final double scaleFactorX = newDims['width']!.toDouble() / oldDims['width']!.toDouble();
-      final double scaleFactorY = newDims['height']!.toDouble() / oldDims['height']!.toDouble();
-      
+
+      final oldDims =
+          tileManager.levelDimensions[oldLevel] ??
+          {'width': 512, 'height': 512};
+      final newDims =
+          tileManager.levelDimensions[newZoomLevel] ??
+          {'width': 512, 'height': 512};
+
+      final double scaleFactorX =
+          newDims['width']!.toDouble() / oldDims['width']!.toDouble();
+      final double scaleFactorY =
+          newDims['height']!.toDouble() / oldDims['height']!.toDouble();
+
       finalWorldCenterX = worldCenterXOldLevel * scaleFactorX;
       finalWorldCenterY = worldCenterYOldLevel * scaleFactorY;
-      
+
       print('Level change: $oldLevel -> $newZoomLevel');
-      
+
       tileManager.currentLevel = newZoomLevel;
-      
+
       zoomLevelController.setScaleRangeForLevel(newZoomLevel);
-      
+
       newScale = 1.0;
-        
+
       double visibleWidth = viewportSize.width / newScale;
       double visibleHeight = viewportSize.height / newScale;
-      
+
       Rect viewPortRect = Rect.fromLTWH(
         finalWorldCenterX - visibleWidth / 2,
         finalWorldCenterY - visibleHeight / 2,
         visibleWidth,
         visibleHeight,
       );
-      
-      Set<TileCoordinate> visibleCoords = tileManager.updateVisibleTiles(viewPortRect);
+
+      Set<TileCoordinate> visibleCoords = tileManager.updateVisibleTiles(
+        viewPortRect,
+      );
       tileManager.deloadTiles(visibleCoords);
       await tileManager.mapTiles(visibleCoords);
-      
+
       final newTranslationX = viewportCenterX - (finalWorldCenterX * newScale);
       final newTranslationY = viewportCenterY - (finalWorldCenterY * newScale);
 
@@ -452,11 +479,11 @@ class _ImageCanvasState extends State<ImageCanvas> {
         ..row1 = vm.Vector4(0.0, newScale, 0.0, newTranslationY)
         ..row2 = vm.Vector4(0.0, 0.0, 1.0, 0.0)
         ..row3 = vm.Vector4(0.0, 0.0, 0.0, 1.0);
-      
+
       transformationController.value = matrix;
-      
+
       setState(() {});
-      
+
       Future.delayed(Duration(milliseconds: 100), () {
         setState(() {
           _levelChangeInProgress = false;
@@ -493,81 +520,108 @@ class _ImageCanvasState extends State<ImageCanvas> {
                     if (_levelChangeInProgress) {
                       return;
                     }
-                    
-                    final currentScale = transformationController.value.getMaxScaleOnAxis();
-                    
+
+                    final currentScale = transformationController.value
+                        .getMaxScaleOnAxis();
+
                     if ((currentScale - 1.0).abs() < 0.01) {
                       if (_initialLoadComplete && !_isLoading) {
                         reloadTilesViewport();
                       }
                       return;
                     }
-                    
-                    final desiredZoomLevel = zoomLevelController.getLevelForScale(currentScale);
-                    final currentZoomLevel = zoomLevelController.maxZoomLevel - desiredZoomLevel;
-                    
+
+                    final desiredZoomLevel = zoomLevelController
+                        .getLevelForScale(currentScale);
+                    final currentZoomLevel =
+                        zoomLevelController.maxZoomLevel - desiredZoomLevel;
+
                     if (tileManager.currentLevel != currentZoomLevel) {
                       _levelChangeInProgress = true;
-                      
-                      int oldLevel = tileManager.currentLevel;
-                      
-                      print('Pinch level change: $oldLevel -> $currentZoomLevel (scale: ${currentScale.toStringAsFixed(2)})');
-                      
-                      zoomLevelController.zoomLevel = desiredZoomLevel;
-                      zoomLevelController.setScaleRangeForLevel(currentZoomLevel);
 
-                      final oldDims = tileManager.levelDimensions[oldLevel] ?? {'width': 512, 'height': 512};
-                      final newDims = tileManager.levelDimensions[currentZoomLevel] ?? {'width': 512, 'height': 512};
-                      
-                      final double scaleFactorX = newDims['width']!.toDouble() / oldDims['width']!.toDouble();
-                      final double scaleFactorY = newDims['height']!.toDouble() / oldDims['height']!.toDouble();
-                      
-                      Matrix4 currentMatrix = transformationController.value.clone();
+                      int oldLevel = tileManager.currentLevel;
+
+                      print(
+                        'Pinch level change: $oldLevel -> $currentZoomLevel (scale: ${currentScale.toStringAsFixed(2)})',
+                      );
+
+                      zoomLevelController.zoomLevel = desiredZoomLevel;
+                      zoomLevelController.setScaleRangeForLevel(
+                        currentZoomLevel,
+                      );
+
+                      final oldDims =
+                          tileManager.levelDimensions[oldLevel] ??
+                          {'width': 512, 'height': 512};
+                      final newDims =
+                          tileManager.levelDimensions[currentZoomLevel] ??
+                          {'width': 512, 'height': 512};
+
+                      final double scaleFactorX =
+                          newDims['width']!.toDouble() /
+                          oldDims['width']!.toDouble();
+                      final double scaleFactorY =
+                          newDims['height']!.toDouble() /
+                          oldDims['height']!.toDouble();
+
+                      Matrix4 currentMatrix = transformationController.value
+                          .clone();
 
                       final viewportSize = MediaQuery.of(context).size;
                       final viewportCenterX = viewportSize.width / 2;
                       final viewportCenterY = viewportSize.height / 2;
 
-                      double currentTranslationX = currentMatrix.getTranslation().x;
-                      double currentTranslationY = currentMatrix.getTranslation().y;
+                      double currentTranslationX = currentMatrix
+                          .getTranslation()
+                          .x;
+                      double currentTranslationY = currentMatrix
+                          .getTranslation()
+                          .y;
 
-                      double worldCenterX = (viewportCenterX - currentTranslationX) / currentScale;
-                      double worldCenterY = (viewportCenterY - currentTranslationY) / currentScale;
-                      
+                      double worldCenterX =
+                          (viewportCenterX - currentTranslationX) /
+                          currentScale;
+                      double worldCenterY =
+                          (viewportCenterY - currentTranslationY) /
+                          currentScale;
+
                       worldCenterX *= scaleFactorX;
                       worldCenterY *= scaleFactorY;
-                      
+
                       double newScale = 1.0;
-                      
-                      double newTranslationX = viewportCenterX - (worldCenterX * newScale);
-                      double newTranslationY = viewportCenterY - (worldCenterY * newScale);
-                      
+
+                      double newTranslationX =
+                          viewportCenterX - (worldCenterX * newScale);
+                      double newTranslationY =
+                          viewportCenterY - (worldCenterY * newScale);
+
                       tileManager.currentLevel = currentZoomLevel;
-                      
+
                       double visibleWidth = viewportSize.width / newScale;
                       double visibleHeight = viewportSize.height / newScale;
-                      
+
                       Rect viewPortRect = Rect.fromLTWH(
                         worldCenterX - visibleWidth / 2,
                         worldCenterY - visibleHeight / 2,
                         visibleWidth,
                         visibleHeight,
                       );
-                      
-                      Set<TileCoordinate> visibleCoords = tileManager.updateVisibleTiles(viewPortRect);
+
+                      Set<TileCoordinate> visibleCoords = tileManager
+                          .updateVisibleTiles(viewPortRect);
                       tileManager.deloadTiles(visibleCoords);
                       await tileManager.mapTiles(visibleCoords);
-                      
+
                       final Matrix4 newMatrix = Matrix4.identity()
                         ..row0 = vm.Vector4(newScale, 0.0, 0.0, newTranslationX)
                         ..row1 = vm.Vector4(0.0, newScale, 0.0, newTranslationY)
                         ..row2 = vm.Vector4(0.0, 0.0, 1.0, 0.0)
                         ..row3 = vm.Vector4(0.0, 0.0, 0.0, 1.0);
-                      
+
                       transformationController.value = newMatrix;
-                      
+
                       setState(() {});
-                      
+
                       Future.delayed(Duration(milliseconds: 300), () {
                         _levelChangeInProgress = false;
                       });
@@ -582,7 +636,7 @@ class _ImageCanvasState extends State<ImageCanvas> {
                       painter: TilePainter(
                         tileManager.loadedTiles,
                         tileManager.tileSize,
-                        tileManager
+                        tileManager,
                       ),
                     ),
                   ),
@@ -607,19 +661,60 @@ class _ImageCanvasState extends State<ImageCanvas> {
             child: Row(
               children: [
                 Text('Level: ${tileManager.currentLevel}  |  '),
-                ElevatedButton(
-                  onPressed: () {
+                // ElevatedButton(
+                //   onPressed: () {
+                //     Matrix4 matrix = transformationController.value;
+                //     print('Matrix: $matrix');
+                //     print('Viewport offset: $_viewportOffset');
+                //     print('Scale: ${matrix.getMaxScaleOnAxis()}');
+                //   },
+                //   child: Text('Debug Info'),
+                // ),
+                Button(
+                  onTap: () {
                     Matrix4 matrix = transformationController.value;
                     print('Matrix: $matrix');
                     print('Viewport offset: $_viewportOffset');
                     print('Scale: ${matrix.getMaxScaleOnAxis()}');
                   },
-                  child: Text('Debug Info'),
+                  text: 'Debug Info',
+                  backgroundColor: lightGray,
+									foregroundColor: Colors.black,
+									verticalPadding: 15,
+									borderRadius: 100,
+									fontSize: 15
                 ),
                 SizedBox(width: 8),
-                ElevatedButton(onPressed: () {zoomToCenter(1);}, child: Text('Zoom +')),
+                // ElevatedButton(onPressed: () {zoomToCenter(1);}, child: Text('Zoom +')),
+                Button(
+                  onTap: () {
+                    zoomToCenter(1);
+                  },
+                  text: 'Zoom +',
+                  backgroundColor: lightGray,
+									foregroundColor: Colors.black,
+									verticalPadding: 15,
+									borderRadius: 100,
+									fontSize: 15
+                ),
                 SizedBox(width: 8),
-                ElevatedButton(onPressed: () {zoomToCenter(-1);}, child: Text('Zoom -')),
+                // ElevatedButton(
+                //   onPressed: () {
+                //     zoomToCenter(-1);
+                //   },
+                //   child: Text('Zoom -'),
+                // ),
+                Button(
+                  onTap: () {
+                    zoomToCenter(-1);
+                  },
+                  text: 'Zoom -',
+                  backgroundColor: lightGray,
+									foregroundColor: Colors.black,
+									verticalPadding: 15,
+									borderRadius: 100,
+									fontSize: 15
+                ),
               ],
             ),
           ),
