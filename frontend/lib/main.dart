@@ -8,6 +8,7 @@ import 'package:atlas_citologico_fmabc/screens/prof_diretorios_tab.dart';
 import 'package:atlas_citologico_fmabc/screens/prof_galeria_tab.dart';
 import 'package:atlas_citologico_fmabc/widgets/prof_navbar.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'screens/admin_tab.dart';
 import 'screens/diretorio_tab.dart';
@@ -134,6 +135,9 @@ class _MainPageState extends State<MainPage> {
 	@override
 	Widget build(BuildContext context) {
 		return MaterialApp(
+			theme: ThemeData(
+				fontFamily: GoogleFonts.inter().fontFamily,
+			),
 			debugShowCheckedModeBanner: false,
       title: 'Atlas de Citologia',
 			home: Scaffold(
