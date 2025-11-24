@@ -86,7 +86,7 @@ class _EditDialogState extends State<EditDialog> {
 												validator: false,
 												controller: senhaController,
                         // errorText: 'Digite uma nova senha', // caso mudar o validator para true
-                        // obscureText: true,
+                        obscureText: true,
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
                             color: Colors.black.withAlpha(50),

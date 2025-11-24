@@ -100,6 +100,7 @@ class _AddTeacherDialogState extends State<AddTeacherDialog> {
                       child: InputField(
 												validator: true,
                         controller: senhaController,
+												obscureText: true,
                         errorText: 'Digite uma senha',
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
